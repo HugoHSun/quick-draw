@@ -36,9 +36,14 @@ public class App extends Application {
    */
   @Override
   public void start(final Stage stage) throws IOException {
-    final Scene scene = new Scene(loadFxml("canvas"), 840, 680);
+    final Scene scene = new Scene(loadFxml("menu"), 750, 480);
 
     stage.setScene(scene);
     stage.show();
+  }
+
+  @Override
+  public void stop() throws Exception {
+    System.exit(0);
   }
 }
