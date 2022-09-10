@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane prefHeight="480.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controller.MenuController">
+   <children>
+      <Label alignment="TOP_CENTER" layoutX="242.0" layoutY="88.0" text="QUICK, DRAW!" textAlignment="CENTER">
+         <font>
+            <Font name="Segoe UI Black" size="36.0" />
+         </font>
+         <effect>
+            <Blend />
+         </effect>
+      </Label>
+      <Button alignment="CENTER" layoutX="303.0" layoutY="219.0" mnemonicParsing="false" onAction="#onStartNewGame" prefHeight="43.0" prefWidth="144.0" text="Start a new game">
+         <font>
+            <Font name="Segoe UI" size="15.0" />
+         </font>
+         <effect>
+            <Blend mode="DARKEN" />
+         </effect>
+      </Button>
+   </children>
+</Pane>
