@@ -61,7 +61,7 @@
                     <items>
                       <Button fx:id="penButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onPen" prefHeight="23.0" prefWidth="120.0" text="Pen" />
                     <Button fx:id="eraserButton" alignment="CENTER" mnemonicParsing="false" onAction="#onErase" prefHeight="23.0" prefWidth="120.0" text="Eraser" />
-                    <Button fx:id="clearButton" alignment="CENTER" mnemonicParsing="false" onAction="#onClear" prefHeight="23.0" prefWidth="120.0" text="Clear" />
+                    <Button alignment="CENTER" mnemonicParsing="false" onAction="#onClear" prefHeight="23.0" prefWidth="120.0" text="Clear" />
                     </items>
                      <StackPane.margin>
                         <Insets left="5.0" right="12.0" />

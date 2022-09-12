@@ -8,6 +8,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -17,6 +18,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.ImageCursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -71,8 +73,6 @@ public class CanvasController {
 
   @FXML private Button eraserButton;
 
-  @FXML private Button clearButton;
-
   @FXML private Label predictionLabel;
 
   @FXML private Label winLostLabel;
@@ -106,6 +106,11 @@ public class CanvasController {
     voiceOver.start();
 
     graphic = canvas.getGraphicsContext2D();
+
+    // Change the cursor icon to eraser
+    URL cursorUrl = App.class.getResource("/images/Pencil-icon.png");
+    Image pencilCursor = new Image(cursorUrl.toString());
+    canvas.setCursor(new ImageCursor(pencilCursor, 0, pencilCursor.getHeight()));
 
     // save coordinates when mouse is pressed on the canvas
     canvas.setOnMousePressed(
@@ -143,6 +148,10 @@ public class CanvasController {
     // Setting the buttons
     penButton.setDisable(true);
     eraserButton.setDisable(false);
+    // Change the cursor icon to eraser
+    URL cursorUrl = App.class.getResource("/images/Pencil-icon.png");
+    Image pencilCursor = new Image(cursorUrl.toString());
+    canvas.setCursor(new ImageCursor(pencilCursor, 0, pencilCursor.getHeight()));
 
     canvas.setOnMouseDragged(
         e -> {
@@ -171,11 +180,16 @@ public class CanvasController {
     // Setting the buttons
     penButton.setDisable(false);
     eraserButton.setDisable(true);
+    // Change the cursor to eraser
+    URL cursorUrl = App.class.getResource("/images/Eraser-icon.png");
+    Image eraserCursor = new Image(cursorUrl.toString());
+    canvas.setCursor(
+        new ImageCursor(eraserCursor, eraserCursor.getWidth() / 3.5, eraserCursor.getHeight()));
 
     canvas.setOnMouseDragged(
         e -> {
           // Brush size (you can change this, it should not be too small or too large).
-          final double size = 6;
+          final double size = 9;
 
           final double x = e.getX() - size / 2;
           final double y = e.getY() - size / 2;
@@ -197,24 +211,25 @@ public class CanvasController {
   @FXML
   private void onClear() {
     graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+    // Change to pen after clearing canvas
+    onPen();
   }
 
   /** This method is called when the user click on "Start drawing" button */
   @FXML
   private void onStartDrawing() {
-    // Turn on the canvas and remove the button
+    // Turn on the canvas and change the buttons
     canvas.setDisable(false);
-    // buttonPane.getChildren().remove(0);
     startDrawingButton.setVisible(false);
     toolBox.setVisible(true);
 
     // Create a timer thread running in the background that counts down from 60 to
-    // 0, and
-    // ask GUI thread to update time and predictions display every second
+    // 0, and ask GUI thread to update time and predictions display every second
     Timer timer = new Timer();
     timer.scheduleAtFixedRate(
         new TimerTask() {
-          private Integer secondsLeft = 60;
+          // The remaining time in seconds
+          private Integer remainingTime = 60;
 
           // This method will be called every second by the timer thread
           public void run() {
@@ -222,7 +237,7 @@ public class CanvasController {
             Platform.runLater(
                 () -> {
                   // Time display
-                  timerLabel.setText(secondsLeft.toString());
+                  timerLabel.setText(remainingTime.toString());
 
                   // Get current predictions and update the display
                   try {
@@ -236,45 +251,19 @@ public class CanvasController {
                 });
 
             // Remind the user when there are 10 seconds left
-            if (secondsLeft == 10) {
-              Thread timeReminder = new Thread(() -> new TextToSpeech().speak("Ten seconds left"));
-              timeReminder.start();
-            }
+            remindTimeLeft(remainingTime, 10);
 
             // When a ending condition of the game is met
-            if (secondsLeft == 0 || isWon) {
+            if (remainingTime == 0 || isWon) {
               timer.cancel();
               endGame();
             }
 
-            secondsLeft--;
+            remainingTime--;
           }
         },
         1000,
         1000);
-  }
-
-  /**
-   * Get the current snapshot of the canvas.
-   *
-   * @return The BufferedImage corresponding to the current canvas content.
-   */
-  private BufferedImage getCurrentSnapshot() {
-    final Image snapshot = canvas.snapshot(null, null);
-    final BufferedImage image = SwingFXUtils.fromFXImage(snapshot, null);
-
-    // Convert into a binary image.
-    final BufferedImage imageBinary =
-        new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_BYTE_BINARY);
-
-    final Graphics2D graphics = imageBinary.createGraphics();
-
-    graphics.drawImage(image, 0, 0, null);
-
-    // To release memory we dispose.
-    graphics.dispose();
-
-    return imageBinary;
   }
 
   /**
@@ -286,7 +275,7 @@ public class CanvasController {
   private void onNewGame(ActionEvent event) {
     Scene scene = ((Node) event.getSource()).getScene();
     try {
-      // Load a new version of node tree
+      // Load a new canvas FXML file which initializes everything
       Parent root = new FXMLLoader(App.class.getResource("/fxml/canvas.fxml")).load();
       scene.setRoot(root);
     } catch (IOException e) {
@@ -332,6 +321,29 @@ public class CanvasController {
   }
 
   /**
+   * Get the current snapshot of the canvas.
+   *
+   * @return The BufferedImage corresponding to the current canvas content.
+   */
+  private BufferedImage getCurrentSnapshot() {
+    final Image snapshot = canvas.snapshot(null, null);
+    final BufferedImage image = SwingFXUtils.fromFXImage(snapshot, null);
+
+    // Convert into a binary image.
+    final BufferedImage imageBinary =
+        new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_BYTE_BINARY);
+
+    final Graphics2D graphics = imageBinary.createGraphics();
+
+    graphics.drawImage(image, 0, 0, null);
+
+    // To release memory we dispose.
+    graphics.dispose();
+
+    return imageBinary;
+  }
+
+  /**
    * This is a helper method that builds a string of the current top 10 predictions, which can be
    * displayed in a label. Note that it also checks whether the player has won (the top 3
    * predictions contain the category to be drawn).
@@ -367,16 +379,28 @@ public class CanvasController {
     return sb.toString();
   }
 
+  /**
+   * This is a helper method which reminds user of the remaining time by text to speech
+   *
+   * @param currentRemainingTime the remaining time in seconds
+   * @param reminderTime the time to remind the user
+   */
+  private void remindTimeLeft(int currentRemainingTime, int reminderTime) {
+    if (currentRemainingTime == reminderTime) {
+      Thread timeReminder = new Thread(() -> new TextToSpeech().speak("Ten seconds left"));
+      timeReminder.start();
+    }
+  }
+
   /** This is a helper method that is executed when a game has ended */
   private void endGame() {
     // Setting the buttons
+    toolBox.setVisible(false);
     canvas.setDisable(true);
     canvas.setOnMouseDragged(null);
-    penButton.setDisable(true);
-    eraserButton.setDisable(true);
-    clearButton.setDisable(true);
     saveDrawingButton.setDisable(false);
     newGameButton.setDisable(false);
+
     // Change the background of count down to red
     Platform.runLater(
         () -> {
