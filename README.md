@@ -1,6 +1,6 @@
-# SE206 - 2022 - Assignment 1
+# SE206 - 2022 - Beta & Final Releases
 
-### Quick, Draw! - first prototype
+### Quick, Draw!
 
 **Requirements**
 
