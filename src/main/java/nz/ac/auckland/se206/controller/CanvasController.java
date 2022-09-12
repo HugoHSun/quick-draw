@@ -107,7 +107,7 @@ public class CanvasController {
 
     graphic = canvas.getGraphicsContext2D();
 
-    // Change the cursor icon to eraser
+    // Change the cursor icon to eraser in canvas
     URL cursorUrl = App.class.getResource("/images/Pencil-icon.png");
     Image pencilCursor = new Image(cursorUrl.toString());
     canvas.setCursor(new ImageCursor(pencilCursor, 0, pencilCursor.getHeight()));
@@ -364,7 +364,7 @@ public class CanvasController {
           .append(" : ")
           .append(classification.getClassName().replaceAll("_", " "))
           .append(" : ")
-          .append(String.format("%.2f%%", 100 * classification.getProbability()))
+          .append(String.format("%d%%", Math.round(100 * classification.getProbability())))
           .append(System.lineSeparator());
 
       // When the category to be drawn is in the top 3 predictions
@@ -386,8 +386,10 @@ public class CanvasController {
    * @param reminderTime the time to remind the user
    */
   private void remindTimeLeft(int currentRemainingTime, int reminderTime) {
-    if (currentRemainingTime == reminderTime) {
-      Thread timeReminder = new Thread(() -> new TextToSpeech().speak("Ten seconds left"));
+    if (currentRemainingTime == (reminderTime + 1)) {
+      Thread timeReminder =
+          new Thread(
+              () -> new TextToSpeech().speak(Integer.toString(reminderTime) + " seconds left"));
       timeReminder.start();
     }
   }
