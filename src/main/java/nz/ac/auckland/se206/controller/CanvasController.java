@@ -82,11 +82,15 @@ public class CanvasController {
 
   @FXML private Label predictionLabel;
 
-  private boolean isWon = false;
-
   @FXML private TextField folderNameText;
 
   @FXML private TextField imageNameText;
+
+  private boolean isWon = false;
+
+  // mouse coordinates
+  private double currentX;
+  private double currentY;
 
   /**
    * JavaFX calls this method once the GUI elements are loaded. In our case we create a listener for
@@ -108,17 +112,31 @@ public class CanvasController {
     voiceOver.start();
     graphic = canvas.getGraphicsContext2D();
 
+    // save coordinates when mouse is pressed on the canvas
+    canvas.setOnMousePressed(
+        e -> {
+          currentX = e.getX();
+          currentY = e.getY();
+        });
+
     canvas.setOnMouseDragged(
         e -> {
           // Brush size (you can change this, it should not be too small or too large).
-          final double size = 5.0;
+          final double size = 6;
 
           final double x = e.getX() - size / 2;
           final double y = e.getY() - size / 2;
 
           // This is the colour of the brush.
           graphic.setFill(Color.BLACK);
-          graphic.fillOval(x, y, size, size);
+          graphic.setLineWidth(size);
+
+          // Create a line that goes from the point (currentX, currentY) and (x,y)
+          graphic.strokeLine(currentX, currentY, x, y);
+
+          // update the coordinates
+          currentX = x;
+          currentY = y;
         });
 
     model = new DoodlePrediction();
