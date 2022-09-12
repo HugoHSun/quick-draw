@@ -36,6 +36,8 @@ public class App extends Application {
    */
   @Override
   public void start(final Stage stage) throws IOException {
+    // User cannot resize the window
+    stage.setResizable(false);
     final Scene scene = new Scene(loadFxml("menu"), 750, 480);
 
     stage.setScene(scene);
