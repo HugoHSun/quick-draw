@@ -191,7 +191,7 @@ public class CanvasController {
     canvas.setOnMouseDragged(
         e -> {
           // Brush size (you can change this, it should not be too small or too large).
-          final double size = 9;
+          final double size = 7;
 
           final double x = e.getX() - size / 2;
           final double y = e.getY() - size / 2;
@@ -313,7 +313,7 @@ public class CanvasController {
             new FileChooser.ExtensionFilter("img", "*.jpeg"));
     // open file dialog box
     Window stage = canvas.getScene().getWindow();
-    File file = fileChooser.showOpenDialog(stage);
+    File file = fileChooser.showSaveDialog(stage);
 
     // Save the image to a file.
     ImageIO.write(getCurrentSnapshot(), "bmp", file);
