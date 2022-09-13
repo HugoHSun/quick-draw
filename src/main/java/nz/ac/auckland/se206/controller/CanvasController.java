@@ -33,6 +33,8 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
+import javafx.stage.Window;
 import javax.imageio.ImageIO;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.CategorySelector;
@@ -194,12 +196,8 @@ public class CanvasController {
           final double x = e.getX() - size / 2;
           final double y = e.getY() - size / 2;
 
-          // This is the colour of the brush.
-          graphic.setStroke(Color.WHITE);
-          graphic.setLineWidth(size);
-
           // Create a line that goes from the point (currentX, currentY) and (x,y)
-          graphic.strokeLine(currentX, currentY, x, y);
+          graphic.clearRect(currentX, currentY, x, y);
 
           // update the coordinates
           currentX = x;
@@ -283,19 +281,6 @@ public class CanvasController {
     }
   }
 
-  /** This method is called when the "Save drawing" button is pressed */
-  // TO BE EDITED
-  @FXML
-  private void onSaveDrawing() {
-    // Save the image as default
-    try {
-      saveCurrentSnapshotOnFile();
-    } catch (IOException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-  }
-
   /**
    * Save the current snapshot on a bitmap file.
    *
@@ -303,21 +288,43 @@ public class CanvasController {
    * @throws IOException If the image cannot be saved.
    */
   private File saveCurrentSnapshotOnFile() throws IOException {
+    // Open file dialog box
+    FileChooser fileChooser = new FileChooser();
+    fileChooser.setTitle("Save Drawing");
+
     // You can change the location as you see fit.
     final File tmpFolder = new File("tmp");
 
+    // sets initial folder to the tmpfolder
+    fileChooser.setInitialDirectory(tmpFolder);
+
+    // make a tmp folder if it doesnt exist
     if (!tmpFolder.exists()) {
       tmpFolder.mkdir();
     }
 
     // We save the image to a file in the tmp folder.
-    final File imageToClassify =
-        new File(tmpFolder.getName() + "/snapshot" + System.currentTimeMillis() + ".bmp");
+    fileChooser.setInitialFileName("MyDrawing" + ".bmp");
+    fileChooser
+        .getExtensionFilters()
+        .addAll(
+            new FileChooser.ExtensionFilter("img", "*.bmp"),
+            new FileChooser.ExtensionFilter("img", "*.png"),
+            new FileChooser.ExtensionFilter("img", "*.jpeg"));
+    // open file dialog box
+    Window stage = canvas.getScene().getWindow();
+    File file = fileChooser.showOpenDialog(stage);
 
     // Save the image to a file.
-    ImageIO.write(getCurrentSnapshot(), "bmp", imageToClassify);
+    ImageIO.write(getCurrentSnapshot(), "bmp", file);
 
-    return imageToClassify;
+    return file;
+  }
+
+  @FXML
+  private void onSaveDrawing(ActionEvent event) throws IOException {
+    // button to save the canvas drawing file
+    saveCurrentSnapshotOnFile();
   }
 
   /**
