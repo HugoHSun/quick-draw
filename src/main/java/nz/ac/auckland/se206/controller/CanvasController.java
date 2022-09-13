@@ -196,8 +196,12 @@ public class CanvasController {
           final double x = e.getX() - size / 2;
           final double y = e.getY() - size / 2;
 
+          // This is the colour of the brush.
+          graphic.setStroke(Color.WHITE);
+          graphic.setLineWidth(size);
+
           // Create a line that goes from the point (currentX, currentY) and (x,y)
-          graphic.clearRect(currentX, currentY, x, y);
+          graphic.strokeLine(currentX, currentY, x, y);
 
           // update the coordinates
           currentX = x;
@@ -285,40 +289,44 @@ public class CanvasController {
    * Save the current snapshot on a bitmap file.
    *
    * @return The file of the saved image.
-   * @throws IOException If the image cannot be saved.
    */
-  private File saveCurrentSnapshotOnFile() throws IOException {
-    // Open file dialog box
-    FileChooser fileChooser = new FileChooser();
-    fileChooser.setTitle("Save Drawing");
+  private File saveCurrentSnapshotOnFile() {
+    try {
+      // Open file dialog box
+      FileChooser fileChooser = new FileChooser();
+      fileChooser.setTitle("Save Drawing");
 
-    // You can change the location as you see fit.
-    final File tmpFolder = new File("tmp");
+      // You can change the location as you see fit.
+      final File tmpFolder = new File("tmp");
 
-    // sets initial folder to the tmpfolder
-    fileChooser.setInitialDirectory(tmpFolder);
+      // sets initial folder to the tmpfolder
+      fileChooser.setInitialDirectory(tmpFolder);
 
-    // make a tmp folder if it doesnt exist
-    if (!tmpFolder.exists()) {
-      tmpFolder.mkdir();
+      // make a tmp folder if it doesnt exist
+      if (!tmpFolder.exists()) {
+        tmpFolder.mkdir();
+      }
+
+      // We save the image to a file in the tmp folder.
+      fileChooser.setInitialFileName("MyDrawing" + ".bmp");
+      fileChooser
+          .getExtensionFilters()
+          .addAll(
+              new FileChooser.ExtensionFilter("img", "*.bmp"),
+              new FileChooser.ExtensionFilter("img", "*.png"),
+              new FileChooser.ExtensionFilter("img", "*.jpeg"));
+      // open file dialog box
+      Window stage = canvas.getScene().getWindow();
+      File file = fileChooser.showSaveDialog(stage);
+
+      // Save the image to a file.
+      ImageIO.write(getCurrentSnapshot(), "bmp", file);
+
+      return file;
+    } catch (Exception e) {
+      System.out.println("Closed without saving drawing");
     }
-
-    // We save the image to a file in the tmp folder.
-    fileChooser.setInitialFileName("MyDrawing" + ".bmp");
-    fileChooser
-        .getExtensionFilters()
-        .addAll(
-            new FileChooser.ExtensionFilter("img", "*.bmp"),
-            new FileChooser.ExtensionFilter("img", "*.png"),
-            new FileChooser.ExtensionFilter("img", "*.jpeg"));
-    // open file dialog box
-    Window stage = canvas.getScene().getWindow();
-    File file = fileChooser.showSaveDialog(stage);
-
-    // Save the image to a file.
-    ImageIO.write(getCurrentSnapshot(), "bmp", file);
-
-    return file;
+    return null;
   }
 
   @FXML
