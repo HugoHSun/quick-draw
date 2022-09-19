@@ -235,6 +235,13 @@ public class CanvasController {
 
           // This method will be called every second by the timer thread
           public void run() {
+            // When a ending condition of the game is met
+            if (remainingTime == 0 || isWon) {
+              timer.cancel();
+              endGame();
+              return;
+            }
+
             // Ask the GUI thread to update time and predictions display.
             Platform.runLater(
                 () -> {
@@ -254,12 +261,6 @@ public class CanvasController {
 
             // Remind the user when there are 10 seconds left
             remindTimeLeft(remainingTime, 10);
-
-            // When a ending condition of the game is met
-            if (remainingTime == 0 || isWon) {
-              timer.cancel();
-              endGame();
-            }
 
             remainingTime--;
           }
