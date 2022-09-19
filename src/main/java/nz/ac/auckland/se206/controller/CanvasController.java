@@ -375,10 +375,7 @@ public class CanvasController {
 
     for (final Classifications.Classification classification : currentPredictions) {
       // Build the predictions string to be displayed
-      sb.append("TOP ")
-          .append(predictionRank)
-          .append(" : ")
-          .append(classification.getClassName().replaceAll("_", " "))
+      sb.append(classification.getClassName().replaceAll("_", " "))
           .append(" : ")
           .append(String.format("%d%%", Math.round(100 * classification.getProbability())))
           .append(System.lineSeparator());
