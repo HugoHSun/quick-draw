@@ -24,7 +24,6 @@ import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.user.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
 /**
@@ -38,6 +37,9 @@ public class MenuController {
   private Parent root;
   private List<User> users;
   private List<String> userNames;
+  
+  public static String currentlyActiveUser = null;
+  
   @FXML private ChoiceBox<String> userChoiceBox;
   @FXML private Label currentUser;
   
@@ -68,6 +70,15 @@ public class MenuController {
   @FXML
   private void onStartNewGame(ActionEvent event) {
     // Get the current scene
+	if (userChoiceBox.getValue()==null) {
+		currentUser.setText("You must choose your profile!");
+		return;
+	}
+	
+	for (User user : users) {
+		  System.out.println(user);
+	  }
+	
     scene = ((Node) event.getSource()).getScene();
     try {
       // Load a new parent node
@@ -97,13 +108,8 @@ public class MenuController {
 	  }
 	  
 	  Gson gson = new GsonBuilder().setPrettyPrinting().create();
-	  // construct Type that tells Gson about the generic type
-	  Type userListType = new TypeToken<List<User>>(){}.getType();
 	  users.remove(userNames.indexOf(currentUser.getText()));
 	  userNames.remove(currentUser.getText());
-	  for (User user : users) {
-		  System.out.println(user);
-	  }
 	  
 	  FileWriter fw = new FileWriter("user.json", false);
 	  gson.toJson(users, fw);
@@ -116,5 +122,6 @@ public class MenuController {
   public void setUserLabel(ActionEvent event) {
 	  String current = userChoiceBox.getValue();
 	  currentUser.setText(current);
+	  currentlyActiveUser = currentUser.getText();
   } 
  }

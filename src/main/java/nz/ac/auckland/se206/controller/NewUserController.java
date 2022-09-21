@@ -68,4 +68,16 @@ public class NewUserController {
 	    }
 	    scene.setRoot(root);
 	}
+	
+	@FXML
+	public void onReturn(ActionEvent event) {
+		scene = ((Node) event.getSource()).getScene();
+	    try {
+	      // Load a new parent node
+	      root = new FXMLLoader(App.class.getResource("/fxml/menu.fxml")).load();
+	    } catch (IOException e) {
+	      e.printStackTrace();
+	    }
+	    scene.setRoot(root);
+	}
 }

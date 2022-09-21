@@ -35,5 +35,6 @@
             </HBox>
          </children>
       </VBox>
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#onReturn" text="Return" />
    </children>
 </Pane>
