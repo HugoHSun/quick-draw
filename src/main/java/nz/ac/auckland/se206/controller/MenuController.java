@@ -1,7 +1,11 @@
 package nz.ac.auckland.se206.controller;
 
+import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.opencsv.exceptions.CsvException;
 
@@ -14,7 +18,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import nz.ac.auckland.se206.App;
-import nz.ac.auckland.se206.user.UserManager;
+import nz.ac.auckland.se206.user.User;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 
 /**
  * This is the controller for menu, more features are to be added
@@ -29,11 +37,21 @@ public class MenuController {
   @FXML private Label currentUser;
   
   public void initialize() throws URISyntaxException, IOException, CsvException {
-//	  UserManager users = new UserManager();
-	  String user123[] = {"Samuel", "Chan", "Yoo","That's me"};
-	  userChoiceBox.getItems().addAll(user123);
-	  userChoiceBox.setValue(user123[0]);
-	  currentUser.setText(user123[0]);
+	  Gson gson = new GsonBuilder().setPrettyPrinting().create();
+	  // construct Type that tells Gson about the generic type
+	  Type userListType = new TypeToken<List<User>>(){}.getType();
+	  FileReader fr = new FileReader("user.json");
+	  List<User> users = gson.fromJson(fr, userListType);
+	  fr.close();
+	  
+	  List<String> userNames = new ArrayList<String>();
+	  for (User user : users) {
+		  userNames.add(user.getName());
+	  }
+	  
+	  userChoiceBox.getItems().addAll(userNames);
+	  userChoiceBox.setValue(userNames.get(0));
+	  currentUser.setText(userNames.get(0));
 	  userChoiceBox.setOnAction(this::setUserLabel);
   }
 
@@ -51,13 +69,19 @@ public class MenuController {
   }
   
   @FXML
-  private void onSwitchUser(ActionEvent event) {
-	  System.out.println("Hi");
+  private void onAddUser(ActionEvent event) throws IOException {
+	  scene = ((Node) event.getSource()).getScene();
+	    try {
+	      // Load a new parent node
+	      root = new FXMLLoader(App.class.getResource("/fxml/newuser.fxml")).load();
+	    } catch (IOException e) {
+	      e.printStackTrace();
+	    }
+	    scene.setRoot(root);
   }
   
   public void setUserLabel(ActionEvent event) {
 	  String current = userChoiceBox.getValue();
 	  currentUser.setText(current);
-  }
-  
+  } 
  }
