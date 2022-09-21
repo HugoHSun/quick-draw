@@ -191,7 +191,7 @@ public class CanvasController {
     canvas.setOnMouseDragged(
         e -> {
           // Brush size (you can change this, it should not be too small or too large).
-          final double size = 7;
+          final double size = 9;
 
           final double x = e.getX() - size / 2;
           final double y = e.getY() - size / 2;
@@ -235,6 +235,13 @@ public class CanvasController {
 
           // This method will be called every second by the timer thread
           public void run() {
+            // When a ending condition of the game is met
+            if (remainingTime == 0 || isWon) {
+              timer.cancel();
+              endGame();
+              return;
+            }
+
             // Ask the GUI thread to update time and predictions display.
             Platform.runLater(
                 () -> {
@@ -254,12 +261,6 @@ public class CanvasController {
 
             // Remind the user when there are 10 seconds left
             remindTimeLeft(remainingTime, 10);
-
-            // When a ending condition of the game is met
-            if (remainingTime == 0 || isWon) {
-              timer.cancel();
-              endGame();
-            }
 
             remainingTime--;
           }
@@ -374,10 +375,7 @@ public class CanvasController {
 
     for (final Classifications.Classification classification : currentPredictions) {
       // Build the predictions string to be displayed
-      sb.append("TOP ")
-          .append(predictionRank)
-          .append(" : ")
-          .append(classification.getClassName().replaceAll("_", " "))
+      sb.append(classification.getClassName().replaceAll("_", " "))
           .append(" : ")
           .append(String.format("%d%%", Math.round(100 * classification.getProbability())))
           .append(System.lineSeparator());
