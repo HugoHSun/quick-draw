@@ -38,7 +38,7 @@ public class App extends Application {
   public void start(final Stage stage) throws IOException {
     // User cannot resize the window
     stage.setResizable(false);
-    final Scene scene = new Scene(loadFxml("menu"), 750, 480);
+    final Scene scene = new Scene(loadFxml("menu"), 780, 500);
 
     stage.setScene(scene);
     stage.show();
