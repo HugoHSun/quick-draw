@@ -45,11 +45,19 @@ public class NewUserController {
 	        users = new ArrayList<>();
 	    }
 	    // Add new item to the list
-	    users.add(new User(newUsername.getText()));
-	    // No append replace the whole file
-	    FileWriter fw  = new FileWriter("user.json", false);
-	    gson.toJson(users, fw);
-	    fw.close();  
+	    
+	    List<String> userNames = new ArrayList<String>();
+		for (User user : users) {
+		  userNames.add(user.getName());
+		}
+		  
+	    if (!userNames.contains(newUsername.getText())) {
+	    	users.add(new User(newUsername.getText()));
+		    // No append replace the whole file
+		    FileWriter fw  = new FileWriter("user.json", false);
+		    gson.toJson(users, fw);
+		    fw.close();  
+	    }
 	
 		scene = ((Node) event.getSource()).getScene();
 	    try {

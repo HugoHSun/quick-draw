@@ -1,6 +1,9 @@
 package nz.ac.auckland.se206.controller;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.URISyntaxException;
@@ -33,6 +36,8 @@ public class MenuController {
 
   private Scene scene;
   private Parent root;
+  private List<User> users;
+  private List<String> userNames;
   @FXML private ChoiceBox<String> userChoiceBox;
   @FXML private Label currentUser;
   
@@ -40,18 +45,23 @@ public class MenuController {
 	  Gson gson = new GsonBuilder().setPrettyPrinting().create();
 	  // construct Type that tells Gson about the generic type
 	  Type userListType = new TypeToken<List<User>>(){}.getType();
+	  File f = new File("user.json");
+	  if (!f.exists()) {
+	    FileWriter fw = new FileWriter("user.json");
+	    fw.close();
+	  }
 	  FileReader fr = new FileReader("user.json");
-	  List<User> users = gson.fromJson(fr, userListType);
+	  users = gson.fromJson(fr, userListType);
 	  fr.close();
 	  
-	  List<String> userNames = new ArrayList<String>();
+	  userNames = new ArrayList<String>();
 	  for (User user : users) {
 		  userNames.add(user.getName());
 	  }
 	  
 	  userChoiceBox.getItems().addAll(userNames);
-	  userChoiceBox.setValue(userNames.get(0));
-	  currentUser.setText(userNames.get(0));
+	  userChoiceBox.setValue(null);
+	  currentUser.setText(null);
 	  userChoiceBox.setOnAction(this::setUserLabel);
   }
 
@@ -78,6 +88,29 @@ public class MenuController {
 	      e.printStackTrace();
 	    }
 	    scene.setRoot(root);
+  }
+  
+  @FXML
+  private void onDeleteUser(ActionEvent event) throws IOException {
+	  if (userNames.size() == 0) {
+		  return;
+	  }
+	  
+	  Gson gson = new GsonBuilder().setPrettyPrinting().create();
+	  // construct Type that tells Gson about the generic type
+	  Type userListType = new TypeToken<List<User>>(){}.getType();
+	  users.remove(userNames.indexOf(currentUser.getText()));
+	  userNames.remove(currentUser.getText());
+	  for (User user : users) {
+		  System.out.println(user);
+	  }
+	  
+	  FileWriter fw = new FileWriter("user.json", false);
+	  gson.toJson(users, fw);
+	  fw.close();
+	  userChoiceBox.getItems().clear();
+	  userChoiceBox.getItems().addAll(userNames);
+	  userChoiceBox.setValue(userNames.get(0));
   }
   
   public void setUserLabel(ActionEvent event) {
