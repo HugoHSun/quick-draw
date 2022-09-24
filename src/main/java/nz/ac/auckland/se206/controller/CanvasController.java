@@ -4,6 +4,9 @@ import ai.djl.ModelException;
 import ai.djl.modality.Classifications;
 import ai.djl.modality.Classifications.Classification;
 import ai.djl.translate.TranslateException;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -38,19 +41,14 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.stage.Window;
 import javax.imageio.ImageIO;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.CategorySelector;
 import nz.ac.auckland.se206.ml.DoodlePrediction;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 import nz.ac.auckland.se206.user.User;
-import nz.ac.auckland.se206.controller.MenuController;
 
 /**
  * This is the controller of the canvas. You are free to modify this class and the corresponding
@@ -99,6 +97,7 @@ public class CanvasController {
   // mouse coordinates
   private double currentX;
   private double currentY;
+  private String category;
 
   /**
    * JavaFX calls this method once the GUI elements are loaded. In our case we create a listener for
@@ -109,7 +108,7 @@ public class CanvasController {
    */
   public void initialize() throws ModelException, IOException {
     // Randomly chose a category and update the categoryLabel to display it
-    String category = new CategorySelector().getRandomCategory(CategorySelector.Difficulty.E);
+    category = new CategorySelector().getRandomCategory(CategorySelector.Difficulty.E);
     categoryLabel.setText(category);
     Thread voiceOver =
         new Thread(
@@ -249,7 +248,7 @@ public class CanvasController {
             // When a ending condition of the game is met
             if (remainingTime == 0 || isWon) {
               timer.cancel();
-              endGame();
+              endGame(remainingTime);
               return;
             }
 
@@ -272,12 +271,7 @@ public class CanvasController {
 
             // Remind the user when there are 10 seconds left
             remindTimeLeft(remainingTime, 10);
-            
-            // When a ending condition of the game is met
-            if (remainingTime == 0 || isWon) {
-              timer.cancel();
-              endGame(remainingTime);
-            }
+
             remainingTime--;
           }
         },
@@ -300,6 +294,16 @@ public class CanvasController {
     } catch (IOException e) {
       e.printStackTrace();
     }
+  }
+
+  @FXML
+  private void onStatistics(ActionEvent event) throws IOException {
+    Parent root = FXMLLoader.load(getClass().getResource("/fxml/stats.fxml"));
+    Stage stage = new Stage();
+    stage.setTitle("Statistics");
+    stage.setResizable(false);
+    stage.setScene(new Scene(root));
+    stage.show();
   }
 
   /**
@@ -443,46 +447,46 @@ public class CanvasController {
       Platform.runLater(() -> winLostLabel.setText("YOU WON!!!"));
       textToSpeech.speak("Congratulations, you won!");
       try {
-		recordResult(MenuController.currentlyActiveUser, true, 60-remainingTime);
-	} catch (IOException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
+        recordResult(MenuController.currentlyActiveUser, true, 60 - remainingTime);
+      } catch (IOException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
     } else {
       Platform.runLater(() -> winLostLabel.setText("YOU LOST!!!"));
       textToSpeech.speak("Sorry you lost, try again next time.");
       try {
-  		recordResult(MenuController.currentlyActiveUser, false, 60-remainingTime);
-  	} catch (IOException e) {
-  		// TODO Auto-generated catch block
-  		e.printStackTrace();
-    }
+        recordResult(MenuController.currentlyActiveUser, false, 60 - remainingTime);
+      } catch (IOException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
     }
   }
-  
+
   private void recordResult(String userName, boolean won, int timeTaken) throws IOException {
-	  Gson gson = new GsonBuilder().setPrettyPrinting().create();
-	    // construct Type that tells Gson about the generic type
-	    Type userListType = new TypeToken<List<User>>(){}.getType();
-	    FileReader fr = new FileReader("user.json");
-	    List<User> users = gson.fromJson(fr, userListType);
-	    fr.close();    
-	    List<String> userNames = new ArrayList<String>();
-		for (User user : users) {
-		  userNames.add(user.getName());
-		}
-		
-		if (won) {
-			users.get(userNames.indexOf(userName)).won();
-		}
-		else {
-			users.get(userNames.indexOf(userName)).lost();
-		}
-		
-		users.get(userNames.indexOf(userName)).updateFastestWon(timeTaken);
-		
-		FileWriter fw = new FileWriter("user.json", false);
-		gson.toJson(users,fw);
-		fw.close();
+    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    // construct Type that tells Gson about the generic type
+    Type userListType = new TypeToken<List<User>>() {}.getType();
+    FileReader fr = new FileReader("user.json");
+    List<User> users = gson.fromJson(fr, userListType);
+    fr.close();
+    List<String> userNames = new ArrayList<String>();
+    for (User user : users) {
+      userNames.add(user.getName());
+    }
+
+    if (won) {
+      users.get(userNames.indexOf(userName)).won();
+      users.get(userNames.indexOf(userName)).updateFastestWon(timeTaken);
+    } else {
+      users.get(userNames.indexOf(userName)).lost();
+    }
+
+    users.get(userNames.indexOf(userName)).newWord(category);
+
+    FileWriter fw = new FileWriter("user.json", false);
+    gson.toJson(users, fw);
+    fw.close();
   }
 }

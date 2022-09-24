@@ -1,20 +1,26 @@
 [
   {
-    "name": "Samuel Yoo",
+    "name": "Samuel Yo0",
+    "gamesWon": 4,
+    "gamesLost": 3,
+    "fastestWon": 6,
+    "wordsEncountered": [
+      "leaf",
+      "ladder",
+      "bicycle",
+      "wheel",
+      "windmill",
+      "apple",
+      "axe"
+    ]
+  },
+  {
+    "name": "John Lee",
     "gamesWon": 1,
     "gamesLost": 0,
-    "fastestWon": 9
-  },
-  {
-    "name": "Hugo Sun",
-    "gamesWon": 0,
-    "gamesLost": 0,
-    "fastestWon": 61
-  },
-  {
-    "name": "Matthew Wai",
-    "gamesWon": 0,
-    "gamesLost": 0,
-    "fastestWon": 61
+    "fastestWon": 35,
+    "wordsEncountered": [
+      "sword"
+    ]
   }
 ]
