@@ -41,6 +41,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.stage.Window;
 import javax.imageio.ImageIO;
 import nz.ac.auckland.se206.App;
@@ -96,6 +97,7 @@ public class CanvasController {
   // mouse coordinates
   private double currentX;
   private double currentY;
+  private String category;
 
   /**
    * JavaFX calls this method once the GUI elements are loaded. In our case we create a listener for
@@ -106,7 +108,7 @@ public class CanvasController {
    */
   public void initialize() throws ModelException, IOException {
     // Randomly chose a category and update the categoryLabel to display it
-    String category = new CategorySelector().getRandomCategory(CategorySelector.Difficulty.E);
+    category = new CategorySelector().getRandomCategory(CategorySelector.Difficulty.E);
     categoryLabel.setText(category);
     Thread voiceOver =
         new Thread(
@@ -294,6 +296,16 @@ public class CanvasController {
     }
   }
 
+  @FXML
+  private void onStatistics(ActionEvent event) throws IOException {
+    Parent root = FXMLLoader.load(getClass().getResource("/fxml/stats.fxml"));
+    Stage stage = new Stage();
+    stage.setTitle("Statistics");
+    stage.setResizable(false);
+    stage.setScene(new Scene(root));
+    stage.show();
+  }
+
   /**
    * Save the current snapshot on a bitmap file.
    *
@@ -466,11 +478,12 @@ public class CanvasController {
 
     if (won) {
       users.get(userNames.indexOf(userName)).won();
+      users.get(userNames.indexOf(userName)).updateFastestWon(timeTaken);
     } else {
       users.get(userNames.indexOf(userName)).lost();
     }
 
-    users.get(userNames.indexOf(userName)).updateFastestWon(timeTaken);
+    users.get(userNames.indexOf(userName)).newWord(category);
 
     FileWriter fw = new FileWriter("user.json", false);
     gson.toJson(users, fw);
