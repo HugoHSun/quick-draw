@@ -9,6 +9,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.awt.image.PixelGrabber;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -91,7 +92,11 @@ public class CanvasController {
 
   @FXML private Button saveDrawingButton;
 
+  private boolean isDrawn = false;
+
   private boolean isWon = false;
+
+  private String predictionDisplay = "Not Applicable - The canvas is empty!";
 
   // mouse coordinates
   private double currentX;
@@ -256,11 +261,11 @@ public class CanvasController {
                   // Time display
                   timerLabel.setText(remainingTime.toString());
 
-                  // Get current predictions and update the display
+                  // Update current predictions
                   try {
                     List<Classification> currentPredictions =
                         model.getPredictions(getCurrentSnapshot(), 10);
-                    String predictionDisplay = getPredictionDisplay(currentPredictions);
+                    predictionDisplay = getPredictionDisplay(currentPredictions);
                     predictionLabel.setText(predictionDisplay);
                   } catch (TranslateException e) {
                     e.printStackTrace();
@@ -352,10 +357,14 @@ public class CanvasController {
   private BufferedImage getCurrentSnapshot() {
     final Image snapshot = canvas.snapshot(null, null);
     final BufferedImage image = SwingFXUtils.fromFXImage(snapshot, null);
+    final int width = image.getWidth();
+    final int height = image.getHeight();
+
+    checkEmptyCanvas(image, width, height);
 
     // Convert into a binary image.
     final BufferedImage imageBinary =
-        new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_BYTE_BINARY);
+        new BufferedImage(width, height, BufferedImage.TYPE_BYTE_BINARY);
 
     final Graphics2D graphics = imageBinary.createGraphics();
 
@@ -365,6 +374,25 @@ public class CanvasController {
     graphics.dispose();
 
     return imageBinary;
+  }
+
+  private void checkEmptyCanvas(BufferedImage image, int width, int height) {
+    isDrawn = false;
+    int[] pixels = new int[width * height];
+    PixelGrabber pg = new PixelGrabber(image, 0, 0, width, height, pixels, 0, width);
+    try {
+      pg.grabPixels();
+    } catch (InterruptedException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    for (int pixel : pixels) {
+      java.awt.Color color = new java.awt.Color(pixel);
+      if (color.getAlpha() == 0 || color.getRGB() != java.awt.Color.WHITE.getRGB()) {
+        isDrawn = true;
+        break;
+      }
+    }
   }
 
   /**
@@ -377,6 +405,10 @@ public class CanvasController {
    * @return a string containing the top 10 predictions
    */
   private String getPredictionDisplay(List<Classification> currentPredictions) {
+    if (!isDrawn) {
+      return "Not Applicable - The canvas is empty!";
+    }
+
     // Build the string to display the top ten predictions
     final StringBuilder sb = new StringBuilder();
     int predictionRank = 1;
