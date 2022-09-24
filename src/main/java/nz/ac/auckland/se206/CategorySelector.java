@@ -1,15 +1,21 @@
 package nz.ac.auckland.se206;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import nz.ac.auckland.se206.controller.MenuController;
+import nz.ac.auckland.se206.user.User;
 
 /**
  * This class deals with reading csv files and choosing categories randomly
@@ -73,6 +79,23 @@ public class CategorySelector {
           categories.add(line[0]);
         }
       }
+    }
+
+    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    // construct Type that tells Gson about the generic type
+    Type userListType = new TypeToken<List<User>>() {}.getType();
+    FileReader fr = new FileReader("user.json");
+    List<User> users = gson.fromJson(fr, userListType);
+    fr.close();
+    List<String> userNames = new ArrayList<String>();
+    for (User user : users) {
+      userNames.add(user.getName());
+    }
+
+    List<String> words =
+        users.get(userNames.indexOf(MenuController.currentlyActiveUser)).getWordsEncountered();
+    if (words.size() < categories.size()) {
+      categories.removeAll(words);
     }
 
     return categories;
