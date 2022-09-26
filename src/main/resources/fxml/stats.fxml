@@ -6,12 +6,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/18" fx:controller="nz.ac.auckland.se206.controller.StatsController">
+<AnchorPane prefHeight="340.0" prefWidth="498.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controller.StatsController">
    <children>
-      <VBox minHeight="200.0" minWidth="290.0" prefHeight="200.0" prefWidth="290.0">
+      <VBox layoutX="-2.0" minHeight="200.0" minWidth="249.0" prefHeight="340.0" prefWidth="498.0">
          <children>
-            <Label alignment="CENTER" prefHeight="40.0" prefWidth="290.0" text="Statistics">
+            <Label alignment="CENTER" prefHeight="49.0" prefWidth="497.0" text="Statistics">
                <font>
                   <Font size="33.0" />
                </font>
@@ -19,9 +18,9 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </Label>
-            <Label fx:id="statLabel" alignment="TOP_LEFT" minHeight="131.0" minWidth="200.0" prefHeight="131.0" prefWidth="270.0">
+            <Label fx:id="statLabel" alignment="TOP_LEFT" minHeight="126.0" minWidth="200.0" prefHeight="211.0" prefWidth="408.0">
                <VBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                  <Insets bottom="10.0" left="50.0" right="10.0" top="30.0" />
                </VBox.margin>
             </Label>
          </children>

@@ -76,6 +76,8 @@ public class User {
         + "\nWin Rate : "
         + winRate
         + "%\nFastest time to victory : "
-        + fastestTime;
+        + fastestTime
+        + "%\nWords Encountered : "
+        + wordsEncountered;
   }
 }
