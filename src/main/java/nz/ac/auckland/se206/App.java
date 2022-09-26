@@ -1,6 +1,8 @@
 package nz.ac.auckland.se206;
 
+import com.opencsv.exceptions.CsvException;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -41,6 +43,14 @@ public class App extends Application {
     // User cannot resize the window
     stage.setResizable(false);
     stage.setTitle("Quick Draw! - SE206 Edition");
+
+    // Initialize the CategorySelector
+    try {
+      CategorySelector.loadCategories();
+    } catch (IOException | CsvException | URISyntaxException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
 
     SceneManager.addUi(SceneManager.AppUi.MAIN_MENU, loadFxml("menu"));
     final Scene scene = new Scene(SceneManager.getUi(AppUi.MAIN_MENU), 780, 500);

@@ -108,8 +108,8 @@ public class CanvasController {
    * @throws IOException If the model cannot be found on the file system.
    */
   public void initialize() throws ModelException, IOException {
-    // Randomly chose a category and update the categoryLabel to display it
-    category = new CategorySelector().getRandomCategory(CategorySelector.Difficulty.E);
+    // Randomly chose an easy category and display it
+    category = CategorySelector.getRandomCategory(CategorySelector.Difficulty.E);
     categoryLabel.setText(category);
     Thread voiceOver =
         new Thread(

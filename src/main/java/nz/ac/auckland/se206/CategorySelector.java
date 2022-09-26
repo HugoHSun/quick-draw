@@ -12,6 +12,7 @@ import java.lang.reflect.Type;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import nz.ac.auckland.se206.controller.MenuController;
@@ -30,22 +31,68 @@ public class CategorySelector {
     H;
   }
 
+  private static HashMap<Difficulty, List<String>> categoryMap =
+      new HashMap<Difficulty, List<String>>();
+
+  /**
+   * This method reads a csv file that contains all the categories and map them according to its
+   * difficulty.
+   *
+   * @throws IOException
+   * @throws CsvException
+   * @throws URISyntaxException
+   */
+  public static void loadCategories() throws IOException, CsvException, URISyntaxException {
+    categoryMap.put(Difficulty.E, new ArrayList<String>());
+    categoryMap.put(Difficulty.M, new ArrayList<String>());
+    categoryMap.put(Difficulty.H, new ArrayList<String>());
+
+    // Get all the content from the csv file
+    File fileName =
+        new File(CategorySelector.class.getResource("/category_difficulty.csv").toURI());
+    try (var fr = new FileReader(fileName, StandardCharsets.UTF_8);
+        var reader = new CSVReader(fr)) {
+      List<String[]> lines = reader.readAll();
+      // line[0] stores the category name, line[1] stores the category difficulty
+      // Map each category to the categoryMap according to its difficulty
+      for (String[] line : lines) {
+        switch (line[1]) {
+          case "E":
+            categoryMap.get(Difficulty.E).add(line[0]);
+            break;
+
+          case "M":
+            categoryMap.get(Difficulty.M).add(line[0]);
+            break;
+
+          case "H":
+            categoryMap.get(Difficulty.H).add(line[0]);
+            break;
+
+          default:
+            System.out.println("The diffculty is not found!");
+            break;
+        }
+      }
+    }
+  }
+
   /**
    * This method randomly chooses a category with the chosen difficulty and return the name as a
-   * string
+   * string (Note: only the categories that the player has not encountered will be chosen)
    *
    * @param dif the difficulty of categories
-   * @return a random category with the chose difficulty
+   * @return a random category with the chosen difficulty
    */
-  public String getRandomCategory(Difficulty dif) {
+  public static String getRandomCategory(Difficulty dif) {
     String output = null;
 
     try {
+      List<String> unplayedCategories = getUnplayedCategories(dif);
       // Generating a random index for retrieving element
-      List<String> categories = getCategories(dif);
-      int randomIndex = new Random().nextInt(categories.size());
-      output = categories.get(randomIndex);
-    } catch (IOException | CsvException | URISyntaxException e) {
+      int randomIndex = new Random().nextInt(unplayedCategories.size());
+      output = unplayedCategories.get(randomIndex);
+    } catch (IOException e) {
       e.printStackTrace();
     }
 
@@ -53,33 +100,14 @@ public class CategorySelector {
   }
 
   /**
-   * This is a helper method that reads a csv file that contains all the categories and its
-   * corresponding difficulty. Then returns all the categories with the chosen difficulty.
+   * This method returns all the unplayed, specific difficulty categories by the player
    *
    * @param dif the difficulty of categories
-   * @return an ArrayList of Strings that contains all the categories of the chosen difficulty
+   * @return unplayed, specific difficulty categories by the player
    * @throws IOException
-   * @throws CsvException
-   * @throws URISyntaxException
    */
-  private List<String> getCategories(Difficulty dif)
-      throws IOException, CsvException, URISyntaxException {
-    String diffculty = dif.toString();
-    List<String> categories = new ArrayList<String>();
-
-    // Read all the content in the file
-    File fileName =
-        new File(CategorySelector.class.getResource("/category_difficulty.csv").toURI());
-    try (var fr = new FileReader(fileName, StandardCharsets.UTF_8);
-        var reader = new CSVReader(fr)) {
-      List<String[]> lines = reader.readAll();
-      // Add categories with the chosen difficulty to the output
-      for (String[] line : lines) {
-        if (line[1].equals(diffculty)) {
-          categories.add(line[0]);
-        }
-      }
-    }
+  private static List<String> getUnplayedCategories(Difficulty dif) throws IOException {
+    List<String> categories = categoryMap.get(dif);
 
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
     // construct Type that tells Gson about the generic type
@@ -92,6 +120,8 @@ public class CategorySelector {
       userNames.add(user.getName());
     }
 
+    // Remove all the categories that have been played by the current user (except
+    // when the user has played all the categories)
     List<String> words =
         users.get(userNames.indexOf(MenuController.currentlyActiveUser)).getWordsEncountered();
     if (words.size() < categories.size()) {
