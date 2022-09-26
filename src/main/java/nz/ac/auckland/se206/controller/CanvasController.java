@@ -9,6 +9,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.awt.image.PixelGrabber;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -31,6 +32,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToolBar;
@@ -66,10 +69,6 @@ public class CanvasController {
 
   @FXML private Canvas canvas;
 
-  private GraphicsContext graphic;
-
-  private DoodlePrediction model;
-
   @FXML private Label categoryLabel;
 
   @FXML private HBox countdownHorizontalBox;
@@ -88,9 +87,13 @@ public class CanvasController {
 
   @FXML private Label winLostLabel;
 
-  @FXML private Button newGameButton;
+  @FXML private Button newRoundButton;
 
   @FXML private Button saveDrawingButton;
+
+  private GraphicsContext graphic;
+
+  private DoodlePrediction model;
 
   private boolean isWon = false;
 
@@ -107,8 +110,8 @@ public class CanvasController {
    * @throws IOException If the model cannot be found on the file system.
    */
   public void initialize() throws ModelException, IOException {
-    // Randomly chose a category and update the categoryLabel to display it
-    category = new CategorySelector().getRandomCategory(CategorySelector.Difficulty.E);
+    // Randomly chose an easy category and display it
+    category = CategorySelector.getRandomCategory(CategorySelector.Difficulty.E);
     categoryLabel.setText(category);
     Thread voiceOver =
         new Thread(
@@ -157,7 +160,6 @@ public class CanvasController {
   /** This method is called when the "Pen" button is presses */
   @FXML
   private void onPen() {
-    // Setting the buttons
     penButton.setDisable(true);
     eraserButton.setDisable(false);
     // Change the cursor icon to eraser
@@ -189,7 +191,6 @@ public class CanvasController {
   /** This method is called when the "Eraser" button is pressed */
   @FXML
   private void onErase() {
-    // Setting the buttons
     penButton.setDisable(false);
     eraserButton.setDisable(true);
     // Change the cursor to eraser
@@ -223,30 +224,30 @@ public class CanvasController {
   @FXML
   private void onClear() {
     graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-    // Change to pen after clearing canvas
     onPen();
   }
 
   /** This method is called when the user click on "Start drawing" button */
   @FXML
   private void onStartDrawing() {
-    // Turn on the canvas and change the buttons
+    // Turn on the canvas and change the start button to pen, eraser and clear
     canvas.setDisable(false);
     startDrawingButton.setVisible(false);
     toolBox.setVisible(true);
 
-    // Create a timer thread running in the background that counts down from 60 to
-    // 0, and ask GUI thread to update time and predictions display every second
+    // Create a background timer thread that counts down and ask GUI thread to update time and
+    // predictions display every second
     Timer timer = new Timer();
     timer.scheduleAtFixedRate(
         new TimerTask() {
-          // The remaining time in seconds
-          Integer remainingTime = 60;
+          // In seconds
+          private Integer remainingTime = 60;
 
-          // This method will be called every second by the timer thread
+          // First time called after 1 second delay, then called every second
           public void run() {
+            remainingTime--;
             // When a ending condition of the game is met
-            if (remainingTime == 0 || isWon) {
+            if (isWon || remainingTime == 0) {
               timer.cancel();
               endGame(remainingTime);
               return;
@@ -258,21 +259,22 @@ public class CanvasController {
                   // Time display
                   timerLabel.setText(remainingTime.toString());
 
-                  // Get current predictions and update the display
-                  try {
-                    List<Classification> currentPredictions =
-                        model.getPredictions(getCurrentSnapshot(), 10);
-                    String predictionDisplay = getPredictionDisplay(currentPredictions);
-                    predictionLabel.setText(predictionDisplay);
-                  } catch (TranslateException e) {
-                    e.printStackTrace();
+                  // Update current predictions
+                  if (checkEmptyCanvas()) {
+                    predictionLabel.setText("EMPTY CANVAS!");
+                  } else {
+                    try {
+                      List<Classification> currentPredictions =
+                          model.getPredictions(getCurrentSnapshot(), 10);
+                      predictionLabel.setText(getPredictionDisplay(currentPredictions));
+                    } catch (TranslateException e) {
+                      e.printStackTrace();
+                    }
                   }
                 });
 
             // Remind the user when there are 10 seconds left
             remindTimeLeft(remainingTime, 10);
-
-            remainingTime--;
           }
         },
         1000,
@@ -280,12 +282,181 @@ public class CanvasController {
   }
 
   /**
-   * This method is called when "Start a new game" button is pressed
+   * This method checks whether the canvas is empty and returns a boolean
+   *
+   * @return true if the canvas is empty, false otherwise
+   */
+  private boolean checkEmptyCanvas() {
+    // Get the current canvas as an image
+    final Image snapshot = canvas.snapshot(null, null);
+    final BufferedImage image = SwingFXUtils.fromFXImage(snapshot, null);
+    final int width = image.getWidth();
+    final int height = image.getHeight();
+
+    // Grab all the pixels
+    int[] pixels = new int[width * height];
+    PixelGrabber pg = new PixelGrabber(image, 0, 0, width, height, pixels, 0, width);
+    try {
+      pg.grabPixels();
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+
+    // Check each pixel to see if they are all white
+    for (int pixel : pixels) {
+      java.awt.Color color = new java.awt.Color(pixel);
+      if (color.getAlpha() == 0 || color.getRGB() != java.awt.Color.WHITE.getRGB()) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  /**
+   * This is a helper method that builds a string of the current top 10 predictions, which can be
+   * displayed in a label. Note that it also calls checkWon method to check whether the player has
+   * won (the top 3 predictions contain the category to be drawn).
+   *
+   * @param currentPredictions a list of of type Classification, which is the category of AI
+   *     predictions
+   * @return a string containing the top 10 predictions
+   */
+  private String getPredictionDisplay(List<Classification> currentPredictions) {
+    // Build the string to display the top ten predictions
+    final StringBuilder sb = new StringBuilder();
+    int predictionRank = 1;
+
+    for (final Classifications.Classification classification : currentPredictions) {
+      // Build the predictions string to be displayed
+      sb.append(classification.getClassName().replaceAll("_", " "))
+          .append(" : ")
+          .append(String.format("%d%%", Math.round(100 * classification.getProbability())))
+          .append(System.lineSeparator());
+
+      checkWon(classification, predictionRank);
+
+      predictionRank++;
+    }
+
+    return sb.toString();
+  }
+
+  /**
+   * This method checks whether the winning condition is met (in the top 3 AI predictions)
+   *
+   * @param classification the category of prediction
+   * @param predictionRank the rank of prediction
+   */
+  private void checkWon(Classification classification, int predictionRank) {
+    // The player wins if top 3 AI predictions include the category
+    if (predictionRank <= 3
+        && classification.getClassName().replaceAll("_", " ").equals(categoryLabel.getText())) {
+      isWon = true;
+    }
+  }
+
+  /**
+   * This is a helper method which reminds user of the remaining time by text to speech
+   *
+   * @param currentRemainingTime the remaining time in seconds
+   * @param reminderTime the time to remind the user
+   */
+  private void remindTimeLeft(int currentRemainingTime, int reminderTime) {
+    if (currentRemainingTime == (reminderTime + 1)) {
+      Thread timeReminder =
+          new Thread(
+              () -> new TextToSpeech().speak(Integer.toString(reminderTime) + " seconds left"));
+      timeReminder.start();
+    }
+  }
+
+  /**
+   * This is a helper method that is called when the game ends
+   *
+   * @param remainingTime the time left when the game is ended
+   */
+  private void endGame(int remainingTime) {
+    // Updating the GUI components
+    toolBox.setVisible(false);
+    canvas.setDisable(true);
+    canvas.setOnMouseDragged(null);
+    saveDrawingButton.setDisable(false);
+    newRoundButton.setDisable(false);
+
+    // Change the background of count down to red
+    Platform.runLater(
+        () -> {
+          timerLabel.setText(String.valueOf(remainingTime));
+          countdownHorizontalBox.setBackground(
+              new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
+        });
+
+    TextToSpeech textToSpeech = new TextToSpeech();
+    if (isWon) {
+      Platform.runLater(() -> winLostLabel.setText("YOU WON!!!"));
+      textToSpeech.speak("Congratulations, you won!");
+      try {
+        // Record the result to the current user
+        recordResult(MenuController.currentlyActiveUser, isWon, 60 - remainingTime);
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+      // The player has lost
+    } else {
+      Platform.runLater(() -> winLostLabel.setText("YOU LOST!!!"));
+      textToSpeech.speak("Sorry you lost, try again next time.");
+      try {
+        recordResult(MenuController.currentlyActiveUser, isWon, 60 - remainingTime);
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    }
+  }
+
+  /**
+   * This method records the game result and the category played of the current user
+   *
+   * @param userName the name of the user
+   * @param isWon whether the user won
+   * @param timeTaken the time taken for the game to end
+   * @throws IOException
+   */
+  private void recordResult(String userName, boolean isWon, int timeTaken) throws IOException {
+    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    // construct Type that tells Gson about the generic type
+    Type userListType = new TypeToken<List<User>>() {}.getType();
+    FileReader fr = new FileReader("user.json");
+    List<User> users = gson.fromJson(fr, userListType);
+    fr.close();
+    List<String> userNames = new ArrayList<String>();
+    for (User user : users) {
+      userNames.add(user.getName());
+    }
+
+    // Record the game result
+    if (isWon) {
+      users.get(userNames.indexOf(userName)).won();
+      users.get(userNames.indexOf(userName)).updateFastestWon(timeTaken);
+    } else {
+      users.get(userNames.indexOf(userName)).lost();
+    }
+
+    // Record the category played
+    users.get(userNames.indexOf(userName)).newWord(category);
+
+    FileWriter fw = new FileWriter("user.json", false);
+    gson.toJson(users, fw);
+    fw.close();
+  }
+
+  /**
+   * This method is called when "Play another round" button is pressed
    *
    * @param event the event of clicking the button
    */
   @FXML
-  private void onNewGame(ActionEvent event) {
+  private void onPlayNewRound(ActionEvent event) {
     Scene scene = ((Node) event.getSource()).getScene();
     try {
       // Load a new canvas FXML file which initializes everything
@@ -296,9 +467,17 @@ public class CanvasController {
     }
   }
 
+  /**
+   * This method is called when the "Statistics" button is pressed, it shows the statistics of the
+   * current player in a new window
+   *
+   * @param event the event of clicking this button
+   * @throws IOException
+   */
   @FXML
-  private void onStatistics(ActionEvent event) throws IOException {
+  private void onSeeStatistics(ActionEvent event) throws IOException {
     Parent root = FXMLLoader.load(getClass().getResource("/fxml/stats.fxml"));
+    // Display the statistics of the current user in a new window
     Stage stage = new Stage();
     stage.setTitle("Statistics");
     stage.setResizable(false);
@@ -307,53 +486,52 @@ public class CanvasController {
   }
 
   /**
-   * Save the current snapshot on a bitmap file.
+   * Save the drawing on a file when a game has ended
    *
-   * @return The file of the saved image.
+   * @param event the event of clicking "Save Your Drawing" button
+   * @throws IOException
    */
-  private File saveCurrentSnapshotOnFile() {
-    try {
-      // Open file dialog box
-      FileChooser fileChooser = new FileChooser();
-      fileChooser.setTitle("Save Drawing");
-
-      // You can change the location as you see fit.
-      final File tmpFolder = new File("tmp");
-
-      // sets initial folder to the tmpfolder
-      fileChooser.setInitialDirectory(tmpFolder);
-
-      // make a tmp folder if it doesnt exist
-      if (!tmpFolder.exists()) {
-        tmpFolder.mkdir();
-      }
-
-      // We save the image to a file in the tmp folder.
-      fileChooser.setInitialFileName("MyDrawing" + ".bmp");
-      fileChooser
-          .getExtensionFilters()
-          .addAll(
-              new FileChooser.ExtensionFilter("img", "*.bmp"),
-              new FileChooser.ExtensionFilter("img", "*.png"),
-              new FileChooser.ExtensionFilter("img", "*.jpeg"));
-      // open file dialog box
-      Window stage = canvas.getScene().getWindow();
-      File file = fileChooser.showSaveDialog(stage);
-
-      // Save the image to a file.
-      ImageIO.write(getCurrentSnapshot(), "bmp", file);
-
-      return file;
-    } catch (Exception e) {
-      System.out.println("Closed without saving drawing");
-    }
-    return null;
-  }
-
   @FXML
-  private void onSaveDrawing(ActionEvent event) throws IOException {
-    // button to save the canvas drawing file
-    saveCurrentSnapshotOnFile();
+  private void onSaveDrawing(ActionEvent event) {
+    // Open a file dialog box
+    FileChooser fileChooser = new FileChooser();
+    fileChooser.setTitle("Save Your Drawing");
+
+    // You can change the location as you see fit.
+    final File tmpFolder = new File("tmp");
+
+    // tmpfolder is the default directory
+    fileChooser.setInitialDirectory(tmpFolder);
+
+    // make a tmp folder if it doesn't exist
+    if (!tmpFolder.exists()) {
+      tmpFolder.mkdir();
+    }
+
+    // Set default name and available file extensions
+    fileChooser.setInitialFileName("MyDrawing");
+    fileChooser
+        .getExtensionFilters()
+        .addAll(
+            new FileChooser.ExtensionFilter("img", "*.bmp"),
+            new FileChooser.ExtensionFilter("img", "*.png"),
+            new FileChooser.ExtensionFilter("img", "*.jpeg"));
+
+    // open file dialog box
+    Window stage = canvas.getScene().getWindow();
+    File file = fileChooser.showSaveDialog(stage);
+
+    try {
+      // Save the image to a file and pop up a message to show if the image is saved
+      ImageIO.write(getCurrentSnapshot(), "bmp", file);
+      Alert successfulSave = new Alert(AlertType.INFORMATION);
+      successfulSave.setHeaderText("Image successfully saved");
+      successfulSave.show();
+    } catch (Exception e) {
+      Alert unsuccessfulSave = new Alert(AlertType.ERROR);
+      unsuccessfulSave.setHeaderText("Image not saved");
+      unsuccessfulSave.show();
+    }
   }
 
   /**
@@ -377,116 +555,5 @@ public class CanvasController {
     graphics.dispose();
 
     return imageBinary;
-  }
-
-  /**
-   * This is a helper method that builds a string of the current top 10 predictions, which can be
-   * displayed in a label. Note that it also checks whether the player has won (the top 3
-   * predictions contain the category to be drawn).
-   *
-   * @param currentPredictions a list of of type Classification, which is the category of AI
-   *     predictions
-   * @return a string containing the top 10 predictions
-   */
-  private String getPredictionDisplay(List<Classification> currentPredictions) {
-    // Build the string to display the top ten predictions
-    final StringBuilder sb = new StringBuilder();
-    int predictionRank = 1;
-
-    for (final Classifications.Classification classification : currentPredictions) {
-      // Build the predictions string to be displayed
-      sb.append(classification.getClassName().replaceAll("_", " "))
-          .append(" : ")
-          .append(String.format("%d%%", Math.round(100 * classification.getProbability())))
-          .append(System.lineSeparator());
-
-      // When the category to be drawn is in the top 3 predictions
-      if (classification.getClassName().replaceAll("_", " ").equals(categoryLabel.getText())
-          && predictionRank <= 3) {
-        isWon = true;
-      }
-
-      predictionRank++;
-    }
-
-    return sb.toString();
-  }
-
-  /**
-   * This is a helper method which reminds user of the remaining time by text to speech
-   *
-   * @param currentRemainingTime the remaining time in seconds
-   * @param reminderTime the time to remind the user
-   */
-  private void remindTimeLeft(int currentRemainingTime, int reminderTime) {
-    if (currentRemainingTime == (reminderTime + 1)) {
-      Thread timeReminder =
-          new Thread(
-              () -> new TextToSpeech().speak(Integer.toString(reminderTime) + " seconds left"));
-      timeReminder.start();
-    }
-  }
-
-  /** This is a helper method that is executed when a game has ended */
-  private void endGame(int remainingTime) {
-    // Setting the buttons
-    toolBox.setVisible(false);
-    canvas.setDisable(true);
-    canvas.setOnMouseDragged(null);
-    saveDrawingButton.setDisable(false);
-    newGameButton.setDisable(false);
-    // Change the background of count down to red
-    Platform.runLater(
-        () -> {
-          countdownHorizontalBox.setBackground(
-              new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
-        });
-
-    TextToSpeech textToSpeech = new TextToSpeech();
-    if (isWon) {
-      Platform.runLater(() -> winLostLabel.setText("YOU WON!!!"));
-      textToSpeech.speak("Congratulations, you won!");
-      try {
-        recordResult(MenuController.currentlyActiveUser, true, 60 - remainingTime);
-      } catch (IOException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
-    } else {
-      Platform.runLater(() -> winLostLabel.setText("YOU LOST!!!"));
-      textToSpeech.speak("Sorry you lost, try again next time.");
-      try {
-        recordResult(MenuController.currentlyActiveUser, false, 60 - remainingTime);
-      } catch (IOException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
-    }
-  }
-
-  private void recordResult(String userName, boolean won, int timeTaken) throws IOException {
-    Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    // construct Type that tells Gson about the generic type
-    Type userListType = new TypeToken<List<User>>() {}.getType();
-    FileReader fr = new FileReader("user.json");
-    List<User> users = gson.fromJson(fr, userListType);
-    fr.close();
-    List<String> userNames = new ArrayList<String>();
-    for (User user : users) {
-      userNames.add(user.getName());
-    }
-
-    if (won) {
-      users.get(userNames.indexOf(userName)).won();
-      users.get(userNames.indexOf(userName)).updateFastestWon(timeTaken);
-    } else {
-      users.get(userNames.indexOf(userName)).lost();
-    }
-
-    users.get(userNames.indexOf(userName)).newWord(category);
-
-    FileWriter fw = new FileWriter("user.json", false);
-    gson.toJson(users, fw);
-    fw.close();
   }
 }

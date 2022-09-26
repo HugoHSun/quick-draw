@@ -4,13 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class User {
+
   private String name;
+
   private int gamesWon;
+
   private int gamesLost;
+
   private int fastestWon;
+
   private List<String> wordsEncountered;
 
   public User(String name) {
+    // Default values
     this.name = name;
     this.gamesWon = 0;
     this.gamesLost = 0;
@@ -59,6 +65,7 @@ public class User {
   public String toString() {
     double winRate = 100.0 * (double) gamesWon / (gamesWon + gamesLost);
     String fastestTime = String.valueOf(fastestWon);
+    // Default
     if (fastestWon > 60) {
       fastestTime = "You have never won! :(";
     }
@@ -67,6 +74,7 @@ public class User {
       winRate = 0.0;
     }
 
+    // Return all the stats of the user as string
     return "Name : "
         + name
         + "\nGames Won : "

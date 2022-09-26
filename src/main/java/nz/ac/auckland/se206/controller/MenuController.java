@@ -30,15 +30,16 @@ import nz.ac.auckland.se206.user.User;
  */
 public class MenuController {
 
+  public static String currentlyActiveUser = null;
+
+  @FXML private ChoiceBox<String> userChoiceBox;
+
+  @FXML private Label currentUser;
+
   private Scene scene;
   private Parent root;
   private List<User> users;
   private List<String> userNames;
-
-  public static String currentlyActiveUser = null;
-
-  @FXML private ChoiceBox<String> userChoiceBox;
-  @FXML private Label currentUser;
 
   public void initialize() throws URISyntaxException, IOException, CsvException {
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -53,11 +54,13 @@ public class MenuController {
     users = gson.fromJson(fr, userListType);
     fr.close();
 
+    // MULTI PROFILE STUFF
     userNames = new ArrayList<String>();
     for (User user : users) {
       userNames.add(user.getName());
     }
 
+    // Updating the display
     userChoiceBox.getItems().addAll(userNames);
     userChoiceBox.setValue(null);
     currentUser.setText(null);
@@ -96,6 +99,7 @@ public class MenuController {
 
   @FXML
   private void onDeleteUser(ActionEvent event) throws IOException {
+    // When there are no user left
     if (userNames.size() == 0) {
       return;
     }
@@ -104,6 +108,7 @@ public class MenuController {
     users.remove(userNames.indexOf(currentUser.getText()));
     userNames.remove(currentUser.getText());
 
+    // Delete the current user
     FileWriter fw = new FileWriter("user.json", false);
     gson.toJson(users, fw);
     fw.close();
