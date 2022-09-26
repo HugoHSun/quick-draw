@@ -2,27 +2,42 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="340.0" prefWidth="498.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controller.StatsController">
+<AnchorPane prefHeight="340.0" prefWidth="471.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controller.StatsController">
    <children>
-      <VBox layoutX="-2.0" minHeight="200.0" minWidth="249.0" prefHeight="340.0" prefWidth="498.0">
+      <ImageView fitHeight="340.0" fitWidth="527.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/statsbackground.jpg" />
+         </image>
+      </ImageView>
+      <VBox minHeight="200.0" minWidth="249.0" prefHeight="340.0" prefWidth="487.0">
          <children>
             <Label alignment="CENTER" prefHeight="49.0" prefWidth="497.0" text="Statistics">
                <font>
-                  <Font size="33.0" />
+                  <Font name="System Bold" size="33.0" />
                </font>
                <VBox.margin>
-                  <Insets top="10.0" />
+                  <Insets top="20.0" />
                </VBox.margin>
             </Label>
-            <Label fx:id="statLabel" alignment="TOP_LEFT" minHeight="126.0" minWidth="200.0" prefHeight="211.0" prefWidth="408.0">
+            <Pane opacity="0.9" prefHeight="254.0" prefWidth="468.0" style="-fx-background-color: white; -fx-background-radius: 30;">
+               <children>
+                  <Label fx:id="statLabel" alignment="TOP_LEFT" layoutX="19.0" layoutY="13.0" minHeight="126.0" minWidth="200.0" prefHeight="229.0" prefWidth="430.0">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
                <VBox.margin>
-                  <Insets bottom="10.0" left="50.0" right="10.0" top="30.0" />
+                  <Insets left="10.0" right="10.0" />
                </VBox.margin>
-            </Label>
+            </Pane>
          </children>
       </VBox>
    </children>

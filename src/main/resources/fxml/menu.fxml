@@ -24,7 +24,7 @@
             <Blend />
          </effect>
       </Label>
-      <Button alignment="CENTER" layoutX="318.0" layoutY="229.0" mnemonicParsing="false" onAction="#onStartNewGame" prefHeight="43.0" prefWidth="144.0" text="Start a new game">
+      <Button id="button" alignment="CENTER" layoutX="318.0" layoutY="229.0" mnemonicParsing="false" onAction="#onStartNewGame" prefHeight="43.0" prefWidth="144.0" stylesheets="@../css/buttons.css" text="Start New Game">
          <font>
             <Font name="Segoe UI" size="15.0" />
          </font>
