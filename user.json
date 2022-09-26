@@ -22,5 +22,14 @@
     "wordsEncountered": [
       "sword"
     ]
+  },
+  {
+    "name": "Matt",
+    "gamesWon": 1,
+    "gamesLost": 0,
+    "fastestWon": 15,
+    "wordsEncountered": [
+      "door"
+    ]
   }
 ]

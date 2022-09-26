@@ -75,7 +75,9 @@ public class User {
         + gamesLost
         + "\nWin Rate : "
         + winRate
-        + "%\nFastest time to victory : "
-        + fastestTime;
+        + "%\nFastest time to victory (secs): "
+        + fastestTime
+        + "\nWords Encountered : \n"
+        + wordsEncountered;
   }
 }

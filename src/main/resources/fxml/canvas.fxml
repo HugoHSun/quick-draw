@@ -15,9 +15,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="500.0" maxWidth="780.0" minHeight="500.0" minWidth="780.0" prefHeight="500.0" prefWidth="780.0" style="-fx-background-color: lightskyblue;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controller.CanvasController">
+<AnchorPane maxHeight="500.0" maxWidth="780.0" minHeight="500.0" minWidth="780.0" prefHeight="500.0" prefWidth="780.0" style="-fx-background-color: FFD580;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controller.CanvasController">
    <children>
-      <VBox alignment="CENTER" prefHeight="480.0" prefWidth="440.0" style="-fx-background-color: LightSkyBlue;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox alignment="CENTER" prefHeight="480.0" prefWidth="440.0" style="-fx-background-color: FF8200;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
         <children>
           <Label alignment="CENTER" layoutX="124.0" layoutY="14.0" prefHeight="23.0" prefWidth="355.0" text="Please draw the following category: " textAlignment="CENTER">
             <font>
@@ -96,12 +96,12 @@
             </BorderPane>
             <StackPane prefHeight="150.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="startDrawingButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onStartDrawing" style="-fx-background-color: FFE5B4;" text="START DRAWING">
+                  <Button id="button" fx:id="startDrawingButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onStartDrawing" stylesheets="@../css/buttons.css" text="START DRAWING">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </Button>
-                  <ToolBar fx:id="toolBox" style="-fx-background-color: lightskyblue;" visible="false" StackPane.alignment="CENTER">
+                  <ToolBar fx:id="toolBox" style="-fx-background-color: FF8200;" visible="false" StackPane.alignment="CENTER">
                     <items>
                       <Button fx:id="penButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onPen" prefHeight="23.0" prefWidth="120.0" style="-fx-background-color: FFE5B4;" text="Pen" />
                     <Button fx:id="eraserButton" alignment="CENTER" mnemonicParsing="false" onAction="#onErase" prefHeight="23.0" prefWidth="120.0" style="-fx-background-color: FFE5B4;" text="Eraser" />
