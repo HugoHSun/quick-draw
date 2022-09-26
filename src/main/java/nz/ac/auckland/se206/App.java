@@ -36,7 +36,7 @@ public class App extends Application {
    * This method is invoked when the application starts. It loads and shows the "Menu" scene.
    *
    * @param stage The primary stage of the application.
-   * @throws IOException If "src/main/resources/fxml/canvas.fxml" is not found.
+   * @throws IOException If "src/main/resources/fxml/menu.fxml" is not found.
    */
   @Override
   public void start(final Stage stage) throws IOException {
@@ -48,7 +48,6 @@ public class App extends Application {
     try {
       CategorySelector.loadCategories();
     } catch (IOException | CsvException | URISyntaxException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
 

@@ -67,10 +67,6 @@ public class CanvasController {
 
   @FXML private Canvas canvas;
 
-  private GraphicsContext graphic;
-
-  private DoodlePrediction model;
-
   @FXML private Label categoryLabel;
 
   @FXML private HBox countdownHorizontalBox;
@@ -89,9 +85,13 @@ public class CanvasController {
 
   @FXML private Label winLostLabel;
 
-  @FXML private Button newGameButton;
+  @FXML private Button newRoundButton;
 
   @FXML private Button saveDrawingButton;
+
+  private GraphicsContext graphic;
+
+  private DoodlePrediction model;
 
   private boolean isWon = false;
 
@@ -314,7 +314,7 @@ public class CanvasController {
    * @param event the event of clicking the button
    */
   @FXML
-  private void onNewGame(ActionEvent event) {
+  private void onPlayNewRound(ActionEvent event) {
     Scene scene = ((Node) event.getSource()).getScene();
     try {
       // Load a new canvas FXML file which initializes everything
@@ -467,7 +467,7 @@ public class CanvasController {
     canvas.setDisable(true);
     canvas.setOnMouseDragged(null);
     saveDrawingButton.setDisable(false);
-    newGameButton.setDisable(false);
+    newRoundButton.setDisable(false);
     // Change the background of count down to red
     Platform.runLater(
         () -> {

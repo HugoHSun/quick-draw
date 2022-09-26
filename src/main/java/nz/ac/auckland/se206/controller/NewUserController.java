@@ -21,7 +21,7 @@ import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.user.User;
 
 public class NewUserController {
-  @FXML TextField newUsername;
+  @FXML private TextField newUsername;
   private Scene scene;
   private Parent root;
 

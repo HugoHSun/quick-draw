@@ -171,7 +171,7 @@
             </Label>
             <HBox prefWidth="310.0" spacing="20.0">
                <children>
-                  <Button fx:id="newGameButton" contentDisplay="CENTER" disable="true" mnemonicParsing="false" onAction="#onNewGame" prefHeight="86.0" prefWidth="170.0" style="-fx-background-color: FFE5B4;" text="Start a new game">
+                  <Button fx:id="newRoundButton" contentDisplay="CENTER" disable="true" mnemonicParsing="false" onAction="#onPlayNewRound" prefHeight="86.0" prefWidth="170.0" style="-fx-background-color: FFE5B4;" text="Play a new round">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>

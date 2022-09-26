@@ -30,15 +30,15 @@ import nz.ac.auckland.se206.user.User;
  */
 public class MenuController {
 
+  @FXML private ChoiceBox<String> userChoiceBox;
+  @FXML private Label currentUser;
+
   private Scene scene;
   private Parent root;
   private List<User> users;
   private List<String> userNames;
 
   public static String currentlyActiveUser = null;
-
-  @FXML private ChoiceBox<String> userChoiceBox;
-  @FXML private Label currentUser;
 
   public void initialize() throws URISyntaxException, IOException, CsvException {
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
