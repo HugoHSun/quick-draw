@@ -32,6 +32,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToolBar;
@@ -158,7 +160,6 @@ public class CanvasController {
   /** This method is called when the "Pen" button is presses */
   @FXML
   private void onPen() {
-    // Setting the buttons
     penButton.setDisable(true);
     eraserButton.setDisable(false);
     // Change the cursor icon to eraser
@@ -190,7 +191,6 @@ public class CanvasController {
   /** This method is called when the "Eraser" button is pressed */
   @FXML
   private void onErase() {
-    // Setting the buttons
     penButton.setDisable(false);
     eraserButton.setDisable(true);
     // Change the cursor to eraser
@@ -224,28 +224,28 @@ public class CanvasController {
   @FXML
   private void onClear() {
     graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-    // Change to pen after clearing canvas
     onPen();
   }
 
   /** This method is called when the user click on "Start drawing" button */
   @FXML
   private void onStartDrawing() {
-    // Turn on the canvas and change the buttons
+    // Turn on the canvas and change the start button to pen, eraser and clear
     canvas.setDisable(false);
     startDrawingButton.setVisible(false);
     toolBox.setVisible(true);
 
-    // Create a timer thread running in the background that counts down from 60 to
-    // 0, and ask GUI thread to update time and predictions display every second
+    // Create a background timer thread that counts down and ask GUI thread to update time and
+    // predictions display every second
     Timer timer = new Timer();
     timer.scheduleAtFixedRate(
         new TimerTask() {
           // In seconds
           private Integer remainingTime = 60;
 
-          // Called every second by the timer thread
+          // First time called after 1 second delay, then called every second
           public void run() {
+            remainingTime--;
             // When a ending condition of the game is met
             if (isWon || remainingTime == 0) {
               timer.cancel();
@@ -275,29 +275,34 @@ public class CanvasController {
 
             // Remind the user when there are 10 seconds left
             remindTimeLeft(remainingTime, 10);
-
-            remainingTime--;
           }
         },
         1000,
         1000);
   }
 
+  /**
+   * This method checks whether the canvas is empty and returns a boolean
+   *
+   * @return true if the canvas is empty, false otherwise
+   */
   private boolean checkEmptyCanvas() {
+    // Get the current canvas as an image
     final Image snapshot = canvas.snapshot(null, null);
     final BufferedImage image = SwingFXUtils.fromFXImage(snapshot, null);
     final int width = image.getWidth();
     final int height = image.getHeight();
 
+    // Grab all the pixels
     int[] pixels = new int[width * height];
     PixelGrabber pg = new PixelGrabber(image, 0, 0, width, height, pixels, 0, width);
     try {
       pg.grabPixels();
     } catch (InterruptedException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
 
+    // Check each pixel to see if they are all white
     for (int pixel : pixels) {
       java.awt.Color color = new java.awt.Color(pixel);
       if (color.getAlpha() == 0 || color.getRGB() != java.awt.Color.WHITE.getRGB()) {
@@ -309,109 +314,9 @@ public class CanvasController {
   }
 
   /**
-   * This method is called when "Start a new game" button is pressed
-   *
-   * @param event the event of clicking the button
-   */
-  @FXML
-  private void onPlayNewRound(ActionEvent event) {
-    Scene scene = ((Node) event.getSource()).getScene();
-    try {
-      // Load a new canvas FXML file which initializes everything
-      Parent root = new FXMLLoader(App.class.getResource("/fxml/canvas.fxml")).load();
-      scene.setRoot(root);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-  }
-
-  @FXML
-  private void onStatistics(ActionEvent event) throws IOException {
-    Parent root = FXMLLoader.load(getClass().getResource("/fxml/stats.fxml"));
-    Stage stage = new Stage();
-    stage.setTitle("Statistics");
-    stage.setResizable(false);
-    stage.setScene(new Scene(root));
-    stage.show();
-  }
-
-  /**
-   * Save the current snapshot on a bitmap file.
-   *
-   * @return The file of the saved image.
-   */
-  private File saveCurrentSnapshotOnFile() {
-    try {
-      // Open file dialog box
-      FileChooser fileChooser = new FileChooser();
-      fileChooser.setTitle("Save Drawing");
-
-      // You can change the location as you see fit.
-      final File tmpFolder = new File("tmp");
-
-      // sets initial folder to the tmpfolder
-      fileChooser.setInitialDirectory(tmpFolder);
-
-      // make a tmp folder if it doesnt exist
-      if (!tmpFolder.exists()) {
-        tmpFolder.mkdir();
-      }
-
-      // We save the image to a file in the tmp folder.
-      fileChooser.setInitialFileName("MyDrawing" + ".bmp");
-      fileChooser
-          .getExtensionFilters()
-          .addAll(
-              new FileChooser.ExtensionFilter("img", "*.bmp"),
-              new FileChooser.ExtensionFilter("img", "*.png"),
-              new FileChooser.ExtensionFilter("img", "*.jpeg"));
-      // open file dialog box
-      Window stage = canvas.getScene().getWindow();
-      File file = fileChooser.showSaveDialog(stage);
-
-      // Save the image to a file.
-      ImageIO.write(getCurrentSnapshot(), "bmp", file);
-
-      return file;
-    } catch (Exception e) {
-      System.out.println("Closed without saving drawing");
-    }
-    return null;
-  }
-
-  @FXML
-  private void onSaveDrawing(ActionEvent event) throws IOException {
-    // button to save the canvas drawing file
-    saveCurrentSnapshotOnFile();
-  }
-
-  /**
-   * Get the current snapshot of the canvas.
-   *
-   * @return The BufferedImage corresponding to the current canvas content.
-   */
-  private BufferedImage getCurrentSnapshot() {
-    final Image snapshot = canvas.snapshot(null, null);
-    final BufferedImage image = SwingFXUtils.fromFXImage(snapshot, null);
-
-    // Convert into a binary image.
-    final BufferedImage imageBinary =
-        new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_BYTE_BINARY);
-
-    final Graphics2D graphics = imageBinary.createGraphics();
-
-    graphics.drawImage(image, 0, 0, null);
-
-    // To release memory we dispose.
-    graphics.dispose();
-
-    return imageBinary;
-  }
-
-  /**
    * This is a helper method that builds a string of the current top 10 predictions, which can be
-   * displayed in a label. Note that it also checks whether the player has won (the top 3
-   * predictions contain the category to be drawn).
+   * displayed in a label. Note that it also calls checkWon method to check whether the player has
+   * won (the top 3 predictions contain the category to be drawn).
    *
    * @param currentPredictions a list of of type Classification, which is the category of AI
    *     predictions
@@ -437,6 +342,12 @@ public class CanvasController {
     return sb.toString();
   }
 
+  /**
+   * This method checks whether the winning condition is met (in the top 3 AI predictions)
+   *
+   * @param classification the category of prediction
+   * @param predictionRank the rank of prediction
+   */
   private void checkWon(Classification classification, int predictionRank) {
     // The player wins if top 3 AI predictions include the category
     if (predictionRank <= 3
@@ -460,17 +371,23 @@ public class CanvasController {
     }
   }
 
-  /** This is a helper method that is executed when a game has ended */
+  /**
+   * This is a helper method that is called when the game ends
+   *
+   * @param remainingTime the time left when the game is ended
+   */
   private void endGame(int remainingTime) {
-    // Setting the buttons
+    // Updating the GUI components
     toolBox.setVisible(false);
     canvas.setDisable(true);
     canvas.setOnMouseDragged(null);
     saveDrawingButton.setDisable(false);
     newRoundButton.setDisable(false);
+
     // Change the background of count down to red
     Platform.runLater(
         () -> {
+          timerLabel.setText(String.valueOf(remainingTime));
           countdownHorizontalBox.setBackground(
               new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
         });
@@ -480,24 +397,32 @@ public class CanvasController {
       Platform.runLater(() -> winLostLabel.setText("YOU WON!!!"));
       textToSpeech.speak("Congratulations, you won!");
       try {
-        recordResult(MenuController.currentlyActiveUser, true, 60 - remainingTime);
+        // Record the result to the current user
+        recordResult(MenuController.currentlyActiveUser, isWon, 60 - remainingTime);
       } catch (IOException e) {
-        // TODO Auto-generated catch block
         e.printStackTrace();
       }
+      // The player has lost
     } else {
       Platform.runLater(() -> winLostLabel.setText("YOU LOST!!!"));
       textToSpeech.speak("Sorry you lost, try again next time.");
       try {
-        recordResult(MenuController.currentlyActiveUser, false, 60 - remainingTime);
+        recordResult(MenuController.currentlyActiveUser, isWon, 60 - remainingTime);
       } catch (IOException e) {
-        // TODO Auto-generated catch block
         e.printStackTrace();
       }
     }
   }
 
-  private void recordResult(String userName, boolean won, int timeTaken) throws IOException {
+  /**
+   * This method records the game result and the category played of the current user
+   *
+   * @param userName the name of the user
+   * @param isWon whether the user won
+   * @param timeTaken the time taken for the game to end
+   * @throws IOException
+   */
+  private void recordResult(String userName, boolean isWon, int timeTaken) throws IOException {
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
     // construct Type that tells Gson about the generic type
     Type userListType = new TypeToken<List<User>>() {}.getType();
@@ -509,17 +434,125 @@ public class CanvasController {
       userNames.add(user.getName());
     }
 
-    if (won) {
+    // Record the game result
+    if (isWon) {
       users.get(userNames.indexOf(userName)).won();
       users.get(userNames.indexOf(userName)).updateFastestWon(timeTaken);
     } else {
       users.get(userNames.indexOf(userName)).lost();
     }
 
+    // Record the category played
     users.get(userNames.indexOf(userName)).newWord(category);
 
     FileWriter fw = new FileWriter("user.json", false);
     gson.toJson(users, fw);
     fw.close();
+  }
+
+  /**
+   * This method is called when "Play another round" button is pressed
+   *
+   * @param event the event of clicking the button
+   */
+  @FXML
+  private void onPlayNewRound(ActionEvent event) {
+    Scene scene = ((Node) event.getSource()).getScene();
+    try {
+      // Load a new canvas FXML file which initializes everything
+      Parent root = new FXMLLoader(App.class.getResource("/fxml/canvas.fxml")).load();
+      scene.setRoot(root);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  /**
+   * This method is called when the "Statistics" button is pressed, it shows the statistics of the
+   * current player in a new window
+   *
+   * @param event the event of clicking this button
+   * @throws IOException
+   */
+  @FXML
+  private void onStatistics(ActionEvent event) throws IOException {
+    Parent root = FXMLLoader.load(getClass().getResource("/fxml/stats.fxml"));
+    Stage stage = new Stage();
+    stage.setTitle("Statistics");
+    stage.setResizable(false);
+    stage.setScene(new Scene(root));
+    stage.show();
+  }
+
+  /**
+   * Save the drawing on a file when a game has ended
+   *
+   * @param event the event of clicking "Save Your Drawing" button
+   * @throws IOException
+   */
+  @FXML
+  private void onSaveDrawing(ActionEvent event) {
+    // Open a file dialog box
+    FileChooser fileChooser = new FileChooser();
+    fileChooser.setTitle("Save Your Drawing");
+
+    // You can change the location as you see fit.
+    final File tmpFolder = new File("tmp");
+
+    // tmpfolder is the default directory
+    fileChooser.setInitialDirectory(tmpFolder);
+
+    // make a tmp folder if it doesn't exist
+    if (!tmpFolder.exists()) {
+      tmpFolder.mkdir();
+    }
+
+    // Set default name and available file extensions
+    fileChooser.setInitialFileName("MyDrawing");
+    fileChooser
+        .getExtensionFilters()
+        .addAll(
+            new FileChooser.ExtensionFilter("img", "*.bmp"),
+            new FileChooser.ExtensionFilter("img", "*.png"),
+            new FileChooser.ExtensionFilter("img", "*.jpeg"));
+
+    // open file dialog box
+    Window stage = canvas.getScene().getWindow();
+    File file = fileChooser.showSaveDialog(stage);
+
+    try {
+      // Save the image to a file and pop up a message to show if the image is saved
+      ImageIO.write(getCurrentSnapshot(), "bmp", file);
+      Alert successfulSave = new Alert(AlertType.INFORMATION);
+      successfulSave.setHeaderText("Image successfully saved");
+      successfulSave.show();
+    } catch (Exception e) {
+      Alert unsuccessfulSave = new Alert(AlertType.ERROR);
+      unsuccessfulSave.setHeaderText("Image not saved");
+      unsuccessfulSave.show();
+    }
+  }
+
+  /**
+   * Get the current snapshot of the canvas.
+   *
+   * @return The BufferedImage corresponding to the current canvas content.
+   */
+  private BufferedImage getCurrentSnapshot() {
+    final Image snapshot = canvas.snapshot(null, null);
+    final BufferedImage image = SwingFXUtils.fromFXImage(snapshot, null);
+
+    // Convert into a binary image.
+    final BufferedImage imageBinary =
+        new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_BYTE_BINARY);
+
+    final Graphics2D graphics = imageBinary.createGraphics();
+
+    graphics.drawImage(image, 0, 0, null);
+
+    // To release memory we dispose.
+    graphics.dispose();
+
+    return imageBinary;
   }
 }

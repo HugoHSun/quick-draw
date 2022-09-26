@@ -30,6 +30,8 @@ import nz.ac.auckland.se206.user.User;
  */
 public class MenuController {
 
+  public static String currentlyActiveUser = null;
+
   @FXML private ChoiceBox<String> userChoiceBox;
   @FXML private Label currentUser;
 
@@ -37,8 +39,6 @@ public class MenuController {
   private Parent root;
   private List<User> users;
   private List<String> userNames;
-
-  public static String currentlyActiveUser = null;
 
   public void initialize() throws URISyntaxException, IOException, CsvException {
     Gson gson = new GsonBuilder().setPrettyPrinting().create();

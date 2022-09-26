@@ -4,6 +4,7 @@ import java.util.HashMap;
 import javafx.scene.Parent;
 
 public class SceneManager {
+
   public enum AppUi {
     MAIN_MENU,
     CANVAS

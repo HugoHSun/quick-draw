@@ -42,7 +42,7 @@ public class CategorySelector {
    * @throws CsvException
    * @throws URISyntaxException
    */
-  public static void loadCategories() throws IOException, CsvException, URISyntaxException {
+  protected static void loadCategories() throws IOException, CsvException, URISyntaxException {
     categoryMap.put(Difficulty.E, new ArrayList<String>());
     categoryMap.put(Difficulty.M, new ArrayList<String>());
     categoryMap.put(Difficulty.H, new ArrayList<String>());
