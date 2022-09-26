@@ -475,8 +475,9 @@ public class CanvasController {
    * @throws IOException
    */
   @FXML
-  private void onStatistics(ActionEvent event) throws IOException {
+  private void onSeeStatistics(ActionEvent event) throws IOException {
     Parent root = FXMLLoader.load(getClass().getResource("/fxml/stats.fxml"));
+    // Display the statistics of the current user in a new window
     Stage stage = new Stage();
     stage.setTitle("Statistics");
     stage.setResizable(false);
