@@ -93,11 +93,7 @@ public class CanvasController {
 
   @FXML private Button saveDrawingButton;
 
-  private boolean isDrawn = false;
-
   private boolean isWon = false;
-
-  private String predictionDisplay = "Not Applicable - The canvas is empty!";
 
   // mouse coordinates
   private double currentX;
@@ -245,13 +241,13 @@ public class CanvasController {
     Timer timer = new Timer();
     timer.scheduleAtFixedRate(
         new TimerTask() {
-          // The remaining time in seconds
-          Integer remainingTime = 60;
+          // In seconds
+          private Integer remainingTime = 60;
 
-          // This method will be called every second by the timer thread
+          // Called every second by the timer thread
           public void run() {
             // When a ending condition of the game is met
-            if (remainingTime == 0 || isWon) {
+            if (isWon || remainingTime == 0) {
               timer.cancel();
               endGame(remainingTime);
               return;
@@ -264,13 +260,16 @@ public class CanvasController {
                   timerLabel.setText(remainingTime.toString());
 
                   // Update current predictions
-                  try {
-                    List<Classification> currentPredictions =
-                        model.getPredictions(getCurrentSnapshot(), 10);
-                    predictionDisplay = getPredictionDisplay(currentPredictions);
-                    predictionLabel.setText(predictionDisplay);
-                  } catch (TranslateException e) {
-                    e.printStackTrace();
+                  if (checkEmptyCanvas()) {
+                    predictionLabel.setText("EMPTY CANVAS!");
+                  } else {
+                    try {
+                      List<Classification> currentPredictions =
+                          model.getPredictions(getCurrentSnapshot(), 10);
+                      predictionLabel.setText(getPredictionDisplay(currentPredictions));
+                    } catch (TranslateException e) {
+                      e.printStackTrace();
+                    }
                   }
                 });
 
@@ -282,6 +281,31 @@ public class CanvasController {
         },
         1000,
         1000);
+  }
+
+  private boolean checkEmptyCanvas() {
+    final Image snapshot = canvas.snapshot(null, null);
+    final BufferedImage image = SwingFXUtils.fromFXImage(snapshot, null);
+    final int width = image.getWidth();
+    final int height = image.getHeight();
+
+    int[] pixels = new int[width * height];
+    PixelGrabber pg = new PixelGrabber(image, 0, 0, width, height, pixels, 0, width);
+    try {
+      pg.grabPixels();
+    } catch (InterruptedException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+
+    for (int pixel : pixels) {
+      java.awt.Color color = new java.awt.Color(pixel);
+      if (color.getAlpha() == 0 || color.getRGB() != java.awt.Color.WHITE.getRGB()) {
+        return false;
+      }
+    }
+
+    return true;
   }
 
   /**
@@ -369,14 +393,10 @@ public class CanvasController {
   private BufferedImage getCurrentSnapshot() {
     final Image snapshot = canvas.snapshot(null, null);
     final BufferedImage image = SwingFXUtils.fromFXImage(snapshot, null);
-    final int width = image.getWidth();
-    final int height = image.getHeight();
-
-    checkEmptyCanvas(image, width, height);
 
     // Convert into a binary image.
     final BufferedImage imageBinary =
-        new BufferedImage(width, height, BufferedImage.TYPE_BYTE_BINARY);
+        new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_BYTE_BINARY);
 
     final Graphics2D graphics = imageBinary.createGraphics();
 
@@ -386,25 +406,6 @@ public class CanvasController {
     graphics.dispose();
 
     return imageBinary;
-  }
-
-  private void checkEmptyCanvas(BufferedImage image, int width, int height) {
-    isDrawn = false;
-    int[] pixels = new int[width * height];
-    PixelGrabber pg = new PixelGrabber(image, 0, 0, width, height, pixels, 0, width);
-    try {
-      pg.grabPixels();
-    } catch (InterruptedException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-    for (int pixel : pixels) {
-      java.awt.Color color = new java.awt.Color(pixel);
-      if (color.getAlpha() == 0 || color.getRGB() != java.awt.Color.WHITE.getRGB()) {
-        isDrawn = true;
-        break;
-      }
-    }
   }
 
   /**
@@ -417,10 +418,6 @@ public class CanvasController {
    * @return a string containing the top 10 predictions
    */
   private String getPredictionDisplay(List<Classification> currentPredictions) {
-    if (!isDrawn) {
-      return "Not Applicable - The canvas is empty!";
-    }
-
     // Build the string to display the top ten predictions
     final StringBuilder sb = new StringBuilder();
     int predictionRank = 1;
@@ -432,16 +429,20 @@ public class CanvasController {
           .append(String.format("%d%%", Math.round(100 * classification.getProbability())))
           .append(System.lineSeparator());
 
-      // When the category to be drawn is in the top 3 predictions
-      if (classification.getClassName().replaceAll("_", " ").equals(categoryLabel.getText())
-          && predictionRank <= 3) {
-        isWon = true;
-      }
+      checkWon(classification, predictionRank);
 
       predictionRank++;
     }
 
     return sb.toString();
+  }
+
+  private void checkWon(Classification classification, int predictionRank) {
+    // The player wins if top 3 AI predictions include the category
+    if (predictionRank <= 3
+        && classification.getClassName().replaceAll("_", " ").equals(categoryLabel.getText())) {
+      isWon = true;
+    }
   }
 
   /**
