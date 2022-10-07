@@ -18,6 +18,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import nz.ac.auckland.se206.App;
@@ -30,6 +31,7 @@ import nz.ac.auckland.se206.user.User;
  */
 public class MenuController {
 
+  @FXML private Button startGameButton;
   private Scene scene;
   private Parent root;
   private List<User> users;

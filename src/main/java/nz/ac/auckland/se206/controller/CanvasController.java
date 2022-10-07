@@ -69,6 +69,8 @@ public class CanvasController {
 
   private DoodlePrediction model;
 
+  private Parent root;
+
   @FXML private Label categoryLabel;
 
   @FXML private HBox countdownHorizontalBox;
@@ -477,5 +479,17 @@ public class CanvasController {
     FileWriter fw = new FileWriter("user.json", false);
     gson.toJson(users, fw);
     fw.close();
+  }
+
+  @FXML
+  public void onReturn(ActionEvent event) {
+    Scene scene = ((Node) event.getSource()).getScene();
+    try {
+      // Load a new parent node
+      root = new FXMLLoader(App.class.getResource("/fxml/menu.fxml")).load();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    scene.setRoot(root);
   }
 }
