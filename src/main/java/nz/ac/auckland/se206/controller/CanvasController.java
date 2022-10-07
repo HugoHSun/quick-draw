@@ -426,16 +426,12 @@ public class CanvasController {
     canvas.setOnMouseDragged(null);
     saveDrawingButton.setDisable(false);
     newGameButton.setDisable(false);
-    // Change the background of count down to red
-    Platform.runLater(
-        () -> {
-          countdownHorizontalBox.setBackground(
-              new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
-        });
 
     TextToSpeech textToSpeech = new TextToSpeech();
     if (isWon) {
       Platform.runLater(() -> winLostLabel.setText("YOU WON!!!"));
+      countdownHorizontalBox.setBackground(
+          new Background(new BackgroundFill(Color.LIGHTGREEN, CornerRadii.EMPTY, Insets.EMPTY)));
       textToSpeech.speak("Congratulations, you won!");
       try {
         recordResult(MenuController.currentlyActiveUser, true, 60 - remainingTime);
@@ -445,6 +441,8 @@ public class CanvasController {
       }
     } else {
       Platform.runLater(() -> winLostLabel.setText("YOU LOST!!!"));
+      countdownHorizontalBox.setBackground(
+          new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
       textToSpeech.speak("Sorry you lost, try again next time.");
       try {
         recordResult(MenuController.currentlyActiveUser, false, 60 - remainingTime);

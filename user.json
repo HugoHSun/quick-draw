@@ -25,11 +25,12 @@
   },
   {
     "name": "Matt",
-    "gamesWon": 1,
+    "gamesWon": 2,
     "gamesLost": 0,
-    "fastestWon": 15,
+    "fastestWon": 11,
     "wordsEncountered": [
-      "door"
+      "door",
+      "carrot"
     ]
   }
 ]
