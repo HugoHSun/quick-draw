@@ -35,6 +35,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToolBar;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -63,6 +64,7 @@ import nz.ac.auckland.se206.user.User;
  */
 public class CanvasController {
 
+  @FXML private Button menuButton;
   @FXML private Canvas canvas;
 
   private GraphicsContext graphic;
@@ -153,6 +155,10 @@ public class CanvasController {
         });
 
     model = new DoodlePrediction();
+
+    Image returnImg = new Image("/images/returnIcon2.png");
+    ImageView returnImgView = new ImageView(returnImg);
+    menuButton.setGraphic(returnImgView);
   }
 
   /** This method is called when the "Pen" button is presses */

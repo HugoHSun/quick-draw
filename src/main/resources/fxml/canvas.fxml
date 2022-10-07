@@ -21,9 +21,9 @@
         <children>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#onReturn" text="Return">
+                  <Button fx:id="menuButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onReturn" prefHeight="20.0" prefWidth="20.0" scaleX="0.1" scaleY="0.1" scaleZ="0.1" stylesheets="@../css/buttons.css">
                      <HBox.margin>
-                        <Insets left="10.0" />
+                        <Insets left="20.0" />
                      </HBox.margin>
                   </Button>
                 <Label alignment="CENTER" prefHeight="23.0" prefWidth="355.0" text="Please draw the following category: " textAlignment="CENTER">
@@ -108,10 +108,13 @@
             </BorderPane>
             <StackPane prefHeight="150.0" prefWidth="200.0">
                <children>
-                  <Button id="button" fx:id="startDrawingButton" alignment="CENTER_RIGHT" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onStartDrawing" stylesheets="@../css/buttons.css" text="START DRAWING">
+                  <Button fx:id="startDrawingButton" alignment="CENTER_RIGHT" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onStartDrawing" stylesheets="@../css/buttons.css" text="START DRAWING">
                      <font>
                         <Font size="20.0" />
                      </font>
+                     <StackPane.margin>
+                        <Insets top="-20.0" />
+                     </StackPane.margin>
                   </Button>
                   <ToolBar fx:id="toolBox" style="-fx-background-color: FF8200;" visible="false" StackPane.alignment="CENTER">
                     <items>
@@ -131,7 +134,7 @@
       
         </children>
         <padding>
-          <Insets bottom="20.0" top="20.0" />
+          <Insets top="20.0" />
         </padding>
       </VBox>
       <VBox layoutX="440.0" layoutY="27.0" prefHeight="480.0" prefWidth="310.0" spacing="10.0" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">

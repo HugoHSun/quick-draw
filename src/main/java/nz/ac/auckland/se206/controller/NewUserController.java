@@ -16,14 +16,24 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.user.User;
 
 public class NewUserController {
+  @FXML private Button menuButton;
   @FXML TextField newUsername;
   private Scene scene;
   private Parent root;
+
+  public void initialize() {
+    Image returnImg = new Image("/images/returnIcon.png");
+    ImageView returnImgView = new ImageView(returnImg);
+    menuButton.setGraphic(returnImgView);
+  }
 
   @FXML
   public void onNameEntered(ActionEvent event) throws IOException {
@@ -31,6 +41,7 @@ public class NewUserController {
     // construct Type that tells Gson about the generic type
     Type userListType = new TypeToken<List<User>>() {}.getType();
     File f = new File("user.json");
+
     if (!f.exists()) {
       FileWriter fw = new FileWriter("user.json");
       fw.close();

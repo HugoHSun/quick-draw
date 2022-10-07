@@ -25,12 +25,15 @@
   },
   {
     "name": "Matt",
-    "gamesWon": 2,
-    "gamesLost": 0,
+    "gamesWon": 3,
+    "gamesLost": 2,
     "fastestWon": 11,
     "wordsEncountered": [
       "door",
-      "carrot"
+      "carrot",
+      "sun",
+      "ant",
+      "windmill"
     ]
   }
 ]

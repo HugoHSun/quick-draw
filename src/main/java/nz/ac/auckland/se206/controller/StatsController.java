@@ -14,11 +14,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.user.User;
 
 public class StatsController {
+  @FXML private Button menuButton;
   @FXML private Label statLabel;
   private Parent root;
 
@@ -36,6 +40,10 @@ public class StatsController {
       userNames.add(user.getName());
     }
     statLabel.setText(users.get(userNames.indexOf(MenuController.currentlyActiveUser)).toString());
+
+    Image returnImg = new Image("/images/returnIcon.png");
+    ImageView returnImgView = new ImageView(returnImg);
+    menuButton.setGraphic(returnImgView);
   }
 
   @FXML

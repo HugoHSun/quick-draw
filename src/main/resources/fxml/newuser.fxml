@@ -38,6 +38,6 @@
             </HBox>
          </children>
       </VBox>
-      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#onReturn" text="Return" />
+      <Button fx:id="menuButton" layoutX="14.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onReturn" prefHeight="20.0" prefWidth="20.0" scaleX="0.1" scaleY="0.1" scaleZ="0.1" stylesheets="@../css/buttons.css" translateX="10.0" translateY="10.0" />
    </children>
 </Pane>

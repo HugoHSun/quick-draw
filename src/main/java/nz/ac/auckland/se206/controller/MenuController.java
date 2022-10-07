@@ -21,6 +21,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.user.User;
 
@@ -31,6 +33,9 @@ import nz.ac.auckland.se206.user.User;
  */
 public class MenuController {
 
+  @FXML private Button addUserButton;
+  @FXML private Button removeUserButton;
+  @FXML private Button statsButton;
   @FXML private Button startGameButton;
   private Scene scene;
   private Parent root;
@@ -43,6 +48,18 @@ public class MenuController {
   @FXML private Label currentUser;
 
   public void initialize() throws URISyntaxException, IOException, CsvException {
+    Image statsImg = new Image("/images/statsIcon2.png");
+    ImageView statsImgView = new ImageView(statsImg);
+    statsButton.setGraphic(statsImgView);
+
+    Image addUserImg = new Image("/images/addUserIcon.png");
+    ImageView addUserImgView = new ImageView(addUserImg);
+    addUserButton.setGraphic(addUserImgView);
+
+    Image removeUserImg = new Image("/images/removeUserIcon.png");
+    ImageView removeUserImgView = new ImageView(removeUserImg);
+    removeUserButton.setGraphic(removeUserImgView);
+
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
     // construct Type that tells Gson about the generic type
     Type userListType = new TypeToken<List<User>>() {}.getType();
