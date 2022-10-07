@@ -13,7 +13,7 @@
    <children>
       <ImageView fitHeight="500.0" fitWidth="780.0" opacity="0.4">
          <image>
-            <Image url="@../images/menu%20background.jpg" />
+            <Image url="@../images/menubackground.jpg" />
          </image>
       </ImageView>
       <Label alignment="TOP_CENTER" layoutX="250.0" layoutY="124.0" text="QUICK, DRAW!" textAlignment="CENTER">
@@ -40,8 +40,9 @@
          <font>
             <Font name="System Bold" size="24.0" />
          </font></Label>
-      <ChoiceBox fx:id="userChoiceBox" layoutX="585.0" layoutY="83.0" prefWidth="150.0" />
-      <Button layoutX="669.0" layoutY="20.0" mnemonicParsing="false" onAction="#onAddUser" text="Add User" />
-      <Button layoutX="614.0" layoutY="50.0" mnemonicParsing="false" onAction="#onDeleteUser" text="Delete Current User" />
+      <ChoiceBox fx:id="userChoiceBox" layoutX="584.0" layoutY="112.0" prefHeight="35.0" prefWidth="150.0" />
+      <Button layoutX="650.0" layoutY="20.0" mnemonicParsing="false" onAction="#onAddUser" prefHeight="35.0" prefWidth="84.0" text="Add User" />
+      <Button layoutX="598.0" layoutY="65.0" mnemonicParsing="false" onAction="#onDeleteUser" prefHeight="35.0" prefWidth="136.0" text="Delete Current User" />
+      <Button layoutX="34.0" layoutY="440.0" mnemonicParsing="false" onAction="#onStatistics" text="Statistics" />
    </children>
 </Pane>

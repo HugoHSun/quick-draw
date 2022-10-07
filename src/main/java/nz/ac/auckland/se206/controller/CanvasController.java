@@ -41,7 +41,6 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import javafx.stage.Window;
 import javax.imageio.ImageIO;
 import nz.ac.auckland.se206.App;
@@ -294,16 +293,6 @@ public class CanvasController {
     } catch (IOException e) {
       e.printStackTrace();
     }
-  }
-
-  @FXML
-  private void onStatistics(ActionEvent event) throws IOException {
-    Parent root = FXMLLoader.load(getClass().getResource("/fxml/stats.fxml"));
-    Stage stage = new Stage();
-    stage.setTitle("Statistics");
-    stage.setResizable(false);
-    stage.setScene(new Scene(root));
-    stage.show();
   }
 
   /**

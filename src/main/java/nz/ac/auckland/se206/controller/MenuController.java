@@ -117,4 +117,20 @@ public class MenuController {
     currentUser.setText(current);
     currentlyActiveUser = currentUser.getText();
   }
+
+  @FXML
+  private void onStatistics(ActionEvent event) throws IOException {
+    if (userChoiceBox.getValue() == null) {
+      currentUser.setText("You must choose your profile!");
+      return;
+    }
+    scene = ((Node) event.getSource()).getScene();
+    try {
+      // Load a new parent node
+      root = new FXMLLoader(App.class.getResource("/fxml/stats.fxml")).load();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    scene.setRoot(root);
+  }
 }
