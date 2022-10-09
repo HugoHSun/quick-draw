@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /**
@@ -38,6 +39,8 @@ public class App extends Application {
   public void start(final Stage stage) throws IOException {
     // User cannot resize the window
     stage.setResizable(false);
+    stage.setTitle("QUICK DRAW! - SE206 Edition");
+    stage.getIcons().add(new Image("/images/app-logo.png"));
     final Scene scene = new Scene(loadFxml("menu"), 780, 500);
 
     stage.setScene(scene);

@@ -21,8 +21,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.user.User;
 
@@ -33,6 +32,8 @@ import nz.ac.auckland.se206.user.User;
  */
 public class MenuController {
 
+  public static String currentlyActiveUser = null;
+
   @FXML private Button addUserButton;
   @FXML private Button removeUserButton;
   @FXML private Button statsButton;
@@ -42,23 +43,16 @@ public class MenuController {
   private List<User> users;
   private List<String> userNames;
 
-  public static String currentlyActiveUser = null;
+  @FXML private HBox createUserMessage;
+
+  @FXML private HBox selectUserMessage;
+
+  @FXML private HBox welcomeBackMessage;
 
   @FXML private ChoiceBox<String> userChoiceBox;
   @FXML private Label currentUser;
 
   public void initialize() throws URISyntaxException, IOException, CsvException {
-    Image statsImg = new Image("/images/statsIcon2.png");
-    ImageView statsImgView = new ImageView(statsImg);
-    statsButton.setGraphic(statsImgView);
-
-    Image addUserImg = new Image("/images/addUserIcon.png");
-    ImageView addUserImgView = new ImageView(addUserImg);
-    addUserButton.setGraphic(addUserImgView);
-
-    Image removeUserImg = new Image("/images/removeUserIcon.png");
-    ImageView removeUserImgView = new ImageView(removeUserImg);
-    removeUserButton.setGraphic(removeUserImgView);
 
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
     // construct Type that tells Gson about the generic type
@@ -78,6 +72,11 @@ public class MenuController {
       userNames.add(user.getName());
     }
 
+    if (userNames.isEmpty()) {
+      selectUserMessage.setVisible(false);
+      welcomeBackMessage.setVisible(false);
+      createUserMessage.setVisible(true);
+    }
     userChoiceBox.getItems().addAll(userNames);
     userChoiceBox.setValue(null);
     currentUser.setText(null);
