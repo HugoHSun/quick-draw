@@ -716,3 +716,5 @@ FodyWeavers.xsd
 # End of https://www.toptal.com/developers/gitignore/api/git,java,maven,linux,macos,eclipse,windows,netbeans,intellij+all,visualstudio,visualstudiocode
 
 !src/main/resources/ml/*
+
+# User profile file
