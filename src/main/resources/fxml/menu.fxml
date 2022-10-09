@@ -10,10 +10,12 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane prefHeight="500.0" prefWidth="780.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controller.MenuController">
+<AnchorPane prefHeight="500.0" prefWidth="780.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controller.MenuController">
    <children>
       <ImageView fitHeight="500.0" fitWidth="780.0" opacity="0.4">
          <image>
@@ -162,4 +164,4 @@
          </graphic>
       </Button>
    </children>
-</Pane>
+</AnchorPane>

@@ -163,7 +163,7 @@
                         </Label>
                      </children>
                   </VBox>
-                  <Label fx:id="predictionLabel" alignment="TOP_LEFT" contentDisplay="TOP" prefHeight="260.0" prefWidth="180.0">
+                  <Label fx:id="predictionLabel" alignment="TOP_LEFT" contentDisplay="TOP" prefHeight="260.0" prefWidth="180.0" text="EMPTY CANVAS!">
                      <font>
                         <Font name="System Italic" size="16.0" />
                      </font>
@@ -184,21 +184,21 @@
                   <Insets bottom="30.0" />
                </VBox.margin>
             </Label>
-            <HBox prefWidth="310.0" spacing="20.0">
+            <HBox prefWidth="310.0" spacing="10.0">
                <children>
-                  <Button fx:id="newGameButton" contentDisplay="CENTER" disable="true" mnemonicParsing="false" onAction="#onNewGame" prefHeight="86.0" prefWidth="170.0" style="-fx-background-color: FFE5B4;" text="Start a new game">
+                  <Button fx:id="newRoundButton" contentDisplay="CENTER" disable="true" mnemonicParsing="false" onAction="#onPlayNewRound" prefHeight="86.0" prefWidth="170.0" style="-fx-background-color: FFE5B4;" text="Play Another Round">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button fx:id="saveDrawingButton" contentDisplay="CENTER" disable="true" mnemonicParsing="false" onAction="#onSaveDrawing" prefHeight="86.0" prefWidth="170.0" style="-fx-background-color: FFE5B4;" text="Save your drawing">
+                  <Button fx:id="saveDrawingButton" contentDisplay="CENTER" disable="true" mnemonicParsing="false" onAction="#onSaveDrawing" prefHeight="86.0" prefWidth="170.0" style="-fx-background-color: FFE5B4;" text="Save Your Drawing">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
                </children>
                <padding>
-                  <Insets left="15.0" right="15.0" />
+                  <Insets left="10.0" right="10.0" />
                </padding>
                <VBox.margin>
                   <Insets />

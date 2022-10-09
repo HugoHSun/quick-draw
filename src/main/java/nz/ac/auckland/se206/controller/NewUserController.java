@@ -24,9 +24,12 @@ import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.user.User;
 
 public class NewUserController {
+
   @FXML private Button menuButton;
-  @FXML TextField newUsername;
+  @FXML private TextField newUsername;
+
   private Scene scene;
+
   private Parent root;
 
   public void initialize() {
@@ -35,8 +38,14 @@ public class NewUserController {
     menuButton.setGraphic(returnImgView);
   }
 
+  /**
+   * This method adds a new user if the user name does not exist
+   *
+   * @param event the event of button click
+   * @throws IOException
+   */
   @FXML
-  public void onNameEntered(ActionEvent event) throws IOException {
+  private void onNameEntered(ActionEvent event) throws IOException {
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
     // construct Type that tells Gson about the generic type
     Type userListType = new TypeToken<List<User>>() {}.getType();
@@ -78,8 +87,13 @@ public class NewUserController {
     scene.setRoot(root);
   }
 
+  /**
+   * This method is called when the "return" button is clicked, the game goes back to main menu
+   *
+   * @param event the event of button click
+   */
   @FXML
-  public void onReturn(ActionEvent event) {
+  private void onReturn(ActionEvent event) {
     scene = ((Node) event.getSource()).getScene();
     try {
       // Load a new parent node

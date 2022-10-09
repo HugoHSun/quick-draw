@@ -5,13 +5,20 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane prefHeight="480.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controller.NewUserController">
+<Pane prefHeight="500.0" prefWidth="780.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controller.NewUserController">
    <children>
+      <ImageView fitHeight="500.0" fitWidth="780.0" opacity="0.4" pickOnBounds="true">
+         <image>
+            <Image url="@../images/menu%20background.jpg" />
+         </image>
+      </ImageView>
       <VBox layoutY="167.0" prefHeight="147.0" prefWidth="750.0">
          <children>
             <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="54.0" prefWidth="644.0" text="Enter name of the new User!">

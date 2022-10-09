@@ -1,12 +1,16 @@
 package nz.ac.auckland.se206;
 
+import com.opencsv.exceptions.CsvException;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import nz.ac.auckland.se206.controller.SceneManager;
+import nz.ac.auckland.se206.controller.SceneManager.AppUi;
 
 /**
  * This is the entry point of the JavaFX application, while you can change this class, it should
@@ -30,18 +34,28 @@ public class App extends Application {
   }
 
   /**
-   * This method is invoked when the application starts. It loads and shows the "Canvas" scene.
+   * This method is invoked when the application starts. It loads and shows the "Menu" scene.
    *
    * @param stage The primary stage of the application.
-   * @throws IOException If "src/main/resources/fxml/canvas.fxml" is not found.
+   * @throws IOException If "src/main/resources/fxml/menu.fxml" is not found.
    */
   @Override
   public void start(final Stage stage) throws IOException {
     // User cannot resize the window
     stage.setResizable(false);
-    stage.setTitle("QUICK DRAW! - SE206 Edition");
+
+    stage.setTitle("Quick Draw! - SE206 Edition");
     stage.getIcons().add(new Image("/images/app-logo.png"));
-    final Scene scene = new Scene(loadFxml("menu"), 780, 500);
+
+    // Initialize the CategorySelector
+    try {
+      CategorySelector.loadCategories();
+    } catch (IOException | CsvException | URISyntaxException e) {
+      e.printStackTrace();
+    }
+
+    SceneManager.addUi(SceneManager.AppUi.MAIN_MENU, loadFxml("menu"));
+    final Scene scene = new Scene(SceneManager.getUi(AppUi.MAIN_MENU), 780, 500);
 
     stage.setScene(scene);
     stage.show();
