@@ -66,6 +66,7 @@ public class MenuController {
     File f = new File("user.json");
     if (!f.exists()) {
       FileWriter fw = new FileWriter("user.json");
+      fw.write("[]");
       fw.close();
     }
     FileReader fr = new FileReader("user.json");
