@@ -13,7 +13,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <Pane prefHeight="500.0" prefWidth="780.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controller.MenuController">
    <children>
       <ImageView fitHeight="500.0" fitWidth="780.0" opacity="0.4">
@@ -21,7 +20,7 @@
             <Image url="@../images/menubackground.jpg" />
          </image>
       </ImageView>
-      <VBox alignment="TOP_CENTER" layoutX="159.0" layoutY="113.0" prefHeight="337.0" prefWidth="463.0">
+      <VBox alignment="TOP_CENTER" layoutX="159.0" layoutY="99.0" prefHeight="337.0" prefWidth="463.0">
          <children>
             <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefHeight="74.0" prefWidth="378.0" text="QUICK, DRAW!" textAlignment="CENTER">
                <font>
@@ -31,7 +30,7 @@
                   <Blend />
                </effect>
             </Label>
-            <StackPane fx:id="userMessageStackPane" prefHeight="30.0" prefWidth="463.0">
+            <StackPane prefHeight="30.0" prefWidth="463.0">
                <children>
                   <HBox fx:id="createUserMessage" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" visible="false">
                      <children>
@@ -40,9 +39,9 @@
                               <Font name="Segoe UI Semibold" size="28.0" />
                            </font>
                         </Label>
-                        <Button id="addUserButton" fx:id="addUserButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onAddUser" prefHeight="1.0" prefWidth="1.0" stylesheets="@../css/buttons.css">
+                        <Button id="addUserButton" fx:id="addUserButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onAddUser" prefHeight="40.0" prefWidth="45.0" style="-fx-background-color: transparent;">
                            <graphic>
-                              <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView id="addUserButton" accessibleRole="BUTTON" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../images/addUserIcon.png" />
                                  </image>
@@ -54,7 +53,7 @@
                         </Button>
                      </children>
                   </HBox>
-                  <HBox fx:id="selectUserMessage" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" visible="false">
+                  <HBox fx:id="selectUserMessage" alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                      <children>
                         <Label text="Please select an user: ">
                            <font>
@@ -64,7 +63,7 @@
                         <ChoiceBox fx:id="userChoiceBox" prefHeight="30.0" prefWidth="130.0" style="-fx-background-color: #ffb347;" />
                      </children>
                   </HBox>
-                  <HBox fx:id="welcomeBackMessage" alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                  <HBox fx:id="welcomeBackMessage" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" visible="false">
                      <children>
                         <Label alignment="CENTER" text="Welcome Back,">
                            <font>
@@ -80,7 +79,7 @@
                   </HBox>
                </children>
             </StackPane>
-            <Button fx:id="startGameButton" alignment="CENTER" mnemonicParsing="false" onAction="#onStartNewGame" prefHeight="43.0" prefWidth="155.0" stylesheets="@../css/buttons.css" text="Start New Game">
+            <Button fx:id="startGameButton" alignment="CENTER" mnemonicParsing="false" onAction="#onStartNewGame" prefHeight="43.0" prefWidth="155.0" stylesheets="@../css/buttons.css" text="Normal Mode">
                <font>
                   <Font name="Segoe UI" size="15.0" />
                </font>
@@ -115,9 +114,19 @@
             </Button>
          </children>
       </VBox>
-      <HBox alignment="CENTER" layoutX="534.0" layoutY="7.0" prefHeight="40.0" prefWidth="240.0" spacing="20.0">
+      <HBox fx:id="editUserBox" alignment="CENTER_RIGHT" layoutX="396.0" layoutY="7.0" prefHeight="40.0" prefWidth="378.0" spacing="20.0">
          <children>
-            <Button id="addUserButton" fx:id="addUserButton" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onAddUser" prefHeight="20.0" prefWidth="20.0" style="-fx-graphic: url(&quot;\images\addUserIcon.png&quot;);" stylesheets="@../css/buttons.css">
+            <VBox fx:id="changeUserBox" alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label alignment="CENTER" text="Change User" textAlignment="CENTER">
+                     <font>
+                        <Font name="Roboto Black" size="12.0" />
+                     </font>
+                  </Label>
+                  <ChoiceBox accessibleText="Change User" prefHeight="30.0" prefWidth="130.0" style="-fx-background-color: #ffb347;" />
+               </children>
+            </VBox>
+            <Button id="addUserButton" fx:id="addUserButton" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onAddUser" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
                <graphic>
                   <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -126,10 +135,10 @@
                   </ImageView>
                </graphic>
                <HBox.margin>
-                  <Insets right="15.0" />
+                  <Insets left="15.0" right="20.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="removeUserButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onDeleteUser" prefHeight="20.0" prefWidth="20.0" stylesheets="@../css/buttons.css">
+            <Button fx:id="removeUserButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onDeleteUser" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -137,8 +146,10 @@
                      </image>
                   </ImageView>
                </graphic>
+               <HBox.margin>
+                  <Insets right="20.0" />
+               </HBox.margin>
             </Button>
-            <ChoiceBox fx:id="userChoiceBox1" prefHeight="30.0" prefWidth="130.0" style="-fx-background-color: #ffb347;" />
          </children>
       </HBox>
       <Button fx:id="statsButton" layoutX="25.0" layoutY="440.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onStatistics" prefHeight="20.0" prefWidth="20.0" scaleX="0.1" scaleY="0.1" scaleZ="0.1" stylesheets="@../css/buttons.css" translateX="20.0">

@@ -22,6 +22,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.user.User;
 
@@ -34,14 +35,15 @@ public class MenuController {
 
   public static String currentlyActiveUser = null;
 
-  @FXML private Button addUserButton;
-  @FXML private Button removeUserButton;
-  @FXML private Button statsButton;
-  @FXML private Button startGameButton;
   private Scene scene;
   private Parent root;
   private List<User> users;
   private List<String> userNames;
+
+  @FXML private Button addUserButton;
+  @FXML private Button removeUserButton;
+  @FXML private Button statsButton;
+  @FXML private Button startGameButton;
 
   @FXML private HBox createUserMessage;
 
@@ -49,11 +51,14 @@ public class MenuController {
 
   @FXML private HBox welcomeBackMessage;
 
+  @FXML private HBox editUserBox;
+
+  @FXML private VBox changeUserBox;
+
   @FXML private ChoiceBox<String> userChoiceBox;
   @FXML private Label currentUser;
 
   public void initialize() throws URISyntaxException, IOException, CsvException {
-
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
     // construct Type that tells Gson about the generic type
     Type userListType = new TypeToken<List<User>>() {}.getType();
@@ -72,22 +77,25 @@ public class MenuController {
       userNames.add(user.getName());
     }
 
+    // Change the menu layout when there is no created user
     if (userNames.isEmpty()) {
       selectUserMessage.setVisible(false);
       welcomeBackMessage.setVisible(false);
+      editUserBox.setVisible(false);
       createUserMessage.setVisible(true);
+    } else {
+      changeUserBox.setVisible(false);
+      userChoiceBox.getItems().addAll(userNames);
+      userChoiceBox.setValue(null);
+      currentUser.setText(null);
+      userChoiceBox.setOnAction(this::setUserLabel);
     }
-    userChoiceBox.getItems().addAll(userNames);
-    userChoiceBox.setValue(null);
-    currentUser.setText(null);
-    userChoiceBox.setOnAction(this::setUserLabel);
   }
 
   @FXML
   private void onStartNewGame(ActionEvent event) {
     // Get the current scene
     if (userChoiceBox.getValue() == null) {
-      currentUser.setText("You must choose your profile!");
       return;
     }
 
@@ -132,8 +140,13 @@ public class MenuController {
   }
 
   public void setUserLabel(ActionEvent event) {
-    String current = userChoiceBox.getValue();
-    currentUser.setText(current);
+    String currentUserName = userChoiceBox.getValue();
+    currentUser.setText(currentUserName);
+    selectUserMessage.setVisible(false);
+    createUserMessage.setVisible(false);
+    editUserBox.setVisible(true);
+    changeUserBox.setVisible(true);
+    welcomeBackMessage.setVisible(true);
     currentlyActiveUser = currentUser.getText();
   }
 
