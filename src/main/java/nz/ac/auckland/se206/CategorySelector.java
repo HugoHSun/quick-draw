@@ -112,7 +112,7 @@ public class CategorySelector {
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
     // construct Type that tells Gson about the generic type
     Type userListType = new TypeToken<List<User>>() {}.getType();
-    FileReader fr = new FileReader("user.json");
+    FileReader fr = new FileReader(App.usersFileName);
     List<User> users = gson.fromJson(fr, userListType);
     fr.close();
     List<String> userNames = new ArrayList<String>();
@@ -123,7 +123,7 @@ public class CategorySelector {
     // Remove all the categories that have been played by the current user (except
     // when the user has played all the categories)
     List<String> words =
-        users.get(userNames.indexOf(MenuController.currentlyActiveUser)).getWordsEncountered();
+        users.get(userNames.indexOf(MenuController.currentActiveUser)).getWordsEncountered();
     if (words.size() < categories.size()) {
       categories.removeAll(words);
     }

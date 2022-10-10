@@ -718,4 +718,4 @@ FodyWeavers.xsd
 !src/main/resources/ml/*
 
 # User profile file
-user.json
+*.json

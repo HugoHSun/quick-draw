@@ -3,7 +3,6 @@ package nz.ac.auckland.se206.controller;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -49,13 +48,7 @@ public class NewUserController {
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
     // construct Type that tells Gson about the generic type
     Type userListType = new TypeToken<List<User>>() {}.getType();
-    File f = new File("user.json");
-
-    if (!f.exists()) {
-      FileWriter fw = new FileWriter("user.json");
-      fw.close();
-    }
-    FileReader fr = new FileReader("user.json");
+    FileReader fr = new FileReader(App.usersFileName);
     List<User> users = gson.fromJson(fr, userListType);
     fr.close();
     // If it was an empty one create initial list
@@ -72,7 +65,7 @@ public class NewUserController {
     if (!userNames.contains(newUsername.getText())) {
       users.add(new User(newUsername.getText()));
       // No append replace the whole file
-      FileWriter fw = new FileWriter("user.json", false);
+      FileWriter fw = new FileWriter(App.usersFileName, false);
       gson.toJson(users, fw);
       fw.close();
     }

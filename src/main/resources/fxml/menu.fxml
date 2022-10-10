@@ -2,16 +2,15 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.effect.Blend?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -22,7 +21,7 @@
             <Image url="@../images/menubackground.jpg" />
          </image>
       </ImageView>
-      <VBox alignment="TOP_CENTER" layoutX="159.0" layoutY="99.0" prefHeight="337.0" prefWidth="463.0">
+      <VBox alignment="TOP_CENTER" layoutX="158.0" layoutY="91.0" prefHeight="337.0" prefWidth="463.0">
          <children>
             <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefHeight="74.0" prefWidth="378.0" text="QUICK, DRAW!" textAlignment="CENTER">
                <font>
@@ -62,7 +61,7 @@
                               <Font name="Segoe UI Semibold" size="28.0" />
                            </font>
                         </Label>
-                        <ChoiceBox fx:id="userChoiceBox" prefHeight="30.0" prefWidth="130.0" style="-fx-background-color: #ffb347;" />
+                        <ComboBox fx:id="userComboBox" onAction="#setUserLabel" prefHeight="23.0" prefWidth="120.0" style="-fx-background-color: #ffb347;" visibleRowCount="6" />
                      </children>
                   </HBox>
                   <HBox fx:id="welcomeBackMessage" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" visible="false">
@@ -72,7 +71,7 @@
                               <Font name="Segoe UI Semibold" size="28.0" />
                            </font>
                         </Label>
-                        <Label fx:id="currentUser" alignment="CENTER" style="-fx-text-fill: ff9e14;" text="Label">
+                        <Label fx:id="currentUserLabel" alignment="CENTER" style="-fx-text-fill: ff9e14;">
                            <font>
                               <Font name="Segoe UI Black" size="28.0" />
                            </font>
@@ -81,7 +80,7 @@
                   </HBox>
                </children>
             </StackPane>
-            <Button fx:id="startGameButton" alignment="CENTER" mnemonicParsing="false" onAction="#onStartNewGame" prefHeight="43.0" prefWidth="155.0" stylesheets="@../css/buttons.css" text="Normal Mode">
+            <Button fx:id="startGameButton" alignment="CENTER" mnemonicParsing="false" onAction="#onStartNormalGame" prefHeight="43.0" prefWidth="155.0" stylesheets="@../css/buttons.css" text="Normal Mode">
                <font>
                   <Font name="Segoe UI" size="15.0" />
                </font>
@@ -92,7 +91,7 @@
                   <Insets top="15.0" />
                </VBox.margin>
             </Button>
-            <Button alignment="CENTER" mnemonicParsing="false" onAction="#onStartNewGame" prefHeight="43.0" prefWidth="155.0" stylesheets="@../css/buttons.css" text="Hidden-Word Mode">
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#onStartHiddenWordGame" prefHeight="43.0" prefWidth="155.0" stylesheets="@../css/buttons.css" text="Hidden-Word Mode">
                <font>
                   <Font name="Segoe UI" size="15.0" />
                </font>
@@ -103,7 +102,7 @@
                   <Insets top="20.0" />
                </VBox.margin>
             </Button>
-            <Button alignment="CENTER" mnemonicParsing="false" onAction="#onStartNewGame" prefHeight="43.0" prefWidth="155.0" stylesheets="@../css/buttons.css" text="Zen Mode">
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#onStartZenGame" prefHeight="43.0" prefWidth="155.0" stylesheets="@../css/buttons.css" text="Zen Mode">
                <font>
                   <Font name="Segoe UI" size="15.0" />
                </font>
@@ -116,19 +115,18 @@
             </Button>
          </children>
       </VBox>
-      <HBox fx:id="editUserBox" alignment="CENTER_RIGHT" layoutX="396.0" layoutY="7.0" prefHeight="40.0" prefWidth="378.0" spacing="20.0">
+      <HBox fx:id="editUserBox" alignment="TOP_RIGHT" layoutX="396.0" layoutY="7.0" prefHeight="84.0" prefWidth="378.0" spacing="30.0">
          <children>
-            <VBox fx:id="changeUserBox" alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+            <VBox fx:id="changeUserBox" alignment="TOP_CENTER" prefHeight="43.0" prefWidth="105.0">
                <children>
                   <Label alignment="CENTER" text="Change User" textAlignment="CENTER">
                      <font>
                         <Font name="Roboto Black" size="12.0" />
                      </font>
                   </Label>
-                  <ChoiceBox accessibleText="Change User" prefHeight="30.0" prefWidth="130.0" style="-fx-background-color: #ffb347;" />
                </children>
             </VBox>
-            <Button id="addUserButton" fx:id="addUserButton" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onAddUser" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
+            <Button id="addUserButton" alignment="CENTER" contentDisplay="BOTTOM" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onAddUser" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent;">
                <graphic>
                   <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -137,10 +135,16 @@
                   </ImageView>
                </graphic>
                <HBox.margin>
-                  <Insets left="15.0" right="20.0" />
+                  <Insets right="15.0" top="10.0" />
                </HBox.margin>
+               <tooltip>
+                  <Tooltip style="-fx-background-color: #ffb347;" text="Add User" />
+                  <font>
+                        <Font name="Roboto Black" size="14.0" />
+                     </font>
+               </tooltip>
             </Button>
-            <Button fx:id="removeUserButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onDeleteUser" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
+            <Button fx:id="deleteUserButton" contentDisplay="BOTTOM" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onDeleteUser" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent;">
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -149,8 +153,14 @@
                   </ImageView>
                </graphic>
                <HBox.margin>
-                  <Insets right="20.0" />
+                  <Insets right="15.0" top="10.0" />
                </HBox.margin>
+               <tooltip>
+                  <Tooltip style="-fx-background-color: #ffb347;" text="Delete Current User" />
+                  <font>
+                        <Font name="Roboto Black" size="14.0" />
+                     </font>
+               </tooltip>
             </Button>
          </children>
       </HBox>

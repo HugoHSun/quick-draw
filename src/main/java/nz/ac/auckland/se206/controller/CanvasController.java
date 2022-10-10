@@ -396,7 +396,7 @@ public class CanvasController {
           new Background(new BackgroundFill(Color.LIGHTGREEN, CornerRadii.EMPTY, Insets.EMPTY)));
       textToSpeech.speak("Congratulations, you won!");
       try {
-        recordResult(MenuController.currentlyActiveUser, true, 60 - remainingTime);
+        recordResult(MenuController.currentActiveUser, true, 60 - remainingTime);
       } catch (IOException e) {
         // TODO Auto-generated catch block
         e.printStackTrace();
@@ -407,7 +407,7 @@ public class CanvasController {
           new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
       textToSpeech.speak("Sorry you lost, try again next time.");
       try {
-        recordResult(MenuController.currentlyActiveUser, false, 60 - remainingTime);
+        recordResult(MenuController.currentActiveUser, false, 60 - remainingTime);
       } catch (IOException e) {
         // TODO Auto-generated catch block
         e.printStackTrace();
@@ -427,7 +427,7 @@ public class CanvasController {
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
     // construct Type that tells Gson about the generic type
     Type userListType = new TypeToken<List<User>>() {}.getType();
-    FileReader fr = new FileReader("user.json");
+    FileReader fr = new FileReader(App.usersFileName);
     List<User> users = gson.fromJson(fr, userListType);
     fr.close();
     List<String> userNames = new ArrayList<String>();
@@ -446,7 +446,7 @@ public class CanvasController {
     // Record the category played
     users.get(userNames.indexOf(userName)).newWord(category);
 
-    FileWriter fw = new FileWriter("user.json", false);
+    FileWriter fw = new FileWriter(App.usersFileName, false);
     gson.toJson(users, fw);
     fw.close();
   }

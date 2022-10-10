@@ -32,14 +32,14 @@ public class StatsController {
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
     // construct Type that tells Gson about the generic type
     Type userListType = new TypeToken<List<User>>() {}.getType();
-    FileReader fr = new FileReader("user.json");
+    FileReader fr = new FileReader(App.usersFileName);
     List<User> users = gson.fromJson(fr, userListType);
     fr.close();
     List<String> userNames = new ArrayList<String>();
     for (User user : users) {
       userNames.add(user.getName());
     }
-    statLabel.setText(users.get(userNames.indexOf(MenuController.currentlyActiveUser)).toString());
+    statLabel.setText(users.get(userNames.indexOf(MenuController.currentActiveUser)).toString());
 
     Image returnImg = new Image("/images/returnIcon.png");
     ImageView returnImgView = new ImageView(returnImg);

@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.opencsv.exceptions.CsvException;
-import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -18,8 +17,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -33,17 +34,21 @@ import nz.ac.auckland.se206.user.User;
  */
 public class MenuController {
 
-  public static String currentlyActiveUser = null;
+  public static String currentActiveUser = null;
 
   private Scene scene;
+
   private Parent root;
+
   private List<User> users;
+
   private List<String> userNames;
 
-  @FXML private Button addUserButton;
-  @FXML private Button removeUserButton;
   @FXML private Button statsButton;
+
   @FXML private Button startGameButton;
+
+  @FXML private Button deleteUserButton;
 
   @FXML private HBox createUserMessage;
 
@@ -55,53 +60,115 @@ public class MenuController {
 
   @FXML private VBox changeUserBox;
 
-  @FXML private ChoiceBox<String> userChoiceBox;
+  @FXML private ComboBox<String> userComboBox;
 
-  @FXML private Label currentUser;
+  @FXML private Label currentUserLabel;
 
   public void initialize() throws URISyntaxException, IOException, CsvException {
+    // Get all users from the users json file by gson library
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
     // construct Type that tells Gson about the generic type
     Type userListType = new TypeToken<List<User>>() {}.getType();
-    File f = new File("user.json");
-    if (!f.exists()) {
-      FileWriter fw = new FileWriter("user.json");
-      fw.write("[]");
-      fw.close();
-    }
-    FileReader fr = new FileReader("user.json");
+    FileReader fr = new FileReader(App.usersFileName);
     users = gson.fromJson(fr, userListType);
     fr.close();
-
-    // MULTI PROFILE STUFF
     userNames = new ArrayList<String>();
     for (User user : users) {
       userNames.add(user.getName());
     }
 
-    // Change the menu layout when there is no created user
-    if (userNames.isEmpty()) {
+    // Menu layout when there is no created user
+    if (users.isEmpty()) {
+      // Update the displayed message
+      createUserMessage.setVisible(true);
       selectUserMessage.setVisible(false);
       welcomeBackMessage.setVisible(false);
+
       editUserBox.setVisible(false);
-      createUserMessage.setVisible(true);
+      // Menu layout when there is created users
     } else {
-      // Updating the display
+      deleteUserButton.setDisable(true);
+      editUserBox.setVisible(true);
       changeUserBox.setVisible(false);
-      userChoiceBox.getItems().addAll(userNames);
-      userChoiceBox.setValue(null);
-      currentUser.setText(null);
-      userChoiceBox.setOnAction(this::setUserLabel);
+      userComboBox.getItems().addAll(userNames);
     }
   }
 
   @FXML
-  private void onStartNewGame(ActionEvent event) {
-    // Get the current scene
-    if (userChoiceBox.getValue() == null) {
+  private void setUserLabel(ActionEvent event) {
+    currentActiveUser = userComboBox.getValue();
+    currentUserLabel.setText(currentActiveUser);
+    if (!changeUserBox.getChildren().contains(userComboBox)) {
+      changeUserBox.getChildren().add(userComboBox);
+    }
+    changeUserBox.setVisible(true);
+
+    // Update the displayed message
+    createUserMessage.setVisible(false);
+    selectUserMessage.setVisible(false);
+    welcomeBackMessage.setVisible(true);
+
+    // When no user is chosen
+    if (currentActiveUser == null) {
+      deleteUserButton.setDisable(true);
+    } else {
+      deleteUserButton.setDisable(false);
+    }
+  }
+
+  @FXML
+  private void onStartNormalGame(ActionEvent event) {
+    // When no user is selected
+    if (userComboBox.getValue() == null) {
+      Alert noChosenUser = new Alert(AlertType.INFORMATION);
+      noChosenUser.setHeaderText("You need to chose an user to start playing!");
+      noChosenUser.show();
       return;
     }
 
+    // Get the current scene
+    scene = ((Node) event.getSource()).getScene();
+    try {
+      // Load a new parent node
+      root = new FXMLLoader(App.class.getResource("/fxml/canvas.fxml")).load();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    scene.setRoot(root);
+  }
+
+  @FXML
+  private void onStartHiddenWordGame(ActionEvent event) {
+    // When no user is selected
+    if (userComboBox.getValue() == null) {
+      Alert noChosenUser = new Alert(AlertType.INFORMATION);
+      noChosenUser.setHeaderText("You need to chose an user to start playing!");
+      noChosenUser.show();
+      return;
+    }
+
+    // Get the current scene
+    scene = ((Node) event.getSource()).getScene();
+    try {
+      // Load a new parent node
+      root = new FXMLLoader(App.class.getResource("/fxml/canvas.fxml")).load();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    scene.setRoot(root);
+  }
+
+  @FXML
+  private void onStartZenGame(ActionEvent event) {
+    // When no user is selected
+    if (userComboBox.getValue() == null) {
+      Alert noChosenUser = new Alert(AlertType.INFORMATION);
+      noChosenUser.setHeaderText("You need to chose an user to start playing!");
+      noChosenUser.show();
+      return;
+    }
+
+    // Get the current scene
     scene = ((Node) event.getSource()).getScene();
     try {
       // Load a new parent node
@@ -126,39 +193,45 @@ public class MenuController {
 
   @FXML
   private void onDeleteUser(ActionEvent event) throws IOException {
-    // When there are no user left
-    if (userNames.size() == 0) {
-      return;
-    }
-
-    Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    users.remove(userNames.indexOf(currentUser.getText()));
-    userNames.remove(currentUser.getText());
-
     // Delete the current user
-    FileWriter fw = new FileWriter("user.json", false);
+    int userNameIndex = userNames.indexOf(currentActiveUser);
+    users.remove(userNameIndex);
+    userNames.remove(currentActiveUser);
+    currentActiveUser = null;
+    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    FileWriter fw = new FileWriter(App.usersFileName, false);
     gson.toJson(users, fw);
     fw.close();
-    userChoiceBox.getItems().clear();
-    userChoiceBox.getItems().addAll(userNames);
-    userChoiceBox.setValue(userNames.get(0));
-  }
 
-  public void setUserLabel(ActionEvent event) {
-    String currentUserName = userChoiceBox.getValue();
-    currentUser.setText(currentUserName);
-    selectUserMessage.setVisible(false);
-    createUserMessage.setVisible(false);
-    editUserBox.setVisible(true);
-    changeUserBox.setVisible(true);
-    welcomeBackMessage.setVisible(true);
-    currentlyActiveUser = currentUser.getText();
+    // When the last user is deleted
+    if (users.isEmpty()) {
+      // Update the displayed message
+      createUserMessage.setVisible(true);
+      selectUserMessage.setVisible(false);
+      welcomeBackMessage.setVisible(false);
+
+      editUserBox.setVisible(false);
+      // When there is at least one user left
+    } else {
+      userComboBox.getItems().clear();
+      userComboBox.getItems().addAll(userNames);
+
+      // Update the displayed message
+      createUserMessage.setVisible(false);
+      selectUserMessage.setVisible(true);
+      welcomeBackMessage.setVisible(false);
+
+      selectUserMessage.getChildren().add(userComboBox);
+      changeUserBox.setVisible(false);
+    }
   }
 
   @FXML
   private void onStatistics(ActionEvent event) throws IOException {
-    if (userChoiceBox.getValue() == null) {
-      currentUser.setText("You must choose your profile!");
+    if (userComboBox.getValue() == null) {
+      Alert noChosenUser = new Alert(AlertType.INFORMATION);
+      noChosenUser.setHeaderText("You must choose a profile!");
+      noChosenUser.show();
       return;
     }
     scene = ((Node) event.getSource()).getScene();
