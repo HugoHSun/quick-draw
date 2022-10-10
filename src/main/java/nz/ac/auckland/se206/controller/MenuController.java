@@ -119,7 +119,7 @@ public class MenuController {
   @FXML
   private void onStartNormalGame(ActionEvent event) {
     // When no user is selected
-    if (userComboBox.getValue() == null) {
+    if (currentActiveUser == null) {
       Alert noChosenUser = new Alert(AlertType.INFORMATION);
       noChosenUser.setHeaderText("You need to chose an user to start playing!");
       noChosenUser.show();
@@ -140,7 +140,7 @@ public class MenuController {
   @FXML
   private void onStartHiddenWordGame(ActionEvent event) {
     // When no user is selected
-    if (userComboBox.getValue() == null) {
+    if (currentActiveUser == null) {
       Alert noChosenUser = new Alert(AlertType.INFORMATION);
       noChosenUser.setHeaderText("You need to chose an user to start playing!");
       noChosenUser.show();
@@ -161,7 +161,7 @@ public class MenuController {
   @FXML
   private void onStartZenGame(ActionEvent event) {
     // When no user is selected
-    if (userComboBox.getValue() == null) {
+    if (currentActiveUser == null) {
       Alert noChosenUser = new Alert(AlertType.INFORMATION);
       noChosenUser.setHeaderText("You need to chose an user to start playing!");
       noChosenUser.show();
