@@ -28,7 +28,7 @@ import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.user.User;
 
 /**
- * This is the controller for menu, more features are to be added
+ * This is the controller for main menu
  *
  * @author Haoran Sun
  */
@@ -44,9 +44,7 @@ public class MenuController {
 
   private List<String> userNames;
 
-  @FXML private Button statsButton;
-
-  @FXML private Button startGameButton;
+  @FXML private Label currentUserLabel;
 
   @FXML private Button deleteUserButton;
 
@@ -62,8 +60,13 @@ public class MenuController {
 
   @FXML private ComboBox<String> userComboBox;
 
-  @FXML private Label currentUserLabel;
-
+  /**
+   * This method runs after the FXML file is loaded
+   *
+   * @throws URISyntaxException
+   * @throws IOException
+   * @throws CsvException
+   */
   public void initialize() throws URISyntaxException, IOException, CsvException {
     // Get all users from the users json file by gson library
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -94,10 +97,16 @@ public class MenuController {
     }
   }
 
+  /**
+   * This method is called when the combo box of users changes value
+   *
+   * @param event the event of the combo box changing value
+   */
   @FXML
-  private void setUserLabel(ActionEvent event) {
+  private void onUserComboBox(ActionEvent event) {
     currentActiveUser = userComboBox.getValue();
     currentUserLabel.setText(currentActiveUser);
+    // Move the combo box to the top right corner
     if (!changeUserBox.getChildren().contains(userComboBox)) {
       changeUserBox.getChildren().add(userComboBox);
     }
@@ -108,7 +117,7 @@ public class MenuController {
     selectUserMessage.setVisible(false);
     welcomeBackMessage.setVisible(true);
 
-    // When no user is chosen
+    // When no user is chosen, the delete current user button should be disabled
     if (currentActiveUser == null) {
       deleteUserButton.setDisable(true);
     } else {
@@ -116,9 +125,14 @@ public class MenuController {
     }
   }
 
+  /**
+   * This method is called when the user clicks on "Normal Mode" button, which starts a regular game
+   *
+   * @param event the event of clicking this button
+   */
   @FXML
   private void onStartNormalGame(ActionEvent event) {
-    // When no user is selected
+    // When no user is selected, a game cannot start
     if (currentActiveUser == null) {
       Alert noChosenUser = new Alert(AlertType.INFORMATION);
       noChosenUser.setHeaderText("You need to chose an user to start playing!");
@@ -137,6 +151,12 @@ public class MenuController {
     scene.setRoot(root);
   }
 
+  /**
+   * This method is called when the user clicks on "Hidden-Word Mode" button, which starts a game
+   * with the word to draw hidden
+   *
+   * @param event the event of clicking this button
+   */
   @FXML
   private void onStartHiddenWordGame(ActionEvent event) {
     // When no user is selected
@@ -158,6 +178,12 @@ public class MenuController {
     scene.setRoot(root);
   }
 
+  /**
+   * This method is called when the user clicks on "Zen Mode" button, which starts a game that has
+   * no time limit and no win or loss
+   *
+   * @param event the event of clicking this button
+   */
   @FXML
   private void onStartZenGame(ActionEvent event) {
     // When no user is selected
@@ -179,6 +205,12 @@ public class MenuController {
     scene.setRoot(root);
   }
 
+  /**
+   * This method is called when the user clicks on "Add User" button, which go to the new user UI
+   *
+   * @param event the event of clicking this button
+   * @throws IOException
+   */
   @FXML
   private void onAddUser(ActionEvent event) throws IOException {
     scene = ((Node) event.getSource()).getScene();
@@ -191,11 +223,18 @@ public class MenuController {
     scene.setRoot(root);
   }
 
+  /**
+   * This method is called when the user clicks on "Delete User" button, which deletes the current
+   * chosen user
+   *
+   * @param event the event of clicking this button
+   * @throws IOException
+   */
   @FXML
   private void onDeleteUser(ActionEvent event) throws IOException {
     // Delete the current user
-    int userNameIndex = userNames.indexOf(currentActiveUser);
-    users.remove(userNameIndex);
+    int userIndex = userNames.indexOf(currentActiveUser);
+    users.remove(userIndex);
     userNames.remove(currentActiveUser);
     currentActiveUser = null;
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -226,6 +265,13 @@ public class MenuController {
     }
   }
 
+  /**
+   * This method is called when "Statistics" button is clicked, which goes to the statistics page
+   * for the current chosen user
+   *
+   * @param event the event of clicking this button
+   * @throws IOException
+   */
   @FXML
   private void onStatistics(ActionEvent event) throws IOException {
     if (userComboBox.getValue() == null) {

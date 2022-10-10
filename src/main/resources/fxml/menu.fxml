@@ -62,7 +62,7 @@
                               <Font name="Segoe UI Semibold" size="28.0" />
                            </font>
                         </Label>
-                        <ComboBox fx:id="userComboBox" onAction="#setUserLabel" prefHeight="23.0" prefWidth="120.0" style="-fx-background-color: #ffb347;" visibleRowCount="6" />
+                        <ComboBox fx:id="userComboBox" onAction="#onUserComboBox" prefHeight="23.0" prefWidth="120.0" style="-fx-background-color: #ffb347;" visibleRowCount="6" />
                      </children>
                   </HBox>
                   <HBox fx:id="welcomeBackMessage" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" visible="false">
@@ -81,7 +81,7 @@
                   </HBox>
                </children>
             </StackPane>
-            <Button fx:id="startGameButton" alignment="CENTER" mnemonicParsing="false" onAction="#onStartNormalGame" prefHeight="43.0" prefWidth="155.0" stylesheets="@../css/buttons.css" text="Normal Mode">
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#onStartNormalGame" prefHeight="43.0" prefWidth="155.0" stylesheets="@../css/buttons.css" text="Normal Mode">
                <font>
                   <Font name="Segoe UI" size="15.0" />
                </font>
@@ -187,7 +187,7 @@
             <HBox alignment="CENTER" prefHeight="50.0" prefWidth="320.0" spacing="20.0">
                <children>
                   <Button mnemonicParsing="false" stylesheets="@../css/buttons.css" text="Badges" />
-                  <Button fx:id="statsButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onStatistics" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
+                  <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onStatistics" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
                      <graphic>
                         <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
                            <image>
