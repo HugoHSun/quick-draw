@@ -1,12 +1,15 @@
 package nz.ac.auckland.se206;
 
 import com.opencsv.exceptions.CsvException;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import nz.ac.auckland.se206.controller.SceneManager;
 import nz.ac.auckland.se206.controller.SceneManager.AppUi;
@@ -16,6 +19,8 @@ import nz.ac.auckland.se206.controller.SceneManager.AppUi;
  * remain as the class that runs the JavaFX application.
  */
 public class App extends Application {
+  public static final String usersFileName = ".users.json";
+
   public static void main(final String[] args) {
     launch();
   }
@@ -40,9 +45,17 @@ public class App extends Application {
    */
   @Override
   public void start(final Stage stage) throws IOException {
-    // User cannot resize the window
+    // Settings for the window
     stage.setResizable(false);
     stage.setTitle("Quick Draw! - SE206 Edition");
+    stage.getIcons().add(new Image("/images/app-logo.png"));
+
+    // Create a file for multi-profile
+    if (!new File(usersFileName).exists()) {
+      FileWriter fw = new FileWriter(usersFileName);
+      fw.write("[]");
+      fw.close();
+    }
 
     // Initialize the CategorySelector
     try {
@@ -52,7 +65,7 @@ public class App extends Application {
     }
 
     SceneManager.addUi(SceneManager.AppUi.MAIN_MENU, loadFxml("menu"));
-    final Scene scene = new Scene(SceneManager.getUi(AppUi.MAIN_MENU), 780, 500);
+    final Scene scene = new Scene(SceneManager.getUi(AppUi.MAIN_MENU), 820, 520);
 
     stage.setScene(scene);
     stage.show();

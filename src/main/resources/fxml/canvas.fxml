@@ -19,11 +19,23 @@
    <children>
       <VBox alignment="CENTER" prefHeight="480.0" prefWidth="440.0" style="-fx-background-color: FF8200;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
         <children>
-          <Label alignment="CENTER" layoutX="124.0" layoutY="14.0" prefHeight="23.0" prefWidth="355.0" text="Please draw the following category: " textAlignment="CENTER">
-            <font>
-              <Font name="Segoe UI" size="20.0" />
-            </font>
-          </Label>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="menuButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onReturn" prefHeight="20.0" prefWidth="20.0" scaleX="0.1" scaleY="0.1" scaleZ="0.1" stylesheets="@../css/buttons.css">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </Button>
+                <Label alignment="CENTER" prefHeight="23.0" prefWidth="355.0" text="Please draw the following category: " textAlignment="CENTER">
+                  <font>
+                    <Font name="Segoe UI" size="20.0" />
+                  </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                </Label>
+               </children>
+            </HBox>
             <Label fx:id="categoryLabel" text="Loading">
                <font>
                   <Font name="Segoe UI Black Italic" size="28.0" />
@@ -32,7 +44,7 @@
                   <Insets bottom="15.0" />
                </VBox.margin>
             </Label>
-            <HBox fx:id="countdownHorizontalBox" alignment="TOP_CENTER" layoutX="30.0" layoutY="545.0" prefHeight="0.0" prefWidth="400.0" style="-fx-background-color: lightgreen;">
+            <HBox fx:id="countdownHorizontalBox" alignment="TOP_CENTER" layoutX="30.0" layoutY="545.0" prefHeight="0.0" prefWidth="400.0" style="-fx-background-color: lightgrey;">
                <children>
                   <Label alignment="CENTER_RIGHT" prefHeight="24.0" prefWidth="204.0" text="Time Left: ">
                      <font>
@@ -65,28 +77,28 @@
                <top>
                   <ImageView fitHeight="27.0" fitWidth="448.0" pickOnBounds="true" BorderPane.alignment="CENTER">
                      <image>
-                        <Image url="@../images/upper%20canvas%20frame.png" />
+                        <Image url="@../images/upperCanvasFrame.png" />
                      </image>
                   </ImageView>
                </top>
                <left>
                   <ImageView fitHeight="243.0" fitWidth="23.0" pickOnBounds="true" BorderPane.alignment="CENTER">
                      <image>
-                        <Image url="@../images/left%20canvas%20frame.png" />
+                        <Image url="@../images/leftCanvasFrame.png" />
                      </image>
                   </ImageView>
                </left>
                <right>
                   <ImageView fitHeight="243.0" fitWidth="23.0" pickOnBounds="true" BorderPane.alignment="CENTER">
                      <image>
-                        <Image url="@../images/right%20canvas%20frame.png" />
+                        <Image url="@../images/rightCanvasFrame.png" />
                      </image>
                   </ImageView>
                </right>
                <bottom>
                   <ImageView fitHeight="26.0" fitWidth="448.0" pickOnBounds="true" BorderPane.alignment="CENTER">
                      <image>
-                        <Image url="@../images/lower%20canvas%20frame.png" />
+                        <Image url="@../images/lowerCanvasFrame.png" />
                      </image>
                   </ImageView>
                </bottom>
@@ -96,10 +108,13 @@
             </BorderPane>
             <StackPane prefHeight="150.0" prefWidth="200.0">
                <children>
-                  <Button id="button" fx:id="startDrawingButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onStartDrawing" stylesheets="@../css/buttons.css" text="START DRAWING">
+                  <Button fx:id="startDrawingButton" alignment="CENTER_RIGHT" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onStartDrawing" stylesheets="@../css/buttons.css" text="START DRAWING">
                      <font>
                         <Font size="20.0" />
                      </font>
+                     <StackPane.margin>
+                        <Insets top="-20.0" />
+                     </StackPane.margin>
                   </Button>
                   <ToolBar fx:id="toolBox" style="-fx-background-color: FF8200;" visible="false" StackPane.alignment="CENTER">
                     <items>
@@ -119,7 +134,7 @@
       
         </children>
         <padding>
-          <Insets bottom="20.0" top="20.0" />
+          <Insets top="20.0" />
         </padding>
       </VBox>
       <VBox layoutX="440.0" layoutY="27.0" prefHeight="480.0" prefWidth="310.0" spacing="10.0" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -188,18 +203,6 @@
                <VBox.margin>
                   <Insets />
                </VBox.margin>
-            </HBox>
-            <HBox prefHeight="66.0" prefWidth="310.0">
-               <children>
-                  <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#onSeeStatistics" prefHeight="38.0" prefWidth="130.0" style="-fx-background-color: FFE5B4;" text="See Statistics">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="165.0" />
-                     </HBox.margin>
-                  </Button>
-               </children>
             </HBox>
          </children>
       </VBox>

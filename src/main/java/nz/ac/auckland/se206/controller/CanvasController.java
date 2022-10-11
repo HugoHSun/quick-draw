@@ -38,6 +38,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToolBar;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -67,6 +68,8 @@ import nz.ac.auckland.se206.user.User;
  */
 public class CanvasController {
 
+  @FXML private Button menuButton;
+
   @FXML private Canvas canvas;
 
   @FXML private Label categoryLabel;
@@ -90,6 +93,8 @@ public class CanvasController {
   @FXML private Button newRoundButton;
 
   @FXML private Button saveDrawingButton;
+
+  private Parent root;
 
   private GraphicsContext graphic;
 
@@ -155,6 +160,10 @@ public class CanvasController {
         });
 
     model = new DoodlePrediction();
+
+    Image returnImg = new Image("/images/returnIcon2.png");
+    ImageView returnImgView = new ImageView(returnImg);
+    menuButton.setGraphic(returnImgView);
   }
 
   /** This method is called when the "Pen" button is presses */
@@ -371,44 +380,36 @@ public class CanvasController {
     }
   }
 
-  /**
-   * This is a helper method that is called when the game ends
-   *
-   * @param remainingTime the time left when the game is ended
-   */
+  /** This is a helper method that is executed when a game has ended */
   private void endGame(int remainingTime) {
-    // Updating the GUI components
+    // Setting the buttons
     toolBox.setVisible(false);
     canvas.setDisable(true);
     canvas.setOnMouseDragged(null);
     saveDrawingButton.setDisable(false);
     newRoundButton.setDisable(false);
 
-    // Change the background of count down to red
-    Platform.runLater(
-        () -> {
-          timerLabel.setText(String.valueOf(remainingTime));
-          countdownHorizontalBox.setBackground(
-              new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
-        });
-
     TextToSpeech textToSpeech = new TextToSpeech();
     if (isWon) {
       Platform.runLater(() -> winLostLabel.setText("YOU WON!!!"));
+      countdownHorizontalBox.setBackground(
+          new Background(new BackgroundFill(Color.LIGHTGREEN, CornerRadii.EMPTY, Insets.EMPTY)));
       textToSpeech.speak("Congratulations, you won!");
       try {
-        // Record the result to the current user
-        recordResult(MenuController.currentlyActiveUser, isWon, 60 - remainingTime);
+        recordResult(MenuController.currentActiveUser, true, 60 - remainingTime);
       } catch (IOException e) {
+        // TODO Auto-generated catch block
         e.printStackTrace();
       }
-      // The player has lost
     } else {
       Platform.runLater(() -> winLostLabel.setText("YOU LOST!!!"));
+      countdownHorizontalBox.setBackground(
+          new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
       textToSpeech.speak("Sorry you lost, try again next time.");
       try {
-        recordResult(MenuController.currentlyActiveUser, isWon, 60 - remainingTime);
+        recordResult(MenuController.currentActiveUser, false, 60 - remainingTime);
       } catch (IOException e) {
+        // TODO Auto-generated catch block
         e.printStackTrace();
       }
     }
@@ -426,7 +427,7 @@ public class CanvasController {
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
     // construct Type that tells Gson about the generic type
     Type userListType = new TypeToken<List<User>>() {}.getType();
-    FileReader fr = new FileReader("user.json");
+    FileReader fr = new FileReader(App.usersFileName);
     List<User> users = gson.fromJson(fr, userListType);
     fr.close();
     List<String> userNames = new ArrayList<String>();
@@ -445,7 +446,7 @@ public class CanvasController {
     // Record the category played
     users.get(userNames.indexOf(userName)).newWord(category);
 
-    FileWriter fw = new FileWriter("user.json", false);
+    FileWriter fw = new FileWriter(App.usersFileName, false);
     gson.toJson(users, fw);
     fw.close();
   }
@@ -555,5 +556,17 @@ public class CanvasController {
     graphics.dispose();
 
     return imageBinary;
+  }
+
+  @FXML
+  public void onReturn(ActionEvent event) {
+    Scene scene = ((Node) event.getSource()).getScene();
+    try {
+      // Load a new parent node
+      root = new FXMLLoader(App.class.getResource("/fxml/menu.fxml")).load();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    scene.setRoot(root);
   }
 }

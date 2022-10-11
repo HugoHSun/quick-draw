@@ -1,59 +1,213 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.effect.Blend?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="500.0" prefWidth="780.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controller.MenuController">
+<AnchorPane prefHeight="520.0" prefWidth="820.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controller.MenuController">
    <children>
-      <ImageView fitHeight="500.0" fitWidth="780.0" opacity="0.4">
+      <ImageView fitHeight="520.0" fitWidth="820.0" opacity="0.4">
          <image>
-            <Image url="@../images/menu%20background.jpg" />
+            <Image url="@../images/menubackground.jpg" />
          </image>
       </ImageView>
-      <HBox prefHeight="55.0" prefWidth="530.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+      <VBox alignment="TOP_CENTER" layoutX="185.0" layoutY="90.0" prefHeight="320.0" prefWidth="450.0" AnchorPane.bottomAnchor="90.0" AnchorPane.topAnchor="90.0">
          <children>
-            <Label text="Current User: ">
+            <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefHeight="74.0" prefWidth="378.0" text="QUICK, DRAW!" textAlignment="CENTER">
                <font>
-                  <Font name="System Bold" size="20.0" />
+                  <Font name="Segoe UI Black" size="50.0" />
                </font>
+               <effect>
+                  <Blend />
+               </effect>
             </Label>
-            <Label fx:id="currentUser">
+            <StackPane prefHeight="30.0" prefWidth="463.0">
+               <children>
+                  <HBox fx:id="createUserMessage" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" visible="false">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" text="Please create an user:">
+                           <font>
+                              <Font name="Segoe UI Semibold" size="28.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="addUserButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onAddUser" prefHeight="40.0" prefWidth="45.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
+                           <graphic>
+                              <ImageView id="addUserButton" accessibleRole="BUTTON" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/addUserIcon.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <HBox.margin>
+                              <Insets left="30.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <HBox fx:id="selectUserMessage" alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label text="Please select an user: ">
+                           <font>
+                              <Font name="Segoe UI Semibold" size="28.0" />
+                           </font>
+                        </Label>
+                        <ComboBox fx:id="userComboBox" onAction="#onUserComboBox" prefHeight="23.0" prefWidth="120.0" style="-fx-background-color: #ffb347;" visibleRowCount="6" />
+                     </children>
+                  </HBox>
+                  <HBox fx:id="welcomeBackMessage" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" visible="false">
+                     <children>
+                        <Label alignment="CENTER" text="Welcome Back,">
+                           <font>
+                              <Font name="Segoe UI Semibold" size="28.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="currentUserLabel" alignment="CENTER" style="-fx-text-fill: ff9e14;">
+                           <font>
+                              <Font name="Segoe UI Black" size="28.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+               </children>
+            </StackPane>
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#onStartNormalGame" prefHeight="43.0" prefWidth="155.0" stylesheets="@../css/buttons.css" text="Normal Mode">
                <font>
-                  <Font name="System Bold" size="20.0" />
+                  <Font name="Segoe UI" size="15.0" />
                </font>
-            </Label>
-         </children>
-      </HBox>
-      <VBox prefHeight="200.0" prefWidth="140.0" spacing="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
-         <children>
-            <Button mnemonicParsing="false" onAction="#onAddUser" stylesheets="@../css/buttons.css" text="Add User" />
-            <Button mnemonicParsing="false" onAction="#onDeleteUser" stylesheets="@../css/buttons.css" text="Delete Current User" />
-            <ChoiceBox fx:id="userChoiceBox" prefWidth="150.0" style="-fx-background-color: #FBBA72;" />
+               <effect>
+                  <Blend mode="DARKEN" />
+               </effect>
+               <VBox.margin>
+                  <Insets top="15.0" />
+               </VBox.margin>
+            </Button>
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#onStartHiddenWordGame" prefHeight="43.0" prefWidth="155.0" stylesheets="@../css/buttons.css" text="Hidden-Word Mode">
+               <font>
+                  <Font name="Segoe UI" size="15.0" />
+               </font>
+               <effect>
+                  <Blend mode="DARKEN" />
+               </effect>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </Button>
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#onStartZenGame" prefHeight="43.0" prefWidth="155.0" stylesheets="@../css/buttons.css" text="Zen Mode">
+               <font>
+                  <Font name="Segoe UI" size="15.0" />
+               </font>
+               <effect>
+                  <Blend mode="DARKEN" />
+               </effect>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </Button>
          </children>
       </VBox>
-      <Label alignment="TOP_CENTER" text="QUICK, DRAW!" textAlignment="CENTER" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="120.0">
-         <font>
-            <Font name="Segoe UI Black" size="38.0" />
-         </font>
-         <effect>
-            <Blend />
-         </effect>
-      </Label>
-      <Button id="button" alignment="CENTER" mnemonicParsing="false" onAction="#onStartNewGame" prefHeight="40.0" prefWidth="100.0" stylesheets="@../css/buttons.css" text="Start New Game" AnchorPane.bottomAnchor="230.0" AnchorPane.leftAnchor="310.0" AnchorPane.rightAnchor="310.0" AnchorPane.topAnchor="220.0">
-         <font>
-            <Font name="Segoe UI" size="15.0" />
-         </font>
-         <effect>
-            <Blend mode="DARKEN" />
-         </effect>
-      </Button>
+      <HBox layoutX="8.0" layoutY="14.0" prefHeight="60.0" prefWidth="300.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0">
+         <children>
+            <Button alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css" text="About Us - Speedy Sketchers">
+               <graphic>
+                  <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../images/app-logo.PNG" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="Roboto Black" size="12.0" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
+      <HBox fx:id="editUserBox" alignment="TOP_RIGHT" layoutX="475.0" layoutY="7.0" prefHeight="60.0" prefWidth="300.0" spacing="30.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+         <children>
+            <VBox fx:id="changeUserBox" alignment="TOP_CENTER" prefHeight="43.0" prefWidth="105.0">
+               <children>
+                  <Label alignment="CENTER" text="Change User" textAlignment="CENTER">
+                     <font>
+                        <Font name="Roboto Black" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <Button alignment="CENTER" contentDisplay="BOTTOM" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onAddUser" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
+               <graphic>
+                  <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/addUserIcon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <HBox.margin>
+                  <Insets right="15.0" top="10.0" />
+               </HBox.margin>
+               <tooltip>
+                  <Tooltip style="-fx-background-color: #ffb347;" text="Add User" />
+                  <font>
+                        <Font name="Roboto Black" size="14.0" />
+                     </font>
+               </tooltip>
+            </Button>
+            <Button fx:id="deleteUserButton" contentDisplay="BOTTOM" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onDeleteUser" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/removeUserIcon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <HBox.margin>
+                  <Insets right="15.0" top="10.0" />
+               </HBox.margin>
+               <tooltip>
+                  <Tooltip style="-fx-background-color: #ffb347;" text="Delete Current User" />
+                  <font>
+                        <Font name="Roboto Black" size="14.0" />
+                     </font>
+               </tooltip>
+            </Button>
+         </children>
+      </HBox>
+      <VBox layoutX="250.0" layoutY="430.0" prefHeight="60.0" prefWidth="320.0" AnchorPane.bottomAnchor="20.0">
+         <children>
+            <Separator prefWidth="200.0" />
+            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="320.0" spacing="20.0">
+               <children>
+                  <Button mnemonicParsing="false" stylesheets="@../css/buttons.css" text="Badges" />
+                  <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onStatistics" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
+                     <graphic>
+                        <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/statsIcon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <tooltip>
+                        <Tooltip style="-fx-background-color: ffb347;" text="Show Statistics">
+                           <font>
+                              <Font name="Roboto Black" size="12.0" />
+                           </font>
+                        </Tooltip>
+                     </tooltip>
+                  </Button>
+                  <Button mnemonicParsing="false" stylesheets="@../css/buttons.css" text="Settings" />
+                  <Button mnemonicParsing="false" stylesheets="@../css/buttons.css" text="How to Play" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>
