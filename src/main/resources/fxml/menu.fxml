@@ -17,9 +17,9 @@
 
 <AnchorPane prefHeight="520.0" prefWidth="820.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controller.MenuController">
    <children>
-      <ImageView fitHeight="520.0" fitWidth="820.0" opacity="0.4">
+      <ImageView fitHeight="520.0" fitWidth="820.0">
          <image>
-            <Image url="@../images/menubackground.jpg" />
+            <Image url="@../images/mainBg.png" />
          </image>
       </ImageView>
       <VBox alignment="TOP_CENTER" layoutX="185.0" layoutY="90.0" prefHeight="320.0" prefWidth="450.0" AnchorPane.bottomAnchor="90.0" AnchorPane.topAnchor="90.0">
@@ -118,34 +118,45 @@
       </VBox>
       <HBox layoutX="8.0" layoutY="14.0" prefHeight="60.0" prefWidth="300.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
-            <Button alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css" text="About Us - Speedy Sketchers">
+            <Label style="-fx-background-color: FF8200;">
                <graphic>
-                  <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true">
-                     <image>
-                        <Image url="@../images/app-logo.PNG" />
-                     </image>
-                  </ImageView>
+                  <Button alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css" text="Speedy Sketchers">
+                     <graphic>
+                        <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@../images/app-logo.PNG" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
                </graphic>
-               <font>
-                  <Font name="Roboto Black" size="12.0" />
-               </font>
-            </Button>
+            </Label>
          </children>
       </HBox>
       <HBox fx:id="editUserBox" alignment="TOP_RIGHT" layoutX="475.0" layoutY="7.0" prefHeight="60.0" prefWidth="300.0" spacing="30.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
-            <VBox fx:id="changeUserBox" alignment="TOP_CENTER" prefHeight="43.0" prefWidth="105.0">
-               <children>
-                  <Label alignment="CENTER" text="Change User" textAlignment="CENTER">
-                     <font>
-                        <Font name="Roboto Black" size="12.0" />
-                     </font>
-                  </Label>
-               </children>
-            </VBox>
+            <Label style="-fx-background-color: FF8200;">
+               <graphic>
+                  <VBox fx:id="changeUserBox" alignment="TOP_CENTER" prefHeight="43.0" prefWidth="105.0">
+                     <children>
+                        <Label alignment="CENTER" text="Change User" textAlignment="CENTER" translateY="10.0">
+                           <font>
+                              <Font name="Roboto Black" size="12.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets right="10.0" />
+                           </VBox.margin>
+                        </Label>
+                     </children>
+                  </VBox>
+               </graphic>
+            </Label>
             <Button alignment="CENTER" contentDisplay="BOTTOM" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onAddUser" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
                <graphic>
-                  <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" translateX="-10.0" translateY="10.0">
                      <image>
                         <Image url="@../images/addUserIcon.png" />
                      </image>
@@ -163,7 +174,7 @@
             </Button>
             <Button fx:id="deleteUserButton" contentDisplay="BOTTOM" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onDeleteUser" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
                <graphic>
-                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" translateX="-10.0" translateY="10.0">
                      <image>
                         <Image url="@../images/removeUserIcon.png" />
                      </image>
@@ -186,10 +197,18 @@
             <Separator prefWidth="200.0" />
             <HBox alignment="CENTER" prefHeight="50.0" prefWidth="320.0" spacing="20.0">
                <children>
-                  <Button mnemonicParsing="false" stylesheets="@../css/buttons.css" text="Badges" />
-                  <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onStatistics" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
+                  <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" stylesheets="@../css/buttons.css" translateX="-50.0">
                      <graphic>
-                        <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="87.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/badgesIcon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onStatistics" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
+                     <graphic>
+                        <ImageView fitHeight="87.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../images/statsIcon.png" />
                            </image>
@@ -203,8 +222,18 @@
                         </Tooltip>
                      </tooltip>
                   </Button>
-                  <Button mnemonicParsing="false" stylesheets="@../css/buttons.css" text="Settings" />
-                  <Button mnemonicParsing="false" stylesheets="@../css/buttons.css" text="How to Play" />
+                  <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSettings" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css" translateX="50.0">
+                     <tooltip>
+                        <Tooltip text="Settings" />
+                     </tooltip>
+                     <graphic>
+                        <ImageView fitHeight="87.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/settingsIcon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
                </children>
             </HBox>
          </children>
