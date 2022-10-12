@@ -1,7 +1,6 @@
 package nz.ac.auckland.se206.controller;
 
 import ai.djl.ModelException;
-import ai.djl.modality.Classifications;
 import ai.djl.modality.Classifications.Classification;
 import ai.djl.translate.TranslateException;
 import com.google.gson.Gson;
@@ -49,7 +48,8 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import javax.imageio.ImageIO;
 import nz.ac.auckland.se206.App;
-import nz.ac.auckland.se206.CategorySelector;
+import nz.ac.auckland.se206.CategorySelector.Difficulty;
+import nz.ac.auckland.se206.game.Game;
 import nz.ac.auckland.se206.ml.DoodlePrediction;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 import nz.ac.auckland.se206.user.User;
@@ -96,11 +96,11 @@ public class CanvasController {
 
   private Parent root;
 
+  private Game game;
+
   private GraphicsContext graphic;
 
   private DoodlePrediction model;
-
-  private boolean isWon = false;
 
   // mouse coordinates
   private double currentX;
@@ -115,8 +115,9 @@ public class CanvasController {
    * @throws IOException If the model cannot be found on the file system.
    */
   public void initialize() throws ModelException, IOException {
-    // Randomly chose an easy category and display it
-    category = CategorySelector.getRandomCategory(CategorySelector.Difficulty.E);
+    // Initialize a game instance with 60 seconds and easy difficulty
+    game = new Game(60, Difficulty.E);
+    category = game.getCategoryToDraw();
     categoryLabel.setText(category);
     Thread voiceOver =
         new Thread(
@@ -244,46 +245,49 @@ public class CanvasController {
     startDrawingButton.setVisible(false);
     toolBox.setVisible(true);
 
-    // Create a background timer thread that counts down and ask GUI thread to update time and
-    // predictions display every second
+    // Create a background timer thread that executes the task after 1 second delay for the first
+    // time, then executes every second
     Timer timer = new Timer();
     timer.scheduleAtFixedRate(
         new TimerTask() {
-          // In seconds
-          private Integer remainingTime = 60;
-
-          // First time called after 1 second delay, then called every second
           public void run() {
-            remainingTime--;
+            // Update time value and display, remind time left when applicable
+            game.decreaseTime();
+            game.remindTimeLeft(11);
+            Platform.runLater(
+                () -> {
+                  timerLabel.setText(game.getRemainingTime().toString());
+                });
+
             // When a ending condition of the game is met
-            if (isWon || remainingTime == 0) {
+            if (game.checkWon(3)) {
               timer.cancel();
-              endGame(remainingTime);
+              endGame(true);
+              return;
+            } else if (game.checkTimeOut()) {
+              timer.cancel();
+              endGame(false);
               return;
             }
 
-            // Ask the GUI thread to update time and predictions display.
+            // Ask the GUI thread to update predictions display
             Platform.runLater(
                 () -> {
-                  // Time display
-                  timerLabel.setText(remainingTime.toString());
-
-                  // Update current predictions
                   if (checkEmptyCanvas()) {
                     predictionLabel.setText("EMPTY CANVAS!");
+                    game.updatePredictions(null);
+                    // Update the predictions value and display
                   } else {
                     try {
                       List<Classification> currentPredictions =
                           model.getPredictions(getCurrentSnapshot(), 10);
-                      predictionLabel.setText(getPredictionDisplay(currentPredictions));
+                      game.updatePredictions(currentPredictions);
+                      predictionLabel.setText(game.getPredictionDisplay());
                     } catch (TranslateException e) {
                       e.printStackTrace();
                     }
                   }
                 });
-
-            // Remind the user when there are 10 seconds left
-            remindTimeLeft(remainingTime, 10);
           }
         },
         1000,
@@ -322,66 +326,8 @@ public class CanvasController {
     return true;
   }
 
-  /**
-   * This is a helper method that builds a string of the current top 10 predictions, which can be
-   * displayed in a label. Note that it also calls checkWon method to check whether the player has
-   * won (the top 3 predictions contain the category to be drawn).
-   *
-   * @param currentPredictions a list of of type Classification, which is the category of AI
-   *     predictions
-   * @return a string containing the top 10 predictions
-   */
-  private String getPredictionDisplay(List<Classification> currentPredictions) {
-    // Build the string to display the top ten predictions
-    final StringBuilder sb = new StringBuilder();
-    int predictionRank = 1;
-
-    for (final Classifications.Classification classification : currentPredictions) {
-      // Build the predictions string to be displayed
-      sb.append(classification.getClassName().replaceAll("_", " "))
-          .append(" : ")
-          .append(String.format("%d%%", Math.round(100 * classification.getProbability())))
-          .append(System.lineSeparator());
-
-      checkWon(classification, predictionRank);
-
-      predictionRank++;
-    }
-
-    return sb.toString();
-  }
-
-  /**
-   * This method checks whether the winning condition is met (in the top 3 AI predictions)
-   *
-   * @param classification the category of prediction
-   * @param predictionRank the rank of prediction
-   */
-  private void checkWon(Classification classification, int predictionRank) {
-    // The player wins if top 3 AI predictions include the category
-    if (predictionRank <= 3
-        && classification.getClassName().replaceAll("_", " ").equals(categoryLabel.getText())) {
-      isWon = true;
-    }
-  }
-
-  /**
-   * This is a helper method which reminds user of the remaining time by text to speech
-   *
-   * @param currentRemainingTime the remaining time in seconds
-   * @param reminderTime the time to remind the user
-   */
-  private void remindTimeLeft(int currentRemainingTime, int reminderTime) {
-    if (currentRemainingTime == (reminderTime + 1)) {
-      Thread timeReminder =
-          new Thread(
-              () -> new TextToSpeech().speak(Integer.toString(reminderTime) + " seconds left"));
-      timeReminder.start();
-    }
-  }
-
   /** This is a helper method that is executed when a game has ended */
-  private void endGame(int remainingTime) {
+  private void endGame(boolean isWon) {
     // Setting the buttons
     toolBox.setVisible(false);
     canvas.setDisable(true);
@@ -396,7 +342,7 @@ public class CanvasController {
           new Background(new BackgroundFill(Color.LIGHTGREEN, CornerRadii.EMPTY, Insets.EMPTY)));
       textToSpeech.speak("Congratulations, you won!");
       try {
-        recordResult(MenuController.currentActiveUser, true, 60 - remainingTime);
+        recordResult(MenuController.currentActiveUser, true, 60 - game.getRemainingTime());
       } catch (IOException e) {
         // TODO Auto-generated catch block
         e.printStackTrace();
@@ -407,7 +353,7 @@ public class CanvasController {
           new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
       textToSpeech.speak("Sorry you lost, try again next time.");
       try {
-        recordResult(MenuController.currentActiveUser, false, 60 - remainingTime);
+        recordResult(MenuController.currentActiveUser, false, 60 - game.getRemainingTime());
       } catch (IOException e) {
         // TODO Auto-generated catch block
         e.printStackTrace();
@@ -559,7 +505,7 @@ public class CanvasController {
   }
 
   @FXML
-  public void onReturn(ActionEvent event) {
+  private void onReturn(ActionEvent event) {
     Scene scene = ((Node) event.getSource()).getScene();
     try {
       // Load a new parent node
