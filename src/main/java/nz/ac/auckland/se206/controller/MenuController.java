@@ -48,11 +48,11 @@ public class MenuController {
 
   @FXML private Button deleteUserButton;
 
-  @FXML private HBox createUserMessage;
+  @FXML private Label createUserMessage;
 
   @FXML private HBox selectUserMessage;
 
-  @FXML private HBox welcomeBackMessage;
+  @FXML private Label welcomeBackMessage;
 
   @FXML private HBox editUserBox;
 

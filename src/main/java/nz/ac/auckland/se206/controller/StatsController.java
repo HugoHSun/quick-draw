@@ -47,7 +47,7 @@ public class StatsController {
   }
 
   @FXML
-  public void onReturn(ActionEvent event) {
+  private void onReturn(ActionEvent event) {
     Scene scene = ((Node) event.getSource()).getScene();
     try {
       // Load a new parent node
