@@ -113,8 +113,9 @@ public class CanvasController {
    *
    * @throws ModelException If there is an error in reading the input/output of the DL model.
    * @throws IOException If the model cannot be found on the file system.
+ * @throws TranslateException 
    */
-  public void initialize() throws ModelException, IOException {
+  public void initialize() throws ModelException, IOException, TranslateException {
     // Randomly chose an easy category and display it
     category = CategorySelector.getRandomCategory(CategorySelector.Difficulty.E);
     categoryLabel.setText(category);
@@ -160,6 +161,7 @@ public class CanvasController {
         });
 
     model = new DoodlePrediction();
+    model.getPredictions(getCurrentSnapshot(), 10);
 
     Image returnImg = new Image("/images/returnIcon2.png");
     ImageView returnImgView = new ImageView(returnImg);
@@ -254,13 +256,14 @@ public class CanvasController {
 
           // First time called after 1 second delay, then called every second
           public void run() {
-            remainingTime--;
             // When a ending condition of the game is met
             if (isWon || remainingTime == 0) {
               timer.cancel();
               endGame(remainingTime);
               return;
             }
+            
+            remainingTime--;
 
             // Ask the GUI thread to update time and predictions display.
             Platform.runLater(
@@ -388,6 +391,13 @@ public class CanvasController {
     canvas.setOnMouseDragged(null);
     saveDrawingButton.setDisable(false);
     newRoundButton.setDisable(false);
+    
+    try {
+        recordResult(MenuController.currentActiveUser, isWon, 60 - remainingTime);
+      } catch (IOException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
 
     TextToSpeech textToSpeech = new TextToSpeech();
     if (isWon) {
@@ -395,23 +405,12 @@ public class CanvasController {
       countdownHorizontalBox.setBackground(
           new Background(new BackgroundFill(Color.LIGHTGREEN, CornerRadii.EMPTY, Insets.EMPTY)));
       textToSpeech.speak("Congratulations, you won!");
-      try {
-        recordResult(MenuController.currentActiveUser, true, 60 - remainingTime);
-      } catch (IOException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
+      
     } else {
       Platform.runLater(() -> winLostLabel.setText("YOU LOST!!!"));
       countdownHorizontalBox.setBackground(
           new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
       textToSpeech.speak("Sorry you lost, try again next time.");
-      try {
-        recordResult(MenuController.currentActiveUser, false, 60 - remainingTime);
-      } catch (IOException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
     }
   }
 
@@ -435,16 +434,23 @@ public class CanvasController {
       userNames.add(user.getName());
     }
 
+    User user = users.get(userNames.indexOf(userName));
+    
     // Record the game result
     if (isWon) {
-      users.get(userNames.indexOf(userName)).won();
-      users.get(userNames.indexOf(userName)).updateFastestWon(timeTaken);
+      user.won();
+      user.updateFastestWon(timeTaken);
     } else {
-      users.get(userNames.indexOf(userName)).lost();
+      user.lost();
     }
+    
+    user.record(isWon);
 
     // Record the category played
-    users.get(userNames.indexOf(userName)).newWord(category);
+    user.newWord(category);
+    
+    // Update any new badges
+    user.obtainBadges();
 
     FileWriter fw = new FileWriter(App.usersFileName, false);
     gson.toJson(users, fw);
