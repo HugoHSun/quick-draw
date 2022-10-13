@@ -1,40 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.AnchorPane?>
 
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="780.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controller.StatsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="820.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controller.StatsController">
    <children>
-      <ImageView fitHeight="500.0" fitWidth="789.0" layoutX="-4.0" opacity="0.75" pickOnBounds="true">
+      <ImageView fitHeight="520.0" fitWidth="820.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../images/statsbackground.jpg" />
+            <Image url="@../images/settingsBg.png" />
          </image>
       </ImageView>
-      <VBox layoutX="61.0" layoutY="76.0" prefHeight="404.0" prefWidth="671.0">
-         <children>
-            <Label alignment="CENTER" prefHeight="80.0" prefWidth="673.0" text="Statistics">
-               <font>
-                  <Font size="45.0" />
-               </font>
-            </Label>
-            <Label fx:id="statLabel" prefHeight="325.0" prefWidth="673.0">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-         </children>
-      </VBox>
-      <Button fx:id="menuButton" layoutX="33.0" layoutY="34.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onReturn" prefHeight="20.0" prefWidth="20.0" scaleX="0.1" scaleY="0.1" scaleZ="0.1">
-         <padding>
-            <Insets left="20.0" />
-         </padding>
+      <Button layoutX="733.0" layoutY="93.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onReturn" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
+         <graphic>
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/exitButton2.png" />
+               </image>
+            </ImageView>
+         </graphic>
       </Button>
+      <Label fx:id="statLabel" layoutX="79.0" layoutY="118.0" prefHeight="278.0" prefWidth="679.0" />
    </children>
-</Pane>
+</AnchorPane>

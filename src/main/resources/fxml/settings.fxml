@@ -2,10 +2,13 @@
 
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="820.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controller.SettingsController">
@@ -27,7 +30,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <ToggleButton fx:id="soundButton" layoutX="170.0" layoutY="289.0" mnemonicParsing="false" onAction="#onSound" stylesheets="@../css/buttons.css">
+      <ToggleButton fx:id="soundButton" layoutX="149.0" layoutY="165.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSound" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
          <graphic>
             <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" style="-fx-focus-color: transparent;">
                <image>
@@ -35,6 +38,65 @@
                </image>
             </ImageView>
          </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </ToggleButton>
+      <ToggleButton fx:id="musicButton" layoutX="306.0" layoutY="165.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onMusic" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
+         <graphic>
+            <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/musicButton.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ToggleButton>
+      <Text layoutX="145.0" layoutY="219.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sound">
+         <font>
+            <Font name="Segoe UI Black" size="20.0" />
+         </font>
+      </Text>
+      <Text layoutX="304.0" layoutY="219.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Music">
+         <font>
+            <Font name="Segoe UI Black" size="20.0" />
+         </font>
+      </Text>
+      <Button layoutX="653.0" layoutY="166.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transaparent;">
+         <graphic>
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/aboutButton.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Slider blockIncrement="50.0" layoutX="132.0" layoutY="289.0" majorTickUnit="50.0" minorTickCount="0" prefHeight="49.0" prefWidth="235.0" snapToTicks="true">
+         <cursor>
+            <Cursor fx:constant="OPEN_HAND" />
+         </cursor>
+      </Slider>
+      <Text layoutX="217.0" layoutY="343.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MEDIUM">
+         <font>
+            <Font name="Segoe UI Black" size="15.0" />
+         </font>
+      </Text>
+      <Text layoutX="333.0" layoutY="343.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hard">
+         <font>
+            <Font name="Segoe UI Black" size="15.0" />
+         </font>
+      </Text>
+      <Text layoutX="126.0" layoutY="344.0" strokeType="OUTSIDE" strokeWidth="0.0" text="EASY">
+         <font>
+            <Font name="Segoe UI Black" size="15.0" />
+         </font>
+      </Text>
+      <Text layoutX="192.0" layoutY="282.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DIFFICULTY">
+         <font>
+            <Font name="Segoe UI Black" size="20.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

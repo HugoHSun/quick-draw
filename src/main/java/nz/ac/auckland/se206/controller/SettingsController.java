@@ -7,9 +7,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ToggleButton;
 import nz.ac.auckland.se206.App;
 
 public class SettingsController {
+  @FXML private ToggleButton soundButton;
+  @FXML private ToggleButton musicButton;
   private Parent root;
 
   public void initialize() throws IOException {}
@@ -18,7 +21,10 @@ public class SettingsController {
   private void onSound(ActionEvent event) {}
 
   @FXML
-  public void onReturn(ActionEvent event) {
+  private void onMusic(ActionEvent event) {}
+
+  @FXML
+  private void onReturn(ActionEvent event) {
     Scene scene = ((Node) event.getSource()).getScene();
     try {
       // Load a new parent node
