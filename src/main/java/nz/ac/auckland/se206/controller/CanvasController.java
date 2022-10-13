@@ -35,13 +35,11 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ToolBar;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -74,13 +72,13 @@ public class CanvasController {
 
   @FXML private Label categoryLabel;
 
-  @FXML private HBox countdownHorizontalBox;
+  @FXML private Label timeLabel;
 
   @FXML private Label timerLabel;
 
   @FXML private Button startDrawingButton;
 
-  @FXML private ToolBar toolBox;
+  @FXML private VBox toolBox;
 
   @FXML private Button penButton;
 
@@ -161,10 +159,6 @@ public class CanvasController {
         });
 
     model = new DoodlePrediction();
-
-    Image returnImg = new Image("/images/returnIcon2.png");
-    ImageView returnImgView = new ImageView(returnImg);
-    menuButton.setGraphic(returnImgView);
   }
 
   /** This method is called when the "Pen" button is presses */
@@ -253,7 +247,7 @@ public class CanvasController {
           public void run() {
             // Update time value and display, remind time left when applicable
             game.decreaseTime();
-            game.remindTimeLeft(11);
+            game.remindTimeLeft(10);
             Platform.runLater(
                 () -> {
                   timerLabel.setText(game.getRemainingTime().toString());
@@ -338,7 +332,7 @@ public class CanvasController {
     TextToSpeech textToSpeech = new TextToSpeech();
     if (isWon) {
       Platform.runLater(() -> winLostLabel.setText("YOU WON!!!"));
-      countdownHorizontalBox.setBackground(
+      timeLabel.setBackground(
           new Background(new BackgroundFill(Color.LIGHTGREEN, CornerRadii.EMPTY, Insets.EMPTY)));
       textToSpeech.speak("Congratulations, you won!");
       try {
@@ -349,7 +343,7 @@ public class CanvasController {
       }
     } else {
       Platform.runLater(() -> winLostLabel.setText("YOU LOST!!!"));
-      countdownHorizontalBox.setBackground(
+      timeLabel.setBackground(
           new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
       textToSpeech.speak("Sorry you lost, try again next time.");
       try {
