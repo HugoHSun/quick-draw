@@ -34,13 +34,11 @@
             </Label>
             <StackPane prefHeight="30.0" prefWidth="463.0">
                <children>
-                  <HBox fx:id="createUserMessage" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" visible="false">
-                     <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" text="Please create an user:">
-                           <font>
-                              <Font name="Segoe UI Semibold" size="28.0" />
-                           </font>
-                        </Label>
+                  <Label fx:id="createUserMessage" alignment="CENTER" contentDisplay="RIGHT" text="Please create an user:" visible="false">
+                     <font>
+                        <Font name="Segoe UI Semibold" size="28.0" />
+                     </font>
+                     <graphic>
                         <Button fx:id="addUserButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onAddUser" prefHeight="40.0" prefWidth="45.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
                            <graphic>
                               <ImageView id="addUserButton" accessibleRole="BUTTON" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
@@ -49,15 +47,12 @@
                                  </image>
                               </ImageView>
                            </graphic>
-                           <HBox.margin>
-                              <Insets left="30.0" />
-                           </HBox.margin>
                         </Button>
-                     </children>
-                  </HBox>
-                  <HBox fx:id="selectUserMessage" alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     </graphic>
+                  </Label>
+                  <HBox fx:id="selectUserMessage" alignment="CENTER">
                      <children>
-                        <Label text="Please select an user: ">
+                        <Label contentDisplay="RIGHT" minWidth="275.0" prefHeight="40.0" prefWidth="275.0" text="Please select an user: ">
                            <font>
                               <Font name="Segoe UI Semibold" size="28.0" />
                            </font>
@@ -65,20 +60,18 @@
                         <ComboBox fx:id="userComboBox" onAction="#onUserComboBox" prefHeight="23.0" prefWidth="120.0" style="-fx-background-color: #ffb347;" visibleRowCount="6" />
                      </children>
                   </HBox>
-                  <HBox fx:id="welcomeBackMessage" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" visible="false">
-                     <children>
-                        <Label alignment="CENTER" text="Welcome Back,">
-                           <font>
-                              <Font name="Segoe UI Semibold" size="28.0" />
-                           </font>
-                        </Label>
+                  <Label fx:id="welcomeBackMessage" alignment="CENTER" contentDisplay="RIGHT" text="Welcome Back," visible="false">
+                     <font>
+                        <Font name="Segoe UI Semibold" size="28.0" />
+                     </font>
+                     <graphic>
                         <Label fx:id="currentUserLabel" alignment="CENTER" style="-fx-text-fill: ff9e14;">
                            <font>
                               <Font name="Segoe UI Black" size="28.0" />
                            </font>
                         </Label>
-                     </children>
-                  </HBox>
+                     </graphic>
+                  </Label>
                </children>
             </StackPane>
             <Button alignment="CENTER" mnemonicParsing="false" onAction="#onStartNormalGame" prefHeight="43.0" prefWidth="155.0" stylesheets="@../css/buttons.css" text="Normal Mode">

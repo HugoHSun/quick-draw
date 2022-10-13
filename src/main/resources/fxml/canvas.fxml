@@ -5,206 +5,176 @@
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="500.0" maxWidth="780.0" minHeight="500.0" minWidth="780.0" prefHeight="500.0" prefWidth="780.0" style="-fx-background-color: FFD580;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controller.CanvasController">
+<AnchorPane maxHeight="520.0" maxWidth="820.0" minHeight="520.0" minWidth="820.0" prefHeight="520.0" prefWidth="820.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controller.CanvasController">
    <children>
-      <VBox alignment="CENTER" prefHeight="480.0" prefWidth="440.0" style="-fx-background-color: FF8200;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <children>
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <Button fx:id="menuButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onReturn" prefHeight="20.0" prefWidth="20.0" scaleX="0.1" scaleY="0.1" scaleZ="0.1" stylesheets="@../css/buttons.css">
-                     <HBox.margin>
-                        <Insets left="20.0" />
-                     </HBox.margin>
-                  </Button>
-                <Label alignment="CENTER" prefHeight="23.0" prefWidth="355.0" text="Please draw the following category: " textAlignment="CENTER">
-                  <font>
-                    <Font name="Segoe UI" size="20.0" />
-                  </font>
-                     <HBox.margin>
-                        <Insets left="10.0" />
-                     </HBox.margin>
-                </Label>
-               </children>
-            </HBox>
-            <Label fx:id="categoryLabel" text="Loading">
+      <ImageView fitHeight="520.0" fitWidth="820.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <image>
+            <Image url="@../images/canvasBackground.jpg" />
+         </image>
+      </ImageView>
+      <HBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Button fx:id="menuButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onReturn" prefHeight="50.0" prefWidth="50.0" stylesheets="@../css/buttons.css">
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../images/returnIcon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <padding>
+                  <Insets left="15.0" />
+               </padding>
+               <HBox.margin>
+                  <Insets top="5.0" />
+               </HBox.margin>
+               <tooltip>
+                  <Tooltip text="Back to menu" />
+               </tooltip>
+            </Button>
+            <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="55.0" prefWidth="670.0" text="Current user:">
+               <HBox.margin>
+                  <Insets left="100.0" />
+               </HBox.margin>
                <font>
-                  <Font name="Segoe UI Black Italic" size="28.0" />
+                  <Font name="Segoe UI Black" size="18.0" />
                </font>
-               <VBox.margin>
-                  <Insets bottom="15.0" />
-               </VBox.margin>
+               <graphic>
+                  <Label prefHeight="30.0" prefWidth="60.0" text="John">
+                     <font>
+                        <Font name="Segoe UI Black" size="18.0" />
+                     </font>
+                  </Label>
+               </graphic>
             </Label>
-            <HBox fx:id="countdownHorizontalBox" alignment="TOP_CENTER" layoutX="30.0" layoutY="545.0" prefHeight="0.0" prefWidth="400.0" style="-fx-background-color: lightgrey;">
+         </children>
+      </HBox>
+      <VBox alignment="CENTER" layoutX="69.0" layoutY="96.0" prefHeight="460.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0">
+         <children>
+          <Label alignment="CENTER" contentDisplay="RIGHT" prefHeight="23.0" prefWidth="355.0" text="Category To Draw:" textAlignment="CENTER">
+            <font>
+              <Font name="Segoe UI Black" size="20.0" />
+            </font>
+               <graphic>
+                  <Label fx:id="categoryLabel" text="Loading">
+                     <font>
+                        <Font name="Segoe UI Black" size="30.0" />
+                     </font>
+                  </Label>
+               </graphic>
+          </Label>
+            <Label fx:id="timeLabel" alignment="CENTER" contentDisplay="RIGHT" prefHeight="24.0" prefWidth="240.0" text="Time Left: ">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+               <graphic>
+                  <Label fx:id="timerLabel" contentDisplay="RIGHT" prefHeight="24.0" prefWidth="135.0" text="60">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                     <graphic>
+                        <Label prefHeight="24.0" prefWidth="80.0" text="seconds">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                     </graphic>
+                  </Label>
+               </graphic>
+            </Label>
+            <Label fx:id="winLostLabel" alignment="CENTER" prefHeight="40.0" prefWidth="400.0" text="Getting Closer.." textAlignment="CENTER">
+               <font>
+                  <Font name="Segoe UI Black" size="20.0" />
+               </font>
+            </Label>
+            <AnchorPane maxHeight="260.0" maxWidth="400.0" style="-fx-background-color: white;">
                <children>
-                  <Label alignment="CENTER_RIGHT" prefHeight="24.0" prefWidth="204.0" text="Time Left: ">
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="timerLabel" alignment="CENTER" prefHeight="24.0" prefWidth="52.0" text="60">
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="210.0" layoutY="10.0" prefHeight="24.0" prefWidth="204.0" text="seconds">
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font>
-                  </Label>
-               </children>
-               <VBox.margin>
-                  <Insets bottom="15.0" left="20.0" right="20.0" />
-               </VBox.margin>
-            </HBox>
-            <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;">
-               <center>
-                <Canvas fx:id="canvas" disable="true" height="243.0" width="400.0" BorderPane.alignment="CENTER">
+                <Canvas fx:id="canvas" disable="true" height="260.0" width="400.0">
                   <cursor>
                     <Cursor fx:constant="HAND" />
                   </cursor>
                 </Canvas>
-               </center>
-               <top>
-                  <ImageView fitHeight="27.0" fitWidth="448.0" pickOnBounds="true" BorderPane.alignment="CENTER">
-                     <image>
-                        <Image url="@../images/upperCanvasFrame.png" />
-                     </image>
-                  </ImageView>
-               </top>
-               <left>
-                  <ImageView fitHeight="243.0" fitWidth="23.0" pickOnBounds="true" BorderPane.alignment="CENTER">
-                     <image>
-                        <Image url="@../images/leftCanvasFrame.png" />
-                     </image>
-                  </ImageView>
-               </left>
-               <right>
-                  <ImageView fitHeight="243.0" fitWidth="23.0" pickOnBounds="true" BorderPane.alignment="CENTER">
-                     <image>
-                        <Image url="@../images/rightCanvasFrame.png" />
-                     </image>
-                  </ImageView>
-               </right>
-               <bottom>
-                  <ImageView fitHeight="26.0" fitWidth="448.0" pickOnBounds="true" BorderPane.alignment="CENTER">
-                     <image>
-                        <Image url="@../images/lowerCanvasFrame.png" />
-                     </image>
-                  </ImageView>
-               </bottom>
-               <VBox.margin>
-                  <Insets bottom="15.0" left="10.0" right="10.0" />
-               </VBox.margin>
-            </BorderPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0">
+               </children>
+            </AnchorPane>
+            <StackPane prefHeight="55.0">
                <children>
-                  <Button fx:id="startDrawingButton" alignment="CENTER_RIGHT" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onStartDrawing" stylesheets="@../css/buttons.css" text="START DRAWING">
+                  <Button fx:id="startDrawingButton" alignment="CENTER" contentDisplay="CENTER" maxWidth="210.0" mnemonicParsing="false" onAction="#onStartDrawing" prefHeight="40.0" prefWidth="210.0" style="-fx-background-color: FFE5B4;" stylesheets="@../css/buttons.css" text="START DRAWING">
                      <font>
-                        <Font size="20.0" />
+                        <Font name="System Bold" size="20.0" />
                      </font>
                      <StackPane.margin>
-                        <Insets top="-20.0" />
+                        <Insets bottom="15.0" />
                      </StackPane.margin>
                   </Button>
-                  <ToolBar fx:id="toolBox" style="-fx-background-color: FF8200;" visible="false" StackPane.alignment="CENTER">
-                    <items>
-                      <Button fx:id="penButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onPen" prefHeight="23.0" prefWidth="120.0" style="-fx-background-color: FFE5B4;" text="Pen" />
-                    <Button fx:id="eraserButton" alignment="CENTER" mnemonicParsing="false" onAction="#onErase" prefHeight="23.0" prefWidth="120.0" style="-fx-background-color: FFE5B4;" text="Eraser" />
-                    <Button alignment="CENTER" mnemonicParsing="false" onAction="#onClear" prefHeight="23.0" prefWidth="120.0" style="-fx-background-color: FFE5B4;" text="Clear" />
-                    </items>
-                     <StackPane.margin>
-                        <Insets />
-                     </StackPane.margin>
-                     <padding>
-                        <Insets left="49.5" right="49.5" />
-                     </padding>
-                  </ToolBar>
-               </children>
-            </StackPane>
-      
-        </children>
-        <padding>
-          <Insets top="20.0" />
-        </padding>
-      </VBox>
-      <VBox layoutX="440.0" layoutY="27.0" prefHeight="480.0" prefWidth="310.0" spacing="10.0" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <Label alignment="CENTER" prefHeight="27.0" prefWidth="310.0" text="Top 10 predictions:">
-               <font>
-                  <Font name="System Bold" size="20.0" />
-               </font>
-               <VBox.margin>
-                  <Insets top="25.0" />
-               </VBox.margin>
-            </Label>
-            <HBox prefHeight="265.0" prefWidth="100.0">
-               <children>
-                  <VBox prefHeight="220.0" prefWidth="100.0">
+                  <HBox fx:id="toolBox" alignment="CENTER" spacing="10.0" visible="false">
                      <children>
-                        <Label prefWidth="100.0" text="TOP 1 *****&#10;TOP 2 ***&#10;TOP 3 *">
-                           <font>
-                              <Font name="System Bold Italic" size="16.0" />
-                           </font>
-                        </Label>
-                        <Label prefWidth="100.0" text="Top 4&#10;Top 5&#10;Top 6&#10;Top 7&#10;Top 8&#10;Top 9&#10;Top 10">
-                           <font>
-                              <Font name="System Italic" size="16.0" />
-                           </font>
-                        </Label>
+                      <Button fx:id="penButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onPen" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;">
+                           <graphic>
+                              <ImageView fitHeight="35.0" fitWidth="40.0" pickOnBounds="true">
+                                 <image>
+                                    <Image url="@../images/Pencil-icon.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                    <Button fx:id="eraserButton" alignment="CENTER" mnemonicParsing="false" onAction="#onErase" prefHeight="35.0" prefWidth="40.0" style="-fx-background-color: transparent;">
+                           <graphic>
+                              <ImageView fitHeight="35.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/Eraser-icon.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                    <Button alignment="CENTER" mnemonicParsing="false" onAction="#onClear" prefHeight="23.0" prefWidth="80.0" style="-fx-background-color: FFE5B4;" text="Clear" />
                      </children>
-                  </VBox>
-                  <Label fx:id="predictionLabel" alignment="TOP_LEFT" contentDisplay="TOP" prefHeight="260.0" prefWidth="180.0" text="EMPTY CANVAS!">
-                     <font>
-                        <Font name="System Italic" size="16.0" />
-                     </font>
-                     <padding>
-                        <Insets left="10.0" />
-                     </padding>
-                  </Label>
+                  </HBox>
+                  <HBox fx:id="endGameBox" alignment="CENTER" spacing="10.0" visible="false">
+                     <children>
+                        <Button fx:id="saveDrawingButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onSaveDrawing" prefHeight="60.0" prefWidth="150.0" style="-fx-background-color: FFE5B4;" text="Save Your Drawing">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="newRoundButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onPlayNewRound" prefHeight="60.0" prefWidth="150.0" style="-fx-background-color: FFE5B4;" text="Play Another Round">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
                </children>
                <VBox.margin>
-                  <Insets left="15.0" />
+                  <Insets top="10.0" />
                </VBox.margin>
-            </HBox>
-            <Label fx:id="winLostLabel" alignment="CENTER" prefHeight="54.0" prefWidth="302.0" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="28.0" />
-               </font>
-               <VBox.margin>
-                  <Insets bottom="30.0" />
-               </VBox.margin>
-            </Label>
-            <HBox prefWidth="310.0" spacing="10.0">
-               <children>
-                  <Button fx:id="newRoundButton" contentDisplay="CENTER" disable="true" mnemonicParsing="false" onAction="#onPlayNewRound" prefHeight="86.0" prefWidth="170.0" style="-fx-background-color: FFE5B4;" text="Play Another Round">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="saveDrawingButton" contentDisplay="CENTER" disable="true" mnemonicParsing="false" onAction="#onSaveDrawing" prefHeight="86.0" prefWidth="170.0" style="-fx-background-color: FFE5B4;" text="Save Your Drawing">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Button>
-               </children>
-               <padding>
-                  <Insets left="10.0" right="10.0" />
-               </padding>
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </HBox>
+            </StackPane>
          </children>
+      </VBox>
+      <VBox alignment="BOTTOM_LEFT" layoutX="534.0" layoutY="69.0" prefHeight="460.0" prefWidth="340.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <Label fx:id="topPredictionsLabel" alignment="TOP_LEFT" prefHeight="110.0" prefWidth="330.0" text="EMPTY CANVAS!!" textAlignment="CENTER">
+               <font>
+                  <Font name="Segoe UI Black" size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="remainingPredictionsLabel" alignment="TOP_LEFT" prefHeight="315.0" prefWidth="330.0">
+               <font>
+                  <Font name="Segoe UI Semibold" size="20.0" />
+               </font>
+            </Label>
+         </children>
+         <padding>
+            <Insets right="10.0" />
+         </padding>
       </VBox>
    </children>
 </AnchorPane>
