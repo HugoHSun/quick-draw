@@ -50,14 +50,16 @@
                         </Button>
                      </graphic>
                   </Label>
-                  <Label fx:id="selectUserMessage" contentDisplay="RIGHT" text="Please select an user: ">
-                     <font>
-                        <Font name="Segoe UI Semibold" size="28.0" />
-                     </font>
-                     <graphic>
+                  <HBox fx:id="selectUserMessage" alignment="CENTER">
+                     <children>
+                        <Label contentDisplay="RIGHT" minWidth="275.0" prefHeight="40.0" prefWidth="275.0" text="Please select an user: ">
+                           <font>
+                              <Font name="Segoe UI Semibold" size="28.0" />
+                           </font>
+                        </Label>
                         <ComboBox fx:id="userComboBox" onAction="#onUserComboBox" prefHeight="23.0" prefWidth="120.0" style="-fx-background-color: #ffb347;" visibleRowCount="6" />
-                     </graphic>
-                  </Label>
+                     </children>
+                  </HBox>
                   <Label fx:id="welcomeBackMessage" alignment="CENTER" contentDisplay="RIGHT" text="Welcome Back," visible="false">
                      <font>
                         <Font name="Segoe UI Semibold" size="28.0" />

@@ -39,7 +39,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -66,8 +66,6 @@ import nz.ac.auckland.se206.user.User;
  */
 public class CanvasController {
 
-  @FXML private Button menuButton;
-
   @FXML private Canvas canvas;
 
   @FXML private Label categoryLabel;
@@ -78,19 +76,19 @@ public class CanvasController {
 
   @FXML private Button startDrawingButton;
 
-  @FXML private VBox toolBox;
+  @FXML private HBox toolBox;
 
   @FXML private Button penButton;
 
   @FXML private Button eraserButton;
 
-  @FXML private Label predictionLabel;
+  @FXML private Label topPredictionsLabel;
+
+  @FXML private Label remainingPredictionsLabel;
 
   @FXML private Label winLostLabel;
 
-  @FXML private Button newRoundButton;
-
-  @FXML private Button saveDrawingButton;
+  @FXML private HBox endGameBox;
 
   private Parent root;
 
@@ -254,7 +252,7 @@ public class CanvasController {
                 });
 
             // When a ending condition of the game is met
-            if (game.checkWon(3)) {
+            if (game.checkWon()) {
               timer.cancel();
               endGame(true);
               return;
@@ -268,7 +266,8 @@ public class CanvasController {
             Platform.runLater(
                 () -> {
                   if (checkEmptyCanvas()) {
-                    predictionLabel.setText("EMPTY CANVAS!");
+                    topPredictionsLabel.setText("EMPTY CANVAS!!");
+                    remainingPredictionsLabel.setText("");
                     game.updatePredictions(null);
                     // Update the predictions value and display
                   } else {
@@ -276,7 +275,8 @@ public class CanvasController {
                       List<Classification> currentPredictions =
                           model.getPredictions(getCurrentSnapshot(), 10);
                       game.updatePredictions(currentPredictions);
-                      predictionLabel.setText(game.getPredictionDisplay());
+                      topPredictionsLabel.setText(game.getTopPredictionsDisplay());
+                      remainingPredictionsLabel.setText(game.getRemainingPredictionsDisplay());
                     } catch (TranslateException e) {
                       e.printStackTrace();
                     }
@@ -326,8 +326,7 @@ public class CanvasController {
     toolBox.setVisible(false);
     canvas.setDisable(true);
     canvas.setOnMouseDragged(null);
-    saveDrawingButton.setDisable(false);
-    newRoundButton.setDisable(false);
+    endGameBox.setVisible(true);
 
     TextToSpeech textToSpeech = new TextToSpeech();
     if (isWon) {

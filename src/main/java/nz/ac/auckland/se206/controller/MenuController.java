@@ -50,7 +50,7 @@ public class MenuController {
 
   @FXML private Label createUserMessage;
 
-  @FXML private Label selectUserMessage;
+  @FXML private HBox selectUserMessage;
 
   @FXML private Label welcomeBackMessage;
 
@@ -260,8 +260,7 @@ public class MenuController {
       selectUserMessage.setVisible(true);
       welcomeBackMessage.setVisible(false);
 
-      selectUserMessage.setGraphic(userComboBox);
-      ;
+      selectUserMessage.getChildren().add(userComboBox);
       changeUserBox.setVisible(false);
     }
   }

@@ -1,6 +1,5 @@
 package nz.ac.auckland.se206.game;
 
-import ai.djl.modality.Classifications;
 import ai.djl.modality.Classifications.Classification;
 import java.util.List;
 import nz.ac.auckland.se206.CategorySelector;
@@ -11,6 +10,8 @@ public class Game {
 
   // In seconds
   private Integer remainingTime;
+
+  private final Integer winningRank;
 
   private String categoryToDraw;
 
@@ -23,6 +24,7 @@ public class Game {
    * @param difficulty the difficulty of the game
    */
   public Game(Integer gameTime, Difficulty difficulty) {
+    winningRank = 3;
     remainingTime = gameTime;
     categoryToDraw = CategorySelector.getRandomCategory(difficulty);
     currentPredictions = null;
@@ -66,20 +68,42 @@ public class Game {
   }
 
   /**
+   * This is a helper method that builds a string
+   *
+   * @return a string containing the top x predictions
+   */
+  public String getTopPredictionsDisplay() {
+    // Build the string to display the top ten predictions
+    final StringBuilder sb = new StringBuilder();
+
+    for (int i = 0; i < winningRank; i++) {
+      // Build the predictions string to be displayed
+      Classification currentClass = currentPredictions.get(i);
+      sb.append(currentClass.getClassName().replaceAll("_", " "))
+          .append(" : ")
+          .append(String.format("%d%%", Math.round(100 * currentClass.getProbability())))
+          .append(System.lineSeparator());
+    }
+
+    return sb.toString();
+  }
+
+  /**
    * This is a helper method that builds a string of the current top 10 predictions, which can be
    * displayed in a label.
    *
    * @return a string containing the top 10 predictions
    */
-  public String getPredictionDisplay() {
+  public String getRemainingPredictionsDisplay() {
     // Build the string to display the top ten predictions
     final StringBuilder sb = new StringBuilder();
 
-    for (final Classifications.Classification classification : currentPredictions) {
+    for (int i = winningRank; i < 10; i++) {
       // Build the predictions string to be displayed
-      sb.append(classification.getClassName().replaceAll("_", " "))
+      Classification currentClass = currentPredictions.get(i);
+      sb.append(currentClass.getClassName().replaceAll("_", " "))
           .append(" : ")
-          .append(String.format("%d%%", Math.round(100 * classification.getProbability())))
+          .append(String.format("%d%%", Math.round(100 * currentClass.getProbability())))
           .append(System.lineSeparator());
     }
 
@@ -106,7 +130,7 @@ public class Game {
    * @param winningRank the prediction rank that the player need to get into to win
    * @return true if the player has won, false otherwise
    */
-  public boolean checkWon(int winningRank) {
+  public boolean checkWon() {
     if (currentPredictions == null) {
       return false;
     }
