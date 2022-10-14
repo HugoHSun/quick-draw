@@ -48,11 +48,20 @@ public class SettingsController {
   }
 
   @FXML
-  private void onTimeSliderChanged(MouseDragEvent event) {}
+  private void onTimeSliderChanged(MouseDragEvent event) {
+    int sliderValue = (int) timeSlider.getValue();
+    // easy=0, medium=50, hard=100, master=150
+  }
 
   @FXML
-  private void onWordsSliderChanged(MouseDragEvent event) {}
+  private void onWordsSliderChanged(MouseDragEvent event) {
+    int sliderValue = (int) wordsSlider.getValue();
+    // easy=0, medium=50, hard=100, master=150
+  }
 
   @FXML
-  private void onConfidenceSliderChanged(MouseDragEvent event) {}
+  private void onConfidenceSliderChanged(MouseDragEvent event) {
+    int sliderValue = (int) confidenceSlider.getValue();
+    // easy=0, medium=50, hard=100, master=150
+  }
 }
