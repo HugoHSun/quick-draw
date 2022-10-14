@@ -41,7 +41,7 @@
                   <Tooltip text="Back to menu" />
                </tooltip>
             </Button>
-            <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="55.0" prefWidth="670.0" text="Current user:">
+            <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="55.0" prefWidth="683.0" text="Current user:">
                <HBox.margin>
                   <Insets left="100.0" />
                </HBox.margin>
@@ -49,7 +49,7 @@
                   <Font name="Segoe UI Black" size="18.0" />
                </font>
                <graphic>
-                  <Label prefHeight="30.0" prefWidth="60.0" text="John">
+                  <Label fx:id="usernameLabel" prefHeight="30.0" prefWidth="218.0">
                      <font>
                         <Font name="Segoe UI Black" size="18.0" />
                      </font>
@@ -67,24 +67,24 @@
                <graphic>
                   <Label fx:id="categoryLabel" text="Loading">
                      <font>
-                        <Font name="Segoe UI Black" size="30.0" />
+                        <Font name="Segoe UI Black" size="20.0" />
                      </font>
                   </Label>
                </graphic>
           </Label>
-            <Label fx:id="timeLabel" alignment="CENTER" contentDisplay="RIGHT" prefHeight="24.0" prefWidth="240.0" text="Time Left: ">
+            <Label fx:id="timeLabel" alignment="CENTER" contentDisplay="RIGHT" prefHeight="30.0" prefWidth="290.0" text="Time Left: ">
                <font>
-                  <Font name="System Bold" size="18.0" />
+                  <Font name="Segoe UI Black" size="20.0" />
                </font>
                <graphic>
-                  <Label fx:id="timerLabel" contentDisplay="RIGHT" prefHeight="24.0" prefWidth="135.0" text="60">
+                  <Label fx:id="timerLabel" contentDisplay="RIGHT" prefHeight="24.0" prefWidth="135.0">
                      <font>
-                        <Font name="System Bold" size="18.0" />
+                        <Font name="Segoe UI Black" size="20.0" />
                      </font>
                      <graphic>
                         <Label prefHeight="24.0" prefWidth="80.0" text="seconds">
                            <font>
-                              <Font name="System Bold" size="18.0" />
+                              <Font name="Segoe UI Black" size="20.0" />
                            </font>
                         </Label>
                      </graphic>
@@ -109,7 +109,7 @@
                <children>
                   <Button fx:id="startDrawingButton" alignment="CENTER" contentDisplay="CENTER" maxWidth="210.0" mnemonicParsing="false" onAction="#onStartDrawing" prefHeight="40.0" prefWidth="210.0" style="-fx-background-color: FFE5B4;" stylesheets="@../css/buttons.css" text="START DRAWING">
                      <font>
-                        <Font name="System Bold" size="20.0" />
+                        <Font name="Segoe UI Black" size="20.0" />
                      </font>
                      <StackPane.margin>
                         <Insets bottom="15.0" />

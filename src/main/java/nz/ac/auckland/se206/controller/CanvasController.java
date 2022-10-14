@@ -48,6 +48,7 @@ import javax.imageio.ImageIO;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.CategorySelector.Difficulty;
 import nz.ac.auckland.se206.game.Game;
+import nz.ac.auckland.se206.game.GameFactory;
 import nz.ac.auckland.se206.ml.DoodlePrediction;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 import nz.ac.auckland.se206.user.User;
@@ -73,6 +74,8 @@ public class CanvasController {
   @FXML private Label timeLabel;
 
   @FXML private Label timerLabel;
+  
+  @FXML private Label usernameLabel;
 
   @FXML private Button startDrawingButton;
 
@@ -111,9 +114,9 @@ public class CanvasController {
    * @throws IOException If the model cannot be found on the file system.
    * @throws TranslateException
    */
-  public void initialize() throws ModelException, IOException {
+  public void initialize() throws ModelException, IOException, TranslateException {
     // Initialize a game instance with 60 seconds and easy difficulty
-    game = new Game(60, Difficulty.E);
+    game = GameFactory.createGame("Hard");
     category = game.getCategoryToDraw();
     categoryLabel.setText(category);
     Thread voiceOver =
@@ -158,6 +161,11 @@ public class CanvasController {
         });
 
     model = new DoodlePrediction();
+    // By loading one prediction before the scene loads, it removes the GUI freezing
+    model.getPredictions(getCurrentSnapshot(), 10);
+    
+    usernameLabel.setText(MenuController.currentActiveUser);
+    timerLabel.setText(game.getRemainingTime().toString());
   }
 
   /** This method is called when the "Pen" button is presses */
@@ -382,7 +390,7 @@ public class CanvasController {
     user.record(isWon);
 
     // Record the category played
-    user.newWord(category);
+    user.newWord(Difficulty.E,category);
 
     // Update any new badges
     user.obtainBadges();

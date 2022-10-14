@@ -1,7 +1,10 @@
 package nz.ac.auckland.se206.user;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
+import nz.ac.auckland.se206.CategorySelector.Difficulty;
 
 public class User {
 
@@ -13,7 +16,7 @@ public class User {
 
   private int fastestWon;
 
-  private List<String> wordsEncountered;
+  private HashMap<Difficulty, List<String>> wordsEncountered;
   
   private List<Integer> badgesEarned;
   
@@ -25,7 +28,12 @@ public class User {
     this.gamesWon = 0;
     this.gamesLost = 0;
     this.fastestWon = 61;
-    this.wordsEncountered = new ArrayList<String>();
+    
+    this.wordsEncountered =	new HashMap<Difficulty, List<String>>();
+    wordsEncountered.put(Difficulty.E, new ArrayList<String>());
+    wordsEncountered.put(Difficulty.M, new ArrayList<String>());
+    wordsEncountered.put(Difficulty.H, new ArrayList<String>());
+    
     this.badgesEarned = new ArrayList<Integer>();
     this.previousResults = new ArrayList<Boolean>();
   }
@@ -46,16 +54,16 @@ public class User {
     return fastestWon;
   }
 
-  public List<String> getWordsEncountered() {
-    return wordsEncountered;
+  public List<String> getWordsEncountered(Difficulty diff) {
+    return wordsEncountered.get(diff);
   }
   
   public List<Integer> getBadgesEarned(){
 	  return badgesEarned;
   }
 
-  public void newWord(String word) {
-    wordsEncountered.add(word);
+  public void newWord(Difficulty diff, String word) {
+    wordsEncountered.get(diff).add(word);
   }
   
   public void newBadge(List<Integer> newBadges) {
@@ -175,6 +183,8 @@ public class User {
         + "%\nFastest time to victory (secs): "
         + fastestTime
         + "\nWords Encountered : \n"
-        + wordsEncountered;
+        + wordsEncountered.get(Difficulty.E)
+        + wordsEncountered.get(Difficulty.M)
+        + wordsEncountered.get(Difficulty.H);
   }
 }
