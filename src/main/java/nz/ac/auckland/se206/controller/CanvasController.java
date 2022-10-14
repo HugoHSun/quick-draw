@@ -109,9 +109,8 @@ public class CanvasController {
    *
    * @throws ModelException If there is an error in reading the input/output of the DL model.
    * @throws IOException If the model cannot be found on the file system.
- * @throws TranslateException 
+   * @throws TranslateException
    */
-
   public void initialize() throws ModelException, IOException {
     // Initialize a game instance with 60 seconds and easy difficulty
     game = new Game(60, Difficulty.E);
@@ -159,7 +158,6 @@ public class CanvasController {
         });
 
     model = new DoodlePrediction();
-    model.getPredictions(getCurrentSnapshot(), 10);
   }
 
   /** This method is called when the "Pen" button is presses */
@@ -264,8 +262,6 @@ public class CanvasController {
               endGame(false);
               return;
             }
-            
-            remainingTime--;
 
             // Ask the GUI thread to update predictions display
             Platform.runLater(
@@ -332,11 +328,11 @@ public class CanvasController {
     canvas.setDisable(true);
     canvas.setOnMouseDragged(null);
     try {
-        recordResult(MenuController.currentActiveUser, isWon, 60 - remainingTime);
-      } catch (IOException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
+      recordResult(MenuController.currentActiveUser, isWon, 60 - game.getRemainingTime());
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
     endGameBox.setVisible(true);
 
     TextToSpeech textToSpeech = new TextToSpeech();
@@ -374,7 +370,7 @@ public class CanvasController {
     }
 
     User user = users.get(userNames.indexOf(userName));
-    
+
     // Record the game result
     if (isWon) {
       user.won();
@@ -382,12 +378,12 @@ public class CanvasController {
     } else {
       user.lost();
     }
-    
+
     user.record(isWon);
 
     // Record the category played
     user.newWord(category);
-    
+
     // Update any new badges
     user.obtainBadges();
 

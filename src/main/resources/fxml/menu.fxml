@@ -179,7 +179,14 @@
             <Separator prefWidth="200.0" />
             <HBox alignment="CENTER" prefHeight="50.0" prefWidth="320.0" spacing="20.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#onBadges" stylesheets="@../css/buttons.css" text="Badges" />
+                  <Button contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#onBadges" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css" text="Badges">
+                     <graphic>
+                        <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/badgeIcon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Button>
                   <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onStatistics" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
                      <graphic>
                         <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
