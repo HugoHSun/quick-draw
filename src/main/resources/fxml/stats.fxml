@@ -9,10 +9,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="780.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controller.StatsController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="820.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controller.StatsController">
    <children>
-      <ImageView fitHeight="500.0" fitWidth="789.0" layoutX="-4.0" opacity="0.75" pickOnBounds="true">
+      <ImageView fitHeight="520.0" fitWidth="820.0" opacity="0.2" pickOnBounds="true">
          <image>
             <Image url="@../images/statsbackground.jpg" />
          </image>
@@ -21,12 +20,12 @@
          <children>
             <Label alignment="CENTER" prefHeight="80.0" prefWidth="673.0" text="Statistics">
                <font>
-                  <Font size="45.0" />
+                  <Font name="Segoe UI Black" size="40.0" />
                </font>
             </Label>
             <Label fx:id="statLabel" prefHeight="325.0" prefWidth="673.0">
                <font>
-                  <Font size="18.0" />
+                  <Font name="Segoe UI Black" size="20.0" />
                </font>
             </Label>
          </children>

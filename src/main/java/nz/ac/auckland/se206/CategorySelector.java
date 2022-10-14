@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import nz.ac.auckland.se206.controller.MenuController;
+import nz.ac.auckland.se206.game.category;
 import nz.ac.auckland.se206.user.User;
 
 /**
@@ -29,6 +30,15 @@ public class CategorySelector {
     E,
     M,
     H
+  }
+  
+  public enum Mode{
+	  EASY,
+	  MEDIUM,
+	  HARD,
+	  MASTER,
+	  ZEN,
+	  HIDDEN
   }
 
   private static HashMap<Difficulty, List<String>> categoryMap =
@@ -84,22 +94,32 @@ public class CategorySelector {
    * @param dif the difficulty of categories
    * @return a random category with the chosen difficulty
    */
-  public static String getRandomCategory(List<Difficulty> difficulty) {
+  public static category getRandomCategory(List<Difficulty> difficulty) {
     String output = null;
+    Difficulty currentDifficulty = null;
 
     try {
       List<String> unplayedCategories = new ArrayList<String>();
       for (Difficulty dif : difficulty) {
     	  unplayedCategories.addAll(getUnplayedCategories(dif));
+    	  
       }
       // Generating a random index for retrieving element
       int randomIndex = new Random().nextInt(unplayedCategories.size());
       output = unplayedCategories.get(randomIndex);
+      
+      for (Difficulty dif : difficulty) {
+    	  if (getUnplayedCategories(dif).contains(output)) {
+    		  currentDifficulty = dif;
+    		  break;
+    	  }
+      }
+      
     } catch (IOException e) {
       e.printStackTrace();
     }
 
-    return output;
+    return new category(output, currentDifficulty);
   }
 
   /**

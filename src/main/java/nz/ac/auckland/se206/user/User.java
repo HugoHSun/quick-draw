@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import nz.ac.auckland.se206.CategorySelector.Difficulty;
+import nz.ac.auckland.se206.CategorySelector.Mode;
 
 public class User {
 
@@ -21,6 +22,8 @@ public class User {
   private List<Integer> badgesEarned;
   
   private List<Boolean> previousResults;
+  
+  private Mode latestMode;
 
   public User(String name) {
     // Default values
@@ -36,6 +39,7 @@ public class User {
     
     this.badgesEarned = new ArrayList<Integer>();
     this.previousResults = new ArrayList<Boolean>();
+    this.latestMode = null;
   }
 
   public String getName() {
@@ -61,9 +65,21 @@ public class User {
   public List<Integer> getBadgesEarned(){
 	  return badgesEarned;
   }
+  
+  public Mode getLatestMode() {
+	  return latestMode;
+  }
+  
+  public void setLatestMode(Mode mode) {
+	  this.latestMode = mode;
+  }
 
   public void newWord(Difficulty diff, String word) {
     wordsEncountered.get(diff).add(word);
+  }
+  
+  public void newMode(Mode mode) {
+	  latestMode = mode;
   }
   
   public void newBadge(List<Integer> newBadges) {
@@ -120,11 +136,15 @@ public class User {
 	  if (this.gamesWon == 10) {
 		  newBadges.add(5);
 	  }
-	  //implement badge 6
+	  if (this.latestMode.equals(Mode.MEDIUM)) {
+		  newBadges.add(6);
+	  }
 	  if (this.fastestWon <= 15) {
 		  newBadges.add(7);
 	  }
-	  //implement badge 8
+	  if (this.latestMode.equals(Mode.ZEN)) {
+		  newBadges.add(6);
+	  }
 	  if (previousResults.size() >= 3 && !(previousResults.subList(0, 3).contains(false))) {
 		  newBadges.add(9);
 	  }
@@ -133,11 +153,15 @@ public class User {
 	  if (this.gamesWon == 50) {
 		  newBadges.add(10);
 	  }
-	  //implement badge 11
+	  if (this.latestMode.equals(Mode.MASTER)) {
+		  newBadges.add(6);
+	  }
 	  if (this.fastestWon <= 3) {
 		  newBadges.add(12);
 	  }
-	  //implement badge 13
+	  if (this.latestMode.equals(Mode.HIDDEN)) {
+		  newBadges.add(6);
+	  }
 	  if (previousResults.size() == 10 && !(previousResults.contains(false))) {
 		  newBadges.add(14);
 	  }
@@ -182,9 +206,14 @@ public class User {
         + winRate
         + "%\nFastest time to victory (secs): "
         + fastestTime
+        + "\nDifficulty Setting : "
+        + latestMode
         + "\nWords Encountered : \n"
+        + "Level Easy: "
         + wordsEncountered.get(Difficulty.E)
+        + "\nLevel Medium: "
         + wordsEncountered.get(Difficulty.M)
+        + "\nLevel Hard: "
         + wordsEncountered.get(Difficulty.H);
   }
 }
