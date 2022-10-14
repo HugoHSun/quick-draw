@@ -58,7 +58,10 @@
                               <Font name="Segoe UI Semibold" size="28.0" />
                            </font>
                         </Label>
-                        <ComboBox fx:id="userComboBox" onAction="#onUserComboBox" prefHeight="23.0" prefWidth="120.0" style="-fx-background-color: #ffb347;" visibleRowCount="6" />
+                        <ComboBox fx:id="userComboBox" onAction="#onUserComboBox" prefHeight="23.0" prefWidth="120.0" style="-fx-background-color: #ffb347;" visibleRowCount="6">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></ComboBox>
                      </children>
                   </HBox>
                   <Label fx:id="welcomeBackMessage" alignment="CENTER" contentDisplay="RIGHT" text="Welcome Back," visible="false">
@@ -176,24 +179,22 @@
       <VBox layoutX="250.0" layoutY="430.0" prefHeight="60.0" prefWidth="320.0" AnchorPane.bottomAnchor="20.0">
          <children>
             <Separator prefWidth="200.0" />
-            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="320.0" spacing="20.0">
+            <HBox prefHeight="50.0" prefWidth="200.0" spacing="100.0">
                <children>
-                  <Button contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#onBadges" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css" text="Badges">
+                  <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onBadges" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
                      <graphic>
-                        <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../images/badgeIcon.png" />
-                           </image>
-                        </ImageView>
-                     </graphic></Button>
-                  <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onStatistics" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
-                     <graphic>
-                        <ImageView fitHeight="87.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../images/badgesIcon.png" />
                            </image>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                         </ImageView>
                      </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                   <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onStatistics" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
                      <tooltip>
@@ -203,28 +204,34 @@
                            </font>
                         </Tooltip>
                      </tooltip>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                      <graphic>
-                        <ImageView fitHeight="87.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../images/statsIcon.png" />
                            </image>
                         </ImageView>
                      </graphic>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
+                     <HBox.margin>
+                        <Insets top="10.0" />
+                     </HBox.margin>
                   </Button>
-                  <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSettings" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css" translateX="50.0">
+                  <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSettings" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
                      <tooltip>
                         <Tooltip text="Settings" />
                      </tooltip>
                      <graphic>
-                        <ImageView fitHeight="87.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../images/settingsIcon.png" />
                            </image>
                         </ImageView>
                      </graphic>
+                     <HBox.margin>
+                        <Insets top="10.0" />
+                     </HBox.margin>
                   </Button>
                </children>
             </HBox>

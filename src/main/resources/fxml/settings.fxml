@@ -45,6 +45,13 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
+         <graphic>
+            <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/musicButton.png" />
+               </image>
+            </ImageView>
+         </graphic>
       </ToggleButton>
       <Text layoutX="128.0" layoutY="219.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sound">
          <font>
@@ -56,7 +63,6 @@
             <Font name="Segoe UI Black" size="20.0" />
          </font>
       </Text>
-      <Button layoutX="653.0" layoutY="166.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transaparent;" />
       <Slider fx:id="accuracySlider" blockIncrement="50.0" layoutX="99.0" layoutY="289.0" majorTickUnit="50.0" minorTickCount="0" onMouseDragReleased="#onAccuracySliderChanged" prefHeight="49.0" prefWidth="235.0" showTickMarks="true" snapToTicks="true">
          <cursor>
             <Cursor fx:constant="OPEN_HAND" />
@@ -82,11 +88,6 @@
             <Font name="Segoe UI Black" size="20.0" />
          </font>
       </Text>
-      <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="256.0" layoutY="163.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/musicButton.png" />
-         </image>
-      </ImageView>
       <Slider fx:id="timeSlider" blockIncrement="50.0" layoutX="405.0" layoutY="150.0" majorTickUnit="50.0" max="150.0" minorTickCount="0" onMouseDragReleased="#onTimeSliderChanged" prefHeight="49.0" prefWidth="304.0" showTickMarks="true" snapToTicks="true">
          <cursor>
             <Cursor fx:constant="OPEN_HAND" />
