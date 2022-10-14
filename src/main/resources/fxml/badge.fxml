@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="820.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controller.BadgeController">
+   <children>
+      <ImageView fitHeight="520.0" fitWidth="820.0" opacity="0.2" pickOnBounds="true">
+         <image>
+            <Image url="@../images/statsbackground.jpg" />
+         </image>
+      </ImageView>
+      <VBox alignment="CENTER" layoutX="74.0" layoutY="77.0" prefHeight="404.0" prefWidth="671.0">
+         <children>
+            <Label alignment="CENTER" prefHeight="80.0" prefWidth="673.0" text="Badges">
+               <font>
+                  <Font name="Segoe UI Black" size="50.0" />
+               </font>
+            </Label>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#onBadge" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
+                     <graphic>
+                        <ImageView fx:id="bronzeOne" fitHeight="80.0" fitWidth="80.0" opacity="0.3" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/bronze-badge.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <tooltip>
+                        <Tooltip text="&lt;Bronze&gt; Let it begin - Win one game at any mode" />
+                     </tooltip>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#onBadge" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <ImageView fx:id="bronzeTwo" fitHeight="80.0" fitWidth="80.0" opacity="0.3" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/bronze-badge.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <tooltip>
+                        <Tooltip text="&lt;Bronze&gt; - It's okay, mate - Lose a game at any mode" />
+                     </tooltip>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#onBadge" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <ImageView fx:id="bronzeThree" fitHeight="80.0" fitWidth="80.0" opacity="0.3" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/bronze-badge.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <tooltip>
+                        <Tooltip text="&lt;Bronze&gt; Supersonic - Win a game within 30 seconds" />
+                     </tooltip>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#onBadge" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <ImageView fx:id="bronzeFour" fitHeight="80.0" fitWidth="80.0" opacity="0.3" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/bronze-badge.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <tooltip>
+                        <Tooltip text="&lt;Bronze&gt; How bad can you be? - Lose 3 games in a row" />
+                     </tooltip>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#onBadge" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <ImageView fx:id="bronzeFive" fitHeight="80.0" fitWidth="80.0" opacity="0.3" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/bronze-badge.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <tooltip>
+                        <Tooltip text="&lt;Bronze&gt; Nice Try - Lose a game with target word being within the top 10" />
+                     </tooltip>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="bronzeOne1" mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
+                     <graphic>
+                        <ImageView fx:id="silverOne" fitHeight="80.0" fitWidth="80.0" opacity="0.3" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/Silver%20Badge.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <tooltip>
+                        <Tooltip text="&lt;Silver&gt; Gradual Addiction - Win 10 games at any mode" />
+                     </tooltip>
+                  </Button>
+                  <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <ImageView fx:id="silverTwo" fitHeight="80.0" fitWidth="80.0" opacity="0.3" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/Silver%20Badge.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <tooltip>
+                        <Tooltip text="&lt;Silver&gt; Not a beginner - Win one game of level medium" />
+                     </tooltip>
+                  </Button>
+                  <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <ImageView fx:id="silverThree" fitHeight="80.0" fitWidth="80.0" opacity="0.3" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/Silver%20Badge.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <tooltip>
+                        <Tooltip text="&lt;Silver&gt; SuperSupersonic - Win a game within 15 seconds" />
+                     </tooltip>
+                  </Button>
+                  <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <ImageView fx:id="silverFour" fitHeight="80.0" fitWidth="80.0" opacity="0.3" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/Silver%20Badge.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <tooltip>
+                        <Tooltip text="&lt;Silver&gt; Be an artist already - Play one game of Zen mode" />
+                     </tooltip>
+                  </Button>
+                  <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <ImageView fx:id="silverFive" fitHeight="80.0" fitWidth="80.0" opacity="0.3" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/Silver%20Badge.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <tooltip>
+                        <Tooltip text="&lt;Silver&gt; Luck? - Win 3 games in a row" />
+                     </tooltip>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="bronzeOne2" mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
+                     <graphic>
+                        <ImageView fx:id="goldOne" fitHeight="80.0" fitWidth="80.0" opacity="0.3" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/Gold%20badge.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <tooltip>
+                        <Tooltip text="&lt;Gold&gt; Definitely Addicted - Win 50 games at any mode" />
+                     </tooltip>
+                  </Button>
+                  <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <ImageView fx:id="goldTwo" fitHeight="80.0" fitWidth="80.0" opacity="0.3" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/Gold%20badge.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <tooltip>
+                        <Tooltip text="&lt;Gold&gt; Talented I guess? - Win one game of level master" />
+                     </tooltip>
+                  </Button>
+                  <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <ImageView fx:id="goldThree" fitHeight="80.0" fitWidth="80.0" opacity="0.3" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/Gold%20badge.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <tooltip>
+                        <Tooltip text="&lt;Gold&gt; SuperSuperSupersonic - Win a game within 3 seconds" />
+                     </tooltip>
+                  </Button>
+                  <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <ImageView fx:id="goldFour" fitHeight="80.0" fitWidth="80.0" opacity="0.3" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/Gold%20badge.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <tooltip>
+                        <Tooltip text="&lt;Gold&gt; Feeling Creative? - Win one game of Hidden-Word Mode" />
+                     </tooltip>
+                  </Button>
+                  <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <ImageView fx:id="goldFive" fitHeight="80.0" fitWidth="80.0" opacity="0.3" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/Gold%20badge.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <tooltip>
+                        <Tooltip text="&lt;Gold&gt; I guess not - Win 10 games in a row" />
+                     </tooltip>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="bronzeOne3" mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
+                     <graphic>
+                        <ImageView fx:id="diamondOne" fitHeight="80.0" fitWidth="80.0" opacity="0.3" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/Diamond%20badge.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <tooltip>
+                        <Tooltip text="&lt;Diamond&gt; Just TOO good - Play 50 games at any level with win rate over 90%" />
+                     </tooltip>
+                  </Button>
+                  <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <ImageView fx:id="diamondTwo" fitHeight="80.0" fitWidth="80.0" opacity="0.3" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/Diamond%20badge.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <tooltip>
+                        <Tooltip text="&lt;Diamond&gt; Wait what? - Play 1000 games" />
+                     </tooltip>
+                  </Button>
+                  <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <ImageView fx:id="diamondThree" fitHeight="80.0" fitWidth="80.0" opacity="0.3" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/Diamond%20badge.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <tooltip>
+                        <Tooltip text="&lt;Diamond&gt; You have some spare time, don't you? - Spend more than 30 minutes in one game of Zen mode" />
+                     </tooltip>
+                  </Button>
+                  <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <ImageView fx:id="diamondFour" fitHeight="80.0" fitWidth="80.0" opacity="0.3" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/Diamond%20badge.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <tooltip>
+                        <Tooltip text="&lt;Diamond&gt; ??? - Hint: Maybe take some time" />
+                     </tooltip>
+                  </Button>
+                  <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <ImageView fx:id="diamondFive" fitHeight="80.0" fitWidth="80.0" opacity="0.3" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/Diamond%20badge.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <tooltip>
+                        <Tooltip text="&lt;Diamond&gt; ??? - Hint: Are you done yet?" />
+                     </tooltip>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <Button fx:id="menuButton" layoutX="33.0" layoutY="34.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onReturn" prefHeight="20.0" prefWidth="20.0" scaleX="0.1" scaleY="0.1" scaleZ="0.1">
+         <padding>
+            <Insets left="20.0" />
+         </padding>
+      </Button>
+   </children>
+</Pane>

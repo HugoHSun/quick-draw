@@ -48,11 +48,11 @@ public class MenuController {
 
   @FXML private Button deleteUserButton;
 
-  @FXML private HBox createUserMessage;
+  @FXML private Label createUserMessage;
 
   @FXML private HBox selectUserMessage;
 
-  @FXML private HBox welcomeBackMessage;
+  @FXML private Label welcomeBackMessage;
 
   @FXML private HBox editUserBox;
 
@@ -89,6 +89,21 @@ public class MenuController {
 
       editUserBox.setVisible(false);
       // Menu layout when there is created users
+    } else if (currentActiveUser != null) {
+      userComboBox.getItems().addAll(userNames);
+      userComboBox.setValue(currentActiveUser);
+      currentUserLabel.setText(currentActiveUser);
+      // Move the combo box to the top right corner
+      if (!changeUserBox.getChildren().contains(userComboBox)) {
+        changeUserBox.getChildren().add(userComboBox);
+      }
+      changeUserBox.setVisible(true);
+
+      // Update the displayed message
+      createUserMessage.setVisible(false);
+      selectUserMessage.setVisible(false);
+      welcomeBackMessage.setVisible(true);
+      deleteUserButton.setDisable(false);
     } else {
       deleteUserButton.setDisable(true);
       editUserBox.setVisible(true);
@@ -296,6 +311,24 @@ public class MenuController {
     try {
       // Load a new parent node
       root = new FXMLLoader(App.class.getResource("/fxml/settings.fxml")).load();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    scene.setRoot(root);
+  }
+
+  @FXML
+  private void onBadges(ActionEvent event) throws IOException {
+    if (userComboBox.getValue() == null) {
+      Alert noChosenUser = new Alert(AlertType.INFORMATION);
+      noChosenUser.setHeaderText("You must choose a profile!");
+      noChosenUser.show();
+      return;
+    }
+    scene = ((Node) event.getSource()).getScene();
+    try {
+      // Load a new parent node
+      root = new FXMLLoader(App.class.getResource("/fxml/badge.fxml")).load();
     } catch (IOException e) {
       e.printStackTrace();
     }
