@@ -109,6 +109,7 @@ public class CanvasController {
    *
    * @throws ModelException If there is an error in reading the input/output of the DL model.
    * @throws IOException If the model cannot be found on the file system.
+   * @throws TranslateException
    */
   public void initialize() throws ModelException, IOException {
     // Initialize a game instance with 60 seconds and easy difficulty
@@ -326,6 +327,12 @@ public class CanvasController {
     toolBox.setVisible(false);
     canvas.setDisable(true);
     canvas.setOnMouseDragged(null);
+    try {
+      recordResult(MenuController.currentActiveUser, isWon, 60 - game.getRemainingTime());
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
     endGameBox.setVisible(true);
 
     TextToSpeech textToSpeech = new TextToSpeech();
@@ -334,23 +341,11 @@ public class CanvasController {
       timeLabel.setBackground(
           new Background(new BackgroundFill(Color.LIGHTGREEN, CornerRadii.EMPTY, Insets.EMPTY)));
       textToSpeech.speak("Congratulations, you won!");
-      try {
-        recordResult(MenuController.currentActiveUser, true, 60 - game.getRemainingTime());
-      } catch (IOException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
     } else {
       Platform.runLater(() -> winLostLabel.setText("YOU LOST!!!"));
       timeLabel.setBackground(
           new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
       textToSpeech.speak("Sorry you lost, try again next time.");
-      try {
-        recordResult(MenuController.currentActiveUser, false, 60 - game.getRemainingTime());
-      } catch (IOException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
     }
   }
 
@@ -374,16 +369,23 @@ public class CanvasController {
       userNames.add(user.getName());
     }
 
+    User user = users.get(userNames.indexOf(userName));
+
     // Record the game result
     if (isWon) {
-      users.get(userNames.indexOf(userName)).won();
-      users.get(userNames.indexOf(userName)).updateFastestWon(timeTaken);
+      user.won();
+      user.updateFastestWon(timeTaken);
     } else {
-      users.get(userNames.indexOf(userName)).lost();
+      user.lost();
     }
 
+    user.record(isWon);
+
     // Record the category played
-    users.get(userNames.indexOf(userName)).newWord(category);
+    user.newWord(category);
+
+    // Update any new badges
+    user.obtainBadges();
 
     FileWriter fw = new FileWriter(App.usersFileName, false);
     gson.toJson(users, fw);
