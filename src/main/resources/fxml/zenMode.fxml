@@ -93,7 +93,7 @@
             </Label>
          </children>
       </HBox>
-      <VBox alignment="CENTER" layoutX="42.0" layoutY="29.0" prefHeight="484.0" prefWidth="400.0" AnchorPane.bottomAnchor="7.0">
+      <VBox alignment="CENTER" layoutX="48.0" layoutY="30.0" prefHeight="484.0" prefWidth="400.0" AnchorPane.bottomAnchor="6.0">
          <children>
             <Label alignment="CENTER" contentDisplay="RIGHT" prefHeight="23.0" prefWidth="355.0" text="Category To Draw:" textAlignment="CENTER">
                <font>
@@ -103,11 +103,6 @@
             <Label fx:id="categoryLabel" text="Loading">
                <font>
                   <Font name="Segoe UI Black" size="30.0" />
-               </font>
-            </Label>
-            <Label fx:id="winLostLabel" alignment="CENTER" prefHeight="40.0" prefWidth="400.0" text="Getting Closer.." textAlignment="CENTER">
-               <font>
-                  <Font name="Segoe UI Black" size="20.0" />
                </font>
             </Label>
             <AnchorPane maxHeight="260.0" maxWidth="400.0" style="-fx-background-color: white;">
@@ -156,26 +151,6 @@
                            </cursor>
                         </Button>
                         <Button alignment="CENTER" mnemonicParsing="false" onAction="#onClear" prefHeight="23.0" prefWidth="80.0" style="-fx-background-color: FFE5B4;" text="Clear">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Button>
-                     </children>
-                  </HBox>
-                  <HBox fx:id="endGameBox" alignment="CENTER" spacing="10.0" visible="false">
-                     <children>
-                        <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#onSaveDrawing" prefHeight="60.0" prefWidth="150.0" style="-fx-background-color: FFE5B4;" text="Save Your Drawing">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Button>
-                        <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#onPlayNewRound" prefHeight="60.0" prefWidth="150.0" style="-fx-background-color: FFE5B4;" text="Play Another Round">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
@@ -281,18 +256,38 @@
             </Label>
          </children>
       </VBox>
-      <VBox alignment="BOTTOM_LEFT" layoutX="534.0" layoutY="69.0" prefHeight="460.0" prefWidth="340.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <VBox alignment="BOTTOM_LEFT" layoutX="514.6666666666667" layoutY="64.0" prefHeight="434.0" prefWidth="293.0" AnchorPane.bottomAnchor="22.0" AnchorPane.rightAnchor="12.0">
          <children>
-            <Label fx:id="topPredictionsLabel" alignment="CENTER" prefHeight="110.0" prefWidth="330.0" text="EMPTY CANVAS!!">
+            <Label fx:id="topPredictionsLabel" alignment="CENTER" prefHeight="101.0" prefWidth="470.0" text="  EMPTY CANVAS!!">
                <font>
                   <Font name="Segoe UI Black" size="20.0" />
                </font>
             </Label>
-            <Label fx:id="remainingPredictionsLabel" alignment="TOP_LEFT" prefHeight="315.0" prefWidth="330.0">
+            <Label fx:id="remainingPredictionsLabel" alignment="TOP_LEFT" prefHeight="250.0" prefWidth="293.0">
                <font>
                   <Font name="Segoe UI Semibold" size="20.0" />
                </font>
             </Label>
+            <HBox fx:id="endGameBox" alignment="CENTER" prefHeight="87.0" prefWidth="299.0" spacing="10.0" visible="false">
+               <children>
+                  <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#onSaveDrawing" prefHeight="60.0" prefWidth="150.0" style="-fx-background-color: FFE5B4;" text="Save Your Drawing">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#onPlayNewRound" prefHeight="60.0" prefWidth="150.0" style="-fx-background-color: FFE5B4;" text="Play Another Round">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+            </HBox>
          </children>
          <padding>
             <Insets right="10.0" />

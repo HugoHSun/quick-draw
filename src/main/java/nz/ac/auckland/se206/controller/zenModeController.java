@@ -116,6 +116,7 @@ public class zenModeController {
     graphic = canvas.getGraphicsContext2D();
     onPen();
     colours.setVisible(false);
+    endGameBox.setVisible(true);
     model = new DoodlePrediction();
   }
 
@@ -224,12 +225,6 @@ public class zenModeController {
     timer.scheduleAtFixedRate(
         new TimerTask() {
           public void run() {
-            // When a ending condition of the game is met
-            if (game.checkWonZenMode()) {
-              timer.cancel();
-              endGame(true);
-              return;
-            }
             // Ask the GUI thread to update predictions display
             Platform.runLater(
                 () -> {
@@ -243,9 +238,8 @@ public class zenModeController {
                       List<Classifications.Classification> currentPredictions =
                           model.getPredictions((BufferedImage) getCurrentSnapshot(), 10);
                       game.updatePredictions(currentPredictions);
-                      topPredictionsLabel.setText(game.getTopPredictionsDisplayZenMode());
-                      remainingPredictionsLabel.setText(
-                          game.getRemainingPredictionsDisplayZenMode());
+                      topPredictionsLabel.setText(game.getTopPredictionsDisplay());
+                      remainingPredictionsLabel.setText(game.getRemainingPredictionsDisplay());
                     } catch (TranslateException e) {
                       e.printStackTrace();
                     }
@@ -289,35 +283,13 @@ public class zenModeController {
     return true;
   }
 
-  /** This is a helper method that is executed when a game has ended */
-  private void endGame(boolean isWon) {
-    // Setting the buttons
-    toolBox.setVisible(false);
-    colours.setVisible(false);
-    canvas.setDisable(true);
-    canvas.setOnMouseDragged(null);
-    try {
-      recordResult(currentActiveUser, isWon);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    endGameBox.setVisible(true);
-
-    TextToSpeech textToSpeech = new TextToSpeech();
-    if (isWon) {
-      Platform.runLater(() -> winLostLabel.setText("YOU WON!!!"));
-      textToSpeech.speak("Congratulations, you won!");
-    }
-  }
-
   /**
    * This method records the game result and the category played of the current user
    *
    * @param userName the name of the user
-   * @param isWon whether the user won
    * @throws IOException
    */
-  private void recordResult(String userName, boolean isWon) throws IOException {
+  private void recordResult(String userName) throws IOException {
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
     // construct Type that tells Gson about the generic type
     Type userListType = new TypeToken<List<User>>() {}.getType();
@@ -330,16 +302,6 @@ public class zenModeController {
     }
 
     User user = users.get(userNames.indexOf(userName));
-
-    // Record the game result
-    if (isWon) {
-      user.won();
-    } else {
-      user.lost();
-    }
-
-    user.record(isWon);
-
     // Record the category played
     user.newWord(category);
 
