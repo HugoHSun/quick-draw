@@ -18,9 +18,9 @@ public class User {
   private int fastestWon;
 
   private HashMap<Difficulty, List<String>> wordsEncountered;
-  
+ 
   private List<Integer> badgesEarned;
-  
+
   private List<Boolean> previousResults;
   
   private Mode latestMode;
@@ -61,9 +61,9 @@ public class User {
   public List<String> getWordsEncountered(Difficulty diff) {
     return wordsEncountered.get(diff);
   }
-  
-  public List<Integer> getBadgesEarned(){
-	  return badgesEarned;
+
+  public List<Integer> getBadgesEarned() {
+    return badgesEarned;
   }
   
   public Mode getLatestMode() {
@@ -81,13 +81,13 @@ public class User {
   public void newMode(Mode mode) {
 	  latestMode = mode;
   }
-  
+
   public void newBadge(List<Integer> newBadges) {
-	  for (int newBadge : newBadges) {
-		  if (!(badgesEarned.contains(newBadge))) {
-			  badgesEarned.add(newBadge);
-		  }
-	  }
+    for (int newBadge : newBadges) {
+      if (!(badgesEarned.contains(newBadge))) {
+        badgesEarned.add(newBadge);
+      }
+    }
   }
 
   public void won() {
@@ -99,21 +99,20 @@ public class User {
   }
 
   public void record(boolean isWon) {
-	  if (previousResults.size() < 10) {
-		  previousResults.add(isWon);
-	  }
-	  else {
-		  previousResults.remove(0);
-		  previousResults.add(isWon);
-	  }
+    if (previousResults.size() < 10) {
+      previousResults.add(isWon);
+    } else {
+      previousResults.remove(0);
+      previousResults.add(isWon);
+    }
   }
-  
+
   public void updateFastestWon(int fasterWon) {
     if (fasterWon < fastestWon) {
       fastestWon = fasterWon;
     }
   }
-  
+
   public void obtainBadges() {
 	  List<Integer> newBadges = new ArrayList<Integer>();
 	  
@@ -181,6 +180,7 @@ public class User {
 	  }
 	  
 	  newBadge(newBadges);
+
   }
 
   public String toString() {

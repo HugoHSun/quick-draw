@@ -1,5 +1,7 @@
 package nz.ac.auckland.se206.controller;
 
+import static nz.ac.auckland.se206.controller.MenuController.currentActiveUser;
+
 import ai.djl.ModelException;
 import ai.djl.modality.Classifications.Classification;
 import ai.djl.translate.TranslateException;
@@ -68,6 +70,7 @@ import nz.ac.auckland.se206.user.User;
  */
 public class CanvasController {
 
+  @FXML private Label currentUser;
   @FXML private Canvas canvas;
 
   @FXML private Label categoryLabel;
@@ -125,6 +128,7 @@ public class CanvasController {
     category = game.getCategoryToDraw();
     difficulty = game.getCategoryDifficulty();
     categoryLabel.setText(category);
+    currentUser.setText(currentActiveUser);
     Thread voiceOver =
         new Thread(
             () -> {
@@ -342,7 +346,7 @@ public class CanvasController {
     canvas.setDisable(true);
     canvas.setOnMouseDragged(null);
     try {
-      recordResult(MenuController.currentActiveUser, isWon, 60 - game.getRemainingTime());
+      recordResult(currentActiveUser, isWon, 60 - game.getRemainingTime());
     } catch (IOException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
