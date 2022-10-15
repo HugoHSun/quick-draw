@@ -44,6 +44,8 @@ public class SettingsController {
   private Difficulty dif;
   private List<User> users;
 
+  private Boolean sound;
+
   public void initialize() throws IOException {
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
     // construct Type that tells Gson about the generic type
@@ -57,6 +59,14 @@ public class SettingsController {
     }
     dif = users.get(userNames.indexOf(MenuController.currentActiveUser)).getCurrentDifficulty();
     set(dif);
+    sound = users.get(userNames.indexOf(MenuController.currentActiveUser)).getSoundStatus();
+    setSoundState(sound);
+  }
+
+  private void setSoundState(Boolean sound) {
+    if (!sound) {
+      soundButton.setSelected(true);
+    }
   }
 
   private void set(Difficulty dif) {
@@ -112,7 +122,14 @@ public class SettingsController {
   }
 
   @FXML
-  private void onSound(ActionEvent event) {}
+  private void onSound(ActionEvent event) {
+    if (soundButton.isSelected()) {
+      sound = false;
+    } else {
+      sound = true;
+    }
+    setSoundState(sound);
+  }
 
   @FXML
   private void onMusic(ActionEvent event) {}
@@ -125,6 +142,7 @@ public class SettingsController {
       userNames.add(user.getName());
     }
     users.get(userNames.indexOf(MenuController.currentActiveUser)).setCurrentDifficulty(dif);
+    users.get(userNames.indexOf(MenuController.currentActiveUser)).setSoundStatus(sound);
 
     FileWriter fw = new FileWriter(App.usersFileName, false);
     gson.toJson(users, fw);

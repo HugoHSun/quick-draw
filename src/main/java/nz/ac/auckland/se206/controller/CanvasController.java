@@ -16,6 +16,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +43,8 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -110,6 +113,9 @@ public class CanvasController {
   private double currentY;
   private String category;
   private Difficulty difficulty;
+  private Boolean sound;
+  MediaPlayer playerDrawSFX;
+  MediaPlayer playerEraseSFX;
 
   /**
    * JavaFX calls this method once the GUI elements are loaded. In our case we create a listener for
@@ -132,6 +138,7 @@ public class CanvasController {
       userNames.add(user.getName());
     }
     dif = users.get(userNames.indexOf(MenuController.currentActiveUser)).getCurrentDifficulty();
+    sound = users.get(userNames.indexOf(MenuController.currentActiveUser)).getSoundStatus();
 
     game = GameFactory.createGame(dif);
     category = game.getCategoryToDraw();
@@ -145,38 +152,17 @@ public class CanvasController {
             });
     voiceOver.start();
     graphic = canvas.getGraphicsContext2D();
-    // Change the cursor icon to eraser in canvas
-    URL cursorUrl = App.class.getResource("/images/Pencil-icon.png");
-    Image pencilCursor = new Image(cursorUrl.toString());
-    canvas.setCursor(new ImageCursor(pencilCursor, 0, pencilCursor.getHeight()));
 
-    // save coordinates when mouse is pressed on the canvas
-    canvas.setOnMousePressed(
-        e -> {
-          currentX = e.getX();
-          currentY = e.getY();
-        });
-
-    canvas.setOnMouseDragged(
-        e -> {
-          // Brush size (you can change this, it should not be too small or too large).
-          final double size = 6;
-
-          final double x = e.getX() - size / 2;
-          final double y = e.getY() - size / 2;
-
-          // This is the colour of the brush.
-          graphic.setStroke(Color.BLACK);
-          graphic.setLineWidth(size);
-
-          // Create a line that goes from the point (currentX, currentY) and (x,y)
-          graphic.strokeLine(currentX, currentY, x, y);
-
-          // update the coordinates
-          currentX = x;
-          currentY = y;
-        });
-
+    // Initialise drawing sound effect
+    try {
+      Media drawSFX = new Media(App.class.getResource("/sounds/drawSFX.mp3").toURI().toString());
+      playerDrawSFX = new MediaPlayer(drawSFX);
+      Media eraseSFX = new Media(App.class.getResource("/sounds/eraserSFX.mp3").toURI().toString());
+      playerEraseSFX = new MediaPlayer(eraseSFX);
+    } catch (URISyntaxException e) {
+      e.printStackTrace();
+    }
+    onPen();
     model = new DoodlePrediction();
     // By loading one prediction before the scene loads, it removes the GUI freezing
     model.getPredictions(getCurrentSnapshot(), 10);
@@ -195,6 +181,12 @@ public class CanvasController {
     Image pencilCursor = new Image(cursorUrl.toString());
     canvas.setCursor(new ImageCursor(pencilCursor, 0, pencilCursor.getHeight()));
 
+    // save coordinates when mouse is pressed on the canvas
+    canvas.setOnMousePressed(
+        e -> {
+          currentX = e.getX();
+          currentY = e.getY();
+        });
     canvas.setOnMouseDragged(
         e -> {
           // Brush size (you can change this, it should not be too small or too large).
@@ -213,6 +205,16 @@ public class CanvasController {
           // update the coordinates
           currentX = x;
           currentY = y;
+
+          // play drawing sound effect
+          if (sound) {
+            playerDrawSFX.play();
+          }
+        });
+    canvas.setOnMouseReleased(
+        e -> {
+          // stop drawing sound effect
+          playerDrawSFX.stop();
         });
   }
 
@@ -227,6 +229,12 @@ public class CanvasController {
     canvas.setCursor(
         new ImageCursor(eraserCursor, eraserCursor.getWidth() / 3.5, eraserCursor.getHeight()));
 
+    // save coordinates when mouse is pressed on the canvas
+    canvas.setOnMousePressed(
+        e -> {
+          currentX = e.getX();
+          currentY = e.getY();
+        });
     canvas.setOnMouseDragged(
         e -> {
           // Brush size (you can change this, it should not be too small or too large).
@@ -245,6 +253,16 @@ public class CanvasController {
           // update the coordinates
           currentX = x;
           currentY = y;
+
+          // play drawing sound effect
+          if (sound) {
+            playerEraseSFX.play();
+          }
+        });
+    canvas.setOnMouseReleased(
+        e -> {
+          // stop drawing sound effect
+          playerEraseSFX.stop();
         });
   }
 
@@ -355,7 +373,6 @@ public class CanvasController {
     try {
       recordResult(currentActiveUser, isWon, 60 - game.getRemainingTime());
     } catch (IOException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
     endGameBox.setVisible(true);

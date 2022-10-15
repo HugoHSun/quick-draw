@@ -14,7 +14,6 @@ import java.awt.image.PixelGrabber;
 import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.URISyntaxException;
@@ -92,6 +91,7 @@ public class zenModeController {
   private DoodlePrediction model;
 
   private Difficulty dif;
+  private Boolean sound;
 
   // mouse coordinates
   private double currentX;
@@ -124,6 +124,7 @@ public class zenModeController {
       userNames.add(user.getName());
     }
     dif = users.get(userNames.indexOf(MenuController.currentActiveUser)).getCurrentDifficulty();
+    sound = users.get(userNames.indexOf(MenuController.currentActiveUser)).getSoundStatus();
 
     game = GameFactory.createGame(dif);
     category = game.getCategoryToDraw();
@@ -186,7 +187,9 @@ public class zenModeController {
           currentY = y;
 
           // play drawing sound effect
-          playerDrawSFX.play();
+          if (sound) {
+            playerDrawSFX.play();
+          }
         });
 
     canvas.setOnMouseReleased(
@@ -233,7 +236,9 @@ public class zenModeController {
           currentY = y;
 
           // play drawing sound effect
-          playerEraseSFX.play();
+          if (sound) {
+            playerEraseSFX.play();
+          }
         });
 
     canvas.setOnMouseReleased(
@@ -321,36 +326,6 @@ public class zenModeController {
     }
 
     return true;
-  }
-
-  /**
-   * This method records the game result and the category played of the current user
-   *
-   * @param userName the name of the user
-   * @throws IOException
-   */
-  private void recordResult(String userName) throws IOException {
-    Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    // construct Type that tells Gson about the generic type
-    Type userListType = new TypeToken<List<User>>() {}.getType();
-    FileReader fr = new FileReader(App.usersFileName);
-    List<User> users = gson.fromJson(fr, userListType);
-    fr.close();
-    List<String> userNames = new ArrayList<String>();
-    for (User user : users) {
-      userNames.add(user.getName());
-    }
-
-    User user = users.get(userNames.indexOf(userName));
-    // Record the category played
-    user.newWord(difficulty, category);
-
-    // Update any new badges
-    user.obtainBadges();
-
-    FileWriter fw = new FileWriter(App.usersFileName, false);
-    gson.toJson(users, fw);
-    fw.close();
   }
 
   /**

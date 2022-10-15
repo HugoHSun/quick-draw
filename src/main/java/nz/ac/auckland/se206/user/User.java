@@ -224,4 +224,6 @@ public class User {
         + "\nLevel Hard: "
         + wordsEncountered.get(Difficulty.H);
   }
+
+  public void soundStatus() {}
 }
