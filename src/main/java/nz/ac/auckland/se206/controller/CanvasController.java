@@ -70,7 +70,6 @@ import nz.ac.auckland.se206.user.User;
  */
 public class CanvasController {
 
-  @FXML private Label currentUser;
   @FXML private Canvas canvas;
 
   @FXML private Label categoryLabel;
@@ -123,21 +122,18 @@ public class CanvasController {
    * @throws TranslateException
    */
   public void initialize() throws ModelException, IOException, TranslateException {
-    // Initialize a game instance with 60 seconds and easy difficulty
     game = GameFactory.createGame(mode);
     category = game.getCategoryToDraw();
     difficulty = game.getCategoryDifficulty();
     categoryLabel.setText(category);
-    currentUser.setText(currentActiveUser);
+    usernameLabel.setText(currentActiveUser);
     Thread voiceOver =
         new Thread(
             () -> {
               new TextToSpeech().speak("Please draw: " + category);
             });
     voiceOver.start();
-
     graphic = canvas.getGraphicsContext2D();
-
     // Change the cursor icon to eraser in canvas
     URL cursorUrl = App.class.getResource("/images/Pencil-icon.png");
     Image pencilCursor = new Image(cursorUrl.toString());
