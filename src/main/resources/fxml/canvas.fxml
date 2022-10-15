@@ -73,17 +73,17 @@
                   <Font name="Segoe UI Black" size="30.0" />
                </font>
             </Label>
-            <Label fx:id="timeLabel" alignment="CENTER" contentDisplay="RIGHT" prefHeight="24.0" prefWidth="240.0" text="Time Left: ">
+            <Label fx:id="timeLabel" alignment="CENTER" contentDisplay="RIGHT" prefHeight="27.0" prefWidth="263.0" text="Time Left: ">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
                <graphic>
-                  <Label fx:id="timerLabel" contentDisplay="RIGHT" prefHeight="24.0" prefWidth="135.0" text="60">
+                  <Label fx:id="timerLabel" contentDisplay="RIGHT" prefHeight="27.0" prefWidth="101.0" text="60">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                      <graphic>
-                        <Label prefHeight="24.0" prefWidth="80.0" text="seconds">
+                        <Label prefHeight="27.0" prefWidth="71.0" text="seconds">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font>
