@@ -76,20 +76,20 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="55.0" prefWidth="670.0" text="Current user:">
-               <HBox.margin>
-                  <Insets left="100.0" />
-               </HBox.margin>
+            <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="55.0" prefWidth="683.0" text="Current user:">
                <font>
                   <Font name="Segoe UI Black" size="18.0" />
                </font>
                <graphic>
-                  <Label fx:id="currentUser" prefHeight="30.0" prefWidth="60.0">
+                  <Label fx:id="usernameLabel" prefHeight="30.0" prefWidth="218.0">
                      <font>
                         <Font name="Segoe UI Black" size="18.0" />
                      </font>
                   </Label>
                </graphic>
+               <HBox.margin>
+                  <Insets left="100.0" />
+               </HBox.margin>
             </Label>
          </children>
       </HBox>
