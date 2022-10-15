@@ -49,7 +49,6 @@ import javafx.stage.Window;
 import javax.imageio.ImageIO;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.CategorySelector.Difficulty;
-import nz.ac.auckland.se206.CategorySelector.Mode;
 import nz.ac.auckland.se206.game.Game;
 import nz.ac.auckland.se206.game.GameFactory;
 import nz.ac.auckland.se206.ml.DoodlePrediction;
@@ -104,7 +103,7 @@ public class CanvasController {
 
   private DoodlePrediction model;
   
-  private Mode mode= Mode.MEDIUM;
+  private Difficulty dif;
   
 
   // mouse coordinates
@@ -122,7 +121,21 @@ public class CanvasController {
    * @throws TranslateException
    */
   public void initialize() throws ModelException, IOException, TranslateException {
-    game = GameFactory.createGame(mode);
+	  
+	  Gson gson = new GsonBuilder().setPrettyPrinting().create();
+	    // construct Type that tells Gson about the generic type
+	  Type userListType = new TypeToken<List<User>>() {}.getType();
+	  FileReader fr = new FileReader(App.usersFileName);
+	  List<User> users = gson.fromJson(fr, userListType);
+	  fr.close();
+	  List<String> userNames = new ArrayList<String>();
+	  for (User user : users) {
+	    userNames.add(user.getName());
+	  }
+	  dif = users.get(userNames.indexOf(MenuController.currentActiveUser)).getCurrentDifficulty();
+	
+	  
+    game = GameFactory.createGame(dif);
     category = game.getCategoryToDraw();
     difficulty = game.getCategoryDifficulty();
     categoryLabel.setText(category);
@@ -397,7 +410,6 @@ public class CanvasController {
 
     // Record the category played
     user.newWord(difficulty,category);
-    user.setLatestMode(mode);
 
     // Update any new badges
     user.obtainBadges();
