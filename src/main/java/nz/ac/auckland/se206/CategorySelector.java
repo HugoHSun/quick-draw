@@ -93,20 +93,19 @@ public class CategorySelector {
     try {
       List<String> unplayedCategories = new ArrayList<String>();
       for (Difficulty dif : difficulty) {
-    	  unplayedCategories.addAll(getUnplayedCategories(dif));
-    	  
+        unplayedCategories.addAll(getUnplayedCategories(dif));
       }
       // Generating a random index for retrieving element
       int randomIndex = new Random().nextInt(unplayedCategories.size());
       output = unplayedCategories.get(randomIndex);
-      
+
       for (Difficulty dif : difficulty) {
-    	  if (getUnplayedCategories(dif).contains(output)) {
-    		  currentDifficulty = dif;
-    		  break;
-    	  }
+        if (getUnplayedCategories(dif).contains(output)) {
+          currentDifficulty = dif;
+          break;
+        }
       }
-      
+
     } catch (IOException e) {
       e.printStackTrace();
     }

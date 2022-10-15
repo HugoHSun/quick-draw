@@ -3,7 +3,6 @@ package nz.ac.auckland.se206.user;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import nz.ac.auckland.se206.CategorySelector.Difficulty;
 
 public class User {
@@ -17,11 +16,11 @@ public class User {
   private int fastestWon;
 
   private HashMap<Difficulty, List<String>> wordsEncountered;
- 
+
   private List<Integer> badgesEarned;
 
   private List<Boolean> previousResults;
-  
+
   private Difficulty currentDifficulty;
 
   public User(String name) {
@@ -30,12 +29,12 @@ public class User {
     this.gamesWon = 0;
     this.gamesLost = 0;
     this.fastestWon = 61;
-    
-    this.wordsEncountered =	new HashMap<Difficulty, List<String>>();
+
+    this.wordsEncountered = new HashMap<Difficulty, List<String>>();
     wordsEncountered.put(Difficulty.E, new ArrayList<String>());
     wordsEncountered.put(Difficulty.M, new ArrayList<String>());
     wordsEncountered.put(Difficulty.H, new ArrayList<String>());
-    
+
     this.badgesEarned = new ArrayList<Integer>();
     this.previousResults = new ArrayList<Boolean>();
     this.currentDifficulty = Difficulty.E;
@@ -64,13 +63,13 @@ public class User {
   public List<Integer> getBadgesEarned() {
     return badgesEarned;
   }
-  
+
   public Difficulty getCurrentDifficulty() {
-	  return currentDifficulty;
+    return currentDifficulty;
   }
-  
+
   public void setCurrentDifficulty(Difficulty dif) {
-	  currentDifficulty = dif;
+    currentDifficulty = dif;
   }
 
   public void newWord(Difficulty diff, String word) {
@@ -109,69 +108,76 @@ public class User {
   }
 
   public void obtainBadges() {
-	  List<Integer> newBadges = new ArrayList<Integer>();
-	  
-	  //Bronze badges
-	  if (this.gamesWon == 1) {
-		  newBadges.add(0);
-	  }
-	  if (this.gamesLost == 1) {
-		  newBadges.add(1);
-	  }
-	  if (this.fastestWon <= 30) {
-		  newBadges.add(2);
-	  }
-	  if (previousResults.size() >= 3 && !(previousResults.subList(previousResults.size()-3, previousResults.size()).contains(true))){
-		  newBadges.add(3);
-	  }
-	  //implement badge 4
-	  
-	  //Silver badges
-	  if (this.gamesWon == 10) {
-		  newBadges.add(5);
-	  }
-	  if (this.currentDifficulty.equals(Difficulty.M) && previousResults.get(previousResults.size()-1).equals(true)) {
-		  newBadges.add(6);
-	  }
-	  if (this.fastestWon <= 15) {
-		  newBadges.add(7);
-	  }
-	  //Implement badge 8
-	  if (previousResults.size() >= 3 && !(previousResults.subList(previousResults.size()-3, previousResults.size()).contains(false))) {
-		  newBadges.add(9);
-	  }
-	  
-	  //Gold badges
-	  if (this.gamesWon == 50) {
-		  newBadges.add(10);
-	  }
-	  if (this.currentDifficulty.equals(Difficulty.X) && previousResults.get(previousResults.size()-1).equals(true)) {
-		  newBadges.add(11);
-	  }
-	  if (this.fastestWon <= 3) {
-		  newBadges.add(12);
-	  }
-	  // Implement badge 13
-	  if (previousResults.size() == 10 && !(previousResults.contains(false))) {
-		  newBadges.add(14);
-	  }
-	  
-	  //Diamond badges
-	  double winRate = 100.0 * (double) gamesWon / (gamesWon + gamesLost);
-	  if ((this.gamesWon + this.gamesLost >= 50)&& winRate > 0.9) {
-		  newBadges.add(15);
-	  }
-	  if (this.gamesWon + this.gamesLost >= 1000) {
-		  newBadges.add(16);
-	  }
-	  //implement badge 17
-	  //implement badge 18
-	  if (badgesEarned.size() >= 19) {
-		  newBadges.add(19);
-	  }
-	  
-	  newBadge(newBadges);
+    List<Integer> newBadges = new ArrayList<Integer>();
 
+    // Bronze badges
+    if (this.gamesWon == 1) {
+      newBadges.add(0);
+    }
+    if (this.gamesLost == 1) {
+      newBadges.add(1);
+    }
+    if (this.fastestWon <= 30) {
+      newBadges.add(2);
+    }
+    if (previousResults.size() >= 3
+        && !(previousResults
+            .subList(previousResults.size() - 3, previousResults.size())
+            .contains(true))) {
+      newBadges.add(3);
+    }
+    // implement badge 4
+
+    // Silver badges
+    if (this.gamesWon == 10) {
+      newBadges.add(5);
+    }
+    if (this.currentDifficulty.equals(Difficulty.M)
+        && previousResults.get(previousResults.size() - 1).equals(true)) {
+      newBadges.add(6);
+    }
+    if (this.fastestWon <= 15) {
+      newBadges.add(7);
+    }
+    // Implement badge 8
+    if (previousResults.size() >= 3
+        && !(previousResults
+            .subList(previousResults.size() - 3, previousResults.size())
+            .contains(false))) {
+      newBadges.add(9);
+    }
+
+    // Gold badges
+    if (this.gamesWon == 50) {
+      newBadges.add(10);
+    }
+    if (this.currentDifficulty.equals(Difficulty.X)
+        && previousResults.get(previousResults.size() - 1).equals(true)) {
+      newBadges.add(11);
+    }
+    if (this.fastestWon <= 3) {
+      newBadges.add(12);
+    }
+    // Implement badge 13
+    if (previousResults.size() == 10 && !(previousResults.contains(false))) {
+      newBadges.add(14);
+    }
+
+    // Diamond badges
+    double winRate = 100.0 * (double) gamesWon / (gamesWon + gamesLost);
+    if ((this.gamesWon + this.gamesLost >= 50) && winRate > 0.9) {
+      newBadges.add(15);
+    }
+    if (this.gamesWon + this.gamesLost >= 1000) {
+      newBadges.add(16);
+    }
+    // implement badge 17
+    // implement badge 18
+    if (badgesEarned.size() >= 19) {
+      newBadges.add(19);
+    }
+
+    newBadge(newBadges);
   }
 
   public String toString() {

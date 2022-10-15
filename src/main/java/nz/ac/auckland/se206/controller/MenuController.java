@@ -190,7 +190,7 @@ public class MenuController {
     } catch (IOException e) {
       e.printStackTrace();
     }
-    
+
     scene.setRoot(root);
   }
 
