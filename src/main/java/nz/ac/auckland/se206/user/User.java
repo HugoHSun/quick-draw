@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import nz.ac.auckland.se206.CategorySelector.Difficulty;
-import nz.ac.auckland.se206.CategorySelector.Mode;
 
 public class User {
 
@@ -23,7 +22,7 @@ public class User {
 
   private List<Boolean> previousResults;
   
-  private Mode latestMode;
+  private Difficulty currentDifficulty;
 
   public User(String name) {
     // Default values
@@ -39,7 +38,7 @@ public class User {
     
     this.badgesEarned = new ArrayList<Integer>();
     this.previousResults = new ArrayList<Boolean>();
-    this.latestMode = null;
+    this.currentDifficulty = Difficulty.E;
   }
 
   public String getName() {
@@ -66,20 +65,16 @@ public class User {
     return badgesEarned;
   }
   
-  public Mode getLatestMode() {
-	  return latestMode;
+  public Difficulty getCurrentDifficulty() {
+	  return currentDifficulty;
   }
   
-  public void setLatestMode(Mode mode) {
-	  this.latestMode = mode;
+  public void setCurrentDifficulty(Difficulty dif) {
+	  currentDifficulty = dif;
   }
 
   public void newWord(Difficulty diff, String word) {
     wordsEncountered.get(diff).add(word);
-  }
-  
-  public void newMode(Mode mode) {
-	  latestMode = mode;
   }
 
   public void newBadge(List<Integer> newBadges) {
@@ -135,15 +130,13 @@ public class User {
 	  if (this.gamesWon == 10) {
 		  newBadges.add(5);
 	  }
-	  if (this.latestMode.equals(Mode.MEDIUM) && previousResults.get(previousResults.size()-1).equals(true)) {
+	  if (this.currentDifficulty.equals(Difficulty.M) && previousResults.get(previousResults.size()-1).equals(true)) {
 		  newBadges.add(6);
 	  }
 	  if (this.fastestWon <= 15) {
 		  newBadges.add(7);
 	  }
-	  if (this.latestMode.equals(Mode.ZEN)) {
-		  newBadges.add(8);
-	  }
+	  //Implement badge 8
 	  if (previousResults.size() >= 3 && !(previousResults.subList(previousResults.size()-3, previousResults.size()).contains(false))) {
 		  newBadges.add(9);
 	  }
@@ -152,15 +145,13 @@ public class User {
 	  if (this.gamesWon == 50) {
 		  newBadges.add(10);
 	  }
-	  if (this.latestMode.equals(Mode.MASTER) && previousResults.get(previousResults.size()-1).equals(true)) {
+	  if (this.currentDifficulty.equals(Difficulty.X) && previousResults.get(previousResults.size()-1).equals(true)) {
 		  newBadges.add(11);
 	  }
 	  if (this.fastestWon <= 3) {
 		  newBadges.add(12);
 	  }
-	  if (this.latestMode.equals(Mode.HIDDEN) && previousResults.get(previousResults.size()-1).equals(true)) {
-		  newBadges.add(13);
-	  }
+	  // Implement badge 13
 	  if (previousResults.size() == 10 && !(previousResults.contains(false))) {
 		  newBadges.add(14);
 	  }
@@ -207,7 +198,7 @@ public class User {
         + "%\nFastest time to victory (secs): "
         + fastestTime
         + "\nDifficulty Setting : "
-        + latestMode
+        + currentDifficulty
         + "\nWords Encountered : \n"
         + "Level Easy: "
         + wordsEncountered.get(Difficulty.E)

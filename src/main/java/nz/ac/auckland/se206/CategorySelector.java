@@ -29,16 +29,8 @@ public class CategorySelector {
   public enum Difficulty {
     E,
     M,
-    H
-  }
-  
-  public enum Mode{
-	  EASY,
-	  MEDIUM,
-	  HARD,
-	  MASTER,
-	  ZEN,
-	  HIDDEN
+    H,
+    X
   }
 
   private static HashMap<Difficulty, List<String>> categoryMap =

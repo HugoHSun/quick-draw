@@ -23,7 +23,14 @@
       </ImageView>
       <HBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onReturn" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
+            <Button fx:id="menuButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onReturn" prefHeight="50.0" prefWidth="50.0" stylesheets="@../css/buttons.css">
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../images/returnIcon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
                <padding>
                   <Insets left="15.0" />
                </padding>
@@ -33,16 +40,6 @@
                <tooltip>
                   <Tooltip text="Back to menu" />
                </tooltip>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <graphic>
-                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true">
-                     <image>
-                        <Image url="@../images/returnIcon2.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
             </Button>
             <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="55.0" prefWidth="683.0" text="Current user:">
                <HBox.margin>
@@ -126,9 +123,6 @@
                                  </image>
                               </ImageView>
                            </graphic>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
                         </Button>
                     <Button fx:id="eraserButton" alignment="CENTER" mnemonicParsing="false" onAction="#onErase" prefHeight="35.0" prefWidth="40.0" style="-fx-background-color: transparent;">
                            <graphic>
@@ -138,14 +132,8 @@
                                  </image>
                               </ImageView>
                            </graphic>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
                         </Button>
-                    <Button alignment="CENTER" mnemonicParsing="false" onAction="#onClear" prefHeight="23.0" prefWidth="80.0" style="-fx-background-color: FFE5B4;" text="Clear">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor></Button>
+                    <Button alignment="CENTER" mnemonicParsing="false" onAction="#onClear" prefHeight="23.0" prefWidth="80.0" style="-fx-background-color: FFE5B4;" text="Clear" />
                      </children>
                   </HBox>
                   <HBox fx:id="endGameBox" alignment="CENTER" spacing="10.0" visible="false">
@@ -154,17 +142,11 @@
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
                         </Button>
                         <Button fx:id="newRoundButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onPlayNewRound" prefHeight="60.0" prefWidth="150.0" style="-fx-background-color: FFE5B4;" text="Play Another Round">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
                         </Button>
                      </children>
                   </HBox>

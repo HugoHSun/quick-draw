@@ -49,7 +49,6 @@ import javafx.stage.Window;
 import javax.imageio.ImageIO;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.CategorySelector.Difficulty;
-import nz.ac.auckland.se206.CategorySelector.Mode;
 import nz.ac.auckland.se206.game.Game;
 import nz.ac.auckland.se206.game.GameFactory;
 import nz.ac.auckland.se206.ml.DoodlePrediction;
@@ -70,7 +69,6 @@ import nz.ac.auckland.se206.user.User;
  */
 public class CanvasController {
 
-  @FXML private Label currentUser;
   @FXML private Canvas canvas;
 
   @FXML private Label categoryLabel;
@@ -105,7 +103,7 @@ public class CanvasController {
 
   private DoodlePrediction model;
   
-  private Mode mode= Mode.MEDIUM;
+  private Difficulty dif;
   
 
   // mouse coordinates
@@ -123,21 +121,32 @@ public class CanvasController {
    * @throws TranslateException
    */
   public void initialize() throws ModelException, IOException, TranslateException {
-    // Initialize a game instance with 60 seconds and easy difficulty
-    game = GameFactory.createGame(mode);
+	  
+	  Gson gson = new GsonBuilder().setPrettyPrinting().create();
+	    // construct Type that tells Gson about the generic type
+	  Type userListType = new TypeToken<List<User>>() {}.getType();
+	  FileReader fr = new FileReader(App.usersFileName);
+	  List<User> users = gson.fromJson(fr, userListType);
+	  fr.close();
+	  List<String> userNames = new ArrayList<String>();
+	  for (User user : users) {
+	    userNames.add(user.getName());
+	  }
+	  dif = users.get(userNames.indexOf(MenuController.currentActiveUser)).getCurrentDifficulty();
+	
+	  
+    game = GameFactory.createGame(dif);
     category = game.getCategoryToDraw();
     difficulty = game.getCategoryDifficulty();
     categoryLabel.setText(category);
-    currentUser.setText(currentActiveUser);
+    usernameLabel.setText(currentActiveUser);
     Thread voiceOver =
         new Thread(
             () -> {
               new TextToSpeech().speak("Please draw: " + category);
             });
     voiceOver.start();
-
     graphic = canvas.getGraphicsContext2D();
-
     // Change the cursor icon to eraser in canvas
     URL cursorUrl = App.class.getResource("/images/Pencil-icon.png");
     Image pencilCursor = new Image(cursorUrl.toString());
@@ -401,7 +410,6 @@ public class CanvasController {
 
     // Record the category played
     user.newWord(difficulty,category);
-    user.setLatestMode(mode);
 
     // Update any new badges
     user.obtainBadges();

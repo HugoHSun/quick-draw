@@ -1,20 +1,20 @@
 package nz.ac.auckland.se206.game;
 
-import nz.ac.auckland.se206.CategorySelector.Mode;
+import nz.ac.auckland.se206.CategorySelector.Difficulty;
 
 public class GameFactory {
-	public static Game createGame(Mode mode) {
-		switch(mode) {
-		case EASY:
+	public static Game createGame(Difficulty difficulty) {
+		switch(difficulty) {
+		case E:
 			return new Easy();
 		
-		case MEDIUM:
+		case M:
 			return new Medium();
 		
-		case HARD:
+		case H:
 			return new Hard();
 			
-		case MASTER:
+		case X:
 			return new Master();
 			
 		default:
