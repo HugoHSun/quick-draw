@@ -58,31 +58,29 @@
             </Label>
          </children>
       </HBox>
-      <VBox alignment="CENTER" layoutX="69.0" layoutY="96.0" prefHeight="460.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0">
+      <VBox alignment="CENTER" layoutX="69.0" layoutY="45.0" prefHeight="460.0" prefWidth="400.0" AnchorPane.bottomAnchor="15.0">
          <children>
           <Label alignment="CENTER" contentDisplay="RIGHT" prefHeight="23.0" prefWidth="355.0" text="Category To Draw:" textAlignment="CENTER">
             <font>
               <Font name="Segoe UI Black" size="20.0" />
             </font>
-               <graphic>
-                  <Label fx:id="categoryLabel" text="Loading">
-                     <font>
-                        <Font name="Segoe UI Black" size="20.0" />
-                     </font>
-                  </Label>
-               </graphic>
           </Label>
-            <Label fx:id="timeLabel" alignment="CENTER" contentDisplay="RIGHT" prefHeight="30.0" prefWidth="290.0" text="Time Left: ">
+            <Label fx:id="categoryLabel" text="Loading">
+               <font>
+                  <Font name="Segoe UI Black" size="30.0" />
+               </font>
+            </Label>
+            <Label fx:id="timeLabel" alignment="CENTER" contentDisplay="RIGHT" prefHeight="27.0" prefWidth="263.0" text="Time Left: ">
                <font>
                   <Font name="Segoe UI Black" size="20.0" />
                </font>
                <graphic>
-                  <Label fx:id="timerLabel" contentDisplay="RIGHT" prefHeight="24.0" prefWidth="135.0">
+                  <Label fx:id="timerLabel" contentDisplay="RIGHT" prefHeight="27.0" prefWidth="101.0" text="60">
                      <font>
                         <Font name="Segoe UI Black" size="20.0" />
                      </font>
                      <graphic>
-                        <Label prefHeight="24.0" prefWidth="80.0" text="seconds">
+                        <Label prefHeight="27.0" prefWidth="71.0" text="seconds">
                            <font>
                               <Font name="Segoe UI Black" size="20.0" />
                            </font>
@@ -161,7 +159,7 @@
       </VBox>
       <VBox alignment="BOTTOM_LEFT" layoutX="534.0" layoutY="69.0" prefHeight="460.0" prefWidth="340.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <Label fx:id="topPredictionsLabel" alignment="TOP_LEFT" prefHeight="110.0" prefWidth="330.0" text="EMPTY CANVAS!!" textAlignment="CENTER">
+            <Label fx:id="topPredictionsLabel" alignment="CENTER" prefHeight="110.0" prefWidth="330.0" text="EMPTY CANVAS!!" textAlignment="CENTER">
                <font>
                   <Font name="Segoe UI Black" size="20.0" />
                </font>

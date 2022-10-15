@@ -122,7 +122,8 @@ public class Game {
   }
 
   /**
-   * @param winningRank the prediction rank that the player need to get into to win
+   * winningRank the prediction rank that the player need to get into to win
+   *
    * @return true if the player has won, false otherwise
    */
   public boolean checkWon() {
