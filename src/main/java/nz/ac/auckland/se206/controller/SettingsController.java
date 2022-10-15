@@ -45,6 +45,7 @@ public class SettingsController {
   private List<User> users;
 
   private Boolean sound;
+  private Boolean music;
 
   public void initialize() throws IOException {
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -61,11 +62,19 @@ public class SettingsController {
     set(dif);
     sound = users.get(userNames.indexOf(MenuController.currentActiveUser)).getSoundStatus();
     setSoundState(sound);
+    music = users.get(userNames.indexOf(MenuController.currentActiveUser)).getMusicStatus();
+    setMusicState(music);
   }
 
   private void setSoundState(Boolean sound) {
     if (!sound) {
       soundButton.setSelected(true);
+    }
+  }
+
+  private void setMusicState(Boolean music) {
+    if (!music) {
+      musicButton.setSelected(true);
     }
   }
 
@@ -123,16 +132,15 @@ public class SettingsController {
 
   @FXML
   private void onSound(ActionEvent event) {
-    if (soundButton.isSelected()) {
-      sound = false;
-    } else {
-      sound = true;
-    }
+    sound = !soundButton.isSelected();
     setSoundState(sound);
   }
 
   @FXML
-  private void onMusic(ActionEvent event) {}
+  private void onMusic(ActionEvent event) {
+    music = !musicButton.isSelected();
+    setMusicState(music);
+  }
 
   @FXML
   private void onReturn(ActionEvent event) throws IOException {
@@ -143,6 +151,7 @@ public class SettingsController {
     }
     users.get(userNames.indexOf(MenuController.currentActiveUser)).setCurrentDifficulty(dif);
     users.get(userNames.indexOf(MenuController.currentActiveUser)).setSoundStatus(sound);
+    users.get(userNames.indexOf(MenuController.currentActiveUser)).setMusicStatus(music);
 
     FileWriter fw = new FileWriter(App.usersFileName, false);
     gson.toJson(users, fw);

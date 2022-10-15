@@ -60,6 +60,8 @@ public class MenuController {
 
   @FXML private ComboBox<String> userComboBox;
 
+  private Boolean music;
+
   /**
    * This method runs after the FXML file is loaded
    *

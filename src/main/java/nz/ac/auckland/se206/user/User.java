@@ -25,6 +25,8 @@ public class User {
 
   private Boolean soundStatus;
 
+  private Boolean musicStatus;
+
   public User(String name) {
     // Default values
     this.name = name;
@@ -32,6 +34,7 @@ public class User {
     this.gamesLost = 0;
     this.fastestWon = 61;
     this.soundStatus = true;
+    this.musicStatus = true;
 
     this.wordsEncountered = new HashMap<Difficulty, List<String>>();
     wordsEncountered.put(Difficulty.E, new ArrayList<String>());
@@ -77,6 +80,14 @@ public class User {
 
   public void setSoundStatus(Boolean sound) {
     soundStatus = sound;
+  }
+
+  public Boolean getMusicStatus() {
+    return musicStatus;
+  }
+
+  public void setMusicStatus(Boolean music) {
+    musicStatus = music;
   }
 
   public void setCurrentDifficulty(Difficulty dif) {
@@ -224,6 +235,4 @@ public class User {
         + "\nLevel Hard: "
         + wordsEncountered.get(Difficulty.H);
   }
-
-  public void soundStatus() {}
 }

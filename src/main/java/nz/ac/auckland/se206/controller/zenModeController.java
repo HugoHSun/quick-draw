@@ -78,8 +78,6 @@ public class zenModeController {
 
   @FXML private Label remainingPredictionsLabel;
 
-  @FXML private Label winLostLabel;
-
   @FXML private HBox endGameBox;
 
   private Parent root;
@@ -93,14 +91,17 @@ public class zenModeController {
   private Difficulty dif;
   private Boolean sound;
 
+  private Boolean music;
+
   // mouse coordinates
   private double currentX;
   private double currentY;
   private String category;
-  private Difficulty difficulty;
 
   MediaPlayer playerDrawSFX;
   MediaPlayer playerEraseSFX;
+
+  MediaPlayer playerBackgroundMusic;
 
   Color penColour;
 
@@ -125,10 +126,10 @@ public class zenModeController {
     }
     dif = users.get(userNames.indexOf(MenuController.currentActiveUser)).getCurrentDifficulty();
     sound = users.get(userNames.indexOf(MenuController.currentActiveUser)).getSoundStatus();
+    music = users.get(userNames.indexOf(MenuController.currentActiveUser)).getMusicStatus();
 
     game = GameFactory.createGame(dif);
     category = game.getCategoryToDraw();
-    difficulty = game.getCategoryDifficulty();
     categoryLabel.setText(category);
     usernameLabel.setText(currentActiveUser);
     Thread voiceOver =
@@ -152,8 +153,14 @@ public class zenModeController {
       playerDrawSFX = new MediaPlayer(drawSFX);
       Media eraseSFX = new Media(App.class.getResource("/sounds/eraserSFX.mp3").toURI().toString());
       playerEraseSFX = new MediaPlayer(eraseSFX);
+      Media backgroundMusic =
+          new Media(App.class.getResource("/sounds/music2.mp3").toURI().toString());
+      playerBackgroundMusic = new MediaPlayer(backgroundMusic);
     } catch (URISyntaxException e) {
       e.printStackTrace();
+    }
+    if (music) {
+      playerBackgroundMusic.play();
     }
   }
 
@@ -347,6 +354,7 @@ public class zenModeController {
 
   @FXML
   private void onReturn(ActionEvent event) {
+    playerBackgroundMusic.stop();
     Scene scene = ((Node) event.getSource()).getScene();
     try {
       // Load a new parent node
