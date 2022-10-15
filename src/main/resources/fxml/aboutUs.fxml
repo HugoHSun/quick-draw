@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<ScrollPane hbarPolicy="NEVER" prefHeight="520.0" prefWidth="820.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controller.AboutUsController">
+   <content>
+      <AnchorPane prefHeight="750.0" prefWidth="820.0">
+         <children>
+            <ImageView fitHeight="750.0" fitWidth="820.0" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <image>
+                  <Image url="@../images/canvasBackground.jpg" />
+               </image>
+            </ImageView>
+            <VBox prefHeight="750.0" prefWidth="820.0">
+               <children>
+                  <HBox prefHeight="105.0" prefWidth="820.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#onReturn" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
+                           <graphic>
+                              <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/returnIcon2.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Label prefHeight="90.0" prefWidth="700.0" text="Speedy Sketchers&#10;an Auckland-based Art School " textAlignment="CENTER">
+                           <font>
+                              <Font name="Segoe UI Black" size="35.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="60.0" top="12.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <Label prefHeight="40.0" prefWidth="820.0" text="Sign up to our most popular course &quot;Speed Drawing&quot; today!" textFill="WHITE">
+                     <font>
+                        <Font name="Roboto Black" size="26.0" />
+                     </font>
+                     <padding>
+                        <Insets left="35.0" />
+                     </padding>
+                  </Label>
+                  <Hyperlink prefHeight="30.0" prefWidth="820.0" text="https://en.wikipedia.org/wiki/Speed_painting" textFill="WHITE">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <padding>
+                        <Insets left="35.0" />
+                     </padding>
+                     <font>
+                        <Font name="Segoe UI Black" size="18.0" />
+                     </font>
+                  </Hyperlink>
+                  <Label alignment="TOP_LEFT" contentDisplay="RIGHT" graphicTextGap="25.0" lineSpacing="12.0" prefHeight="250.0" prefWidth="820.0" text="This technique has a number of benefits, including:&#10;- Improving speed in overall drawing ability&#10;- Improving efficiency&#10;- Helps to focus on key features, and less on details&#10;- Letting go of the need to be perfect&#10;- Avoiding the temptation to over-think art&#10;- And, of course, it’s challenging!" textFill="#464646">
+                     <font>
+                        <Font name="Roboto Black" size="20.0" />
+                     </font>
+                     <padding>
+                        <Insets left="35.0" />
+                     </padding>
+                     <graphic>
+                        <ImageView fitHeight="240.0" fitWidth="260.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@../images/app-logo.PNG" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+                  <Label prefHeight="50.0" prefWidth="820.0" text="But wait.. Why should I learn Art?" textFill="WHITE">
+                     <font>
+                        <Font name="Roboto Black" size="26.0" />
+                     </font>
+                     <padding>
+                        <Insets left="35.0" />
+                     </padding>
+                  </Label>
+                  <Label alignment="TOP_LEFT" contentDisplay="RIGHT" graphicTextGap="25.0" lineSpacing="12.0" prefHeight="250.0" prefWidth="820.0" text="Art provides many benefits:&#10;- Improving creativity&#10;- Improving focus&#10;- Improving communication&#10;- Improving hand–eye coordination&#10;- Improving problem solving&#10;- Improving memory&#10;- Connecting with emotions&#10;" textFill="#464646">
+                     <font>
+                        <Font name="Roboto Black" size="20.0" />
+                     </font>
+                     <padding>
+                        <Insets left="35.0" />
+                     </padding>
+                  </Label>
+                  <Label prefHeight="50.0" prefWidth="820.0" text="Start ENJOYING these benefits today!" textFill="WHITE">
+                     <font>
+                        <Font name="Roboto Black" size="26.0" />
+                     </font>
+                     <padding>
+                        <Insets left="35.0" />
+                     </padding>
+                  </Label>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+   </content>
+</ScrollPane>
