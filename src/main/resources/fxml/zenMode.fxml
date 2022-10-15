@@ -93,19 +93,22 @@
             </Label>
          </children>
       </HBox>
-      <VBox alignment="CENTER" layoutX="69.0" layoutY="96.0" prefHeight="460.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0">
+      <VBox alignment="CENTER" layoutX="42.0" layoutY="29.0" prefHeight="484.0" prefWidth="400.0" AnchorPane.bottomAnchor="7.0">
          <children>
             <Label alignment="CENTER" contentDisplay="RIGHT" prefHeight="23.0" prefWidth="355.0" text="Category To Draw:" textAlignment="CENTER">
                <font>
                   <Font name="Segoe UI Black" size="20.0" />
                </font>
-               <graphic>
-                  <Label fx:id="categoryLabel" text="Loading">
-                     <font>
-                        <Font name="Segoe UI Black" size="30.0" />
-                     </font>
-                  </Label>
-               </graphic>
+            </Label>
+            <Label fx:id="categoryLabel" text="Loading">
+               <font>
+                  <Font name="Segoe UI Black" size="30.0" />
+               </font>
+            </Label>
+            <Label fx:id="winLostLabel" alignment="CENTER" prefHeight="40.0" prefWidth="400.0" text="Getting Closer.." textAlignment="CENTER">
+               <font>
+                  <Font name="Segoe UI Black" size="20.0" />
+               </font>
             </Label>
             <AnchorPane maxHeight="260.0" maxWidth="400.0" style="-fx-background-color: white;">
                <children>
@@ -116,9 +119,9 @@
                   </Canvas>
                </children>
             </AnchorPane>
-            <StackPane prefHeight="55.0">
+            <StackPane prefHeight="59.0" prefWidth="400.0">
                <children>
-                  <Button fx:id="startDrawingButton" alignment="CENTER" contentDisplay="CENTER" maxWidth="210.0" mnemonicParsing="false" onAction="#onStartDrawing" prefHeight="40.0" prefWidth="210.0" style="-fx-background-color: FFE5B4;" stylesheets="@../css/buttons.css" text="START DRAWING">
+                  <Button fx:id="startDrawingButton" alignment="CENTER" contentDisplay="CENTER" maxWidth="210.0" mnemonicParsing="false" onAction="#onStartDrawing" prefHeight="49.0" prefWidth="210.0" style="-fx-background-color: FFE5B4;" stylesheets="@../css/buttons.css" text="START DRAWING">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
@@ -184,11 +187,103 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </StackPane>
+            <Label fx:id="colours" style="-fx-background-color: white; -fx-background-radius: 20;">
+               <graphic>
+                  <HBox alignment="CENTER" prefHeight="53.0" prefWidth="400.0" spacing="30.0">
+                     <children>
+                        <Button fx:id="redButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onRed" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent;">
+                           <graphic>
+                              <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/red.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button fx:id="blueButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onBlue" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent;">
+                           <graphic>
+                              <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/blue.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button fx:id="greenButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onGreen" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent;">
+                           <graphic>
+                              <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/green.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button fx:id="orangeButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onOrange" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent;">
+                           <graphic>
+                              <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/orange.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button fx:id="purpleButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onPurple" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent;">
+                           <graphic>
+                              <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/purple.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button fx:id="pinkButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onPink" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent;">
+                           <graphic>
+                              <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/pink.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button fx:id="brownButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onBrown" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent;">
+                           <graphic>
+                              <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/brown.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                     </children>
+                  </HBox>
+               </graphic>
+            </Label>
          </children>
       </VBox>
       <VBox alignment="BOTTOM_LEFT" layoutX="534.0" layoutY="69.0" prefHeight="460.0" prefWidth="340.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <Label fx:id="topPredictionsLabel" alignment="TOP_LEFT" prefHeight="110.0" prefWidth="330.0" text="EMPTY CANVAS!!" textAlignment="CENTER">
+            <Label fx:id="topPredictionsLabel" alignment="CENTER" prefHeight="110.0" prefWidth="330.0" text="EMPTY CANVAS!!">
                <font>
                   <Font name="Segoe UI Black" size="20.0" />
                </font>

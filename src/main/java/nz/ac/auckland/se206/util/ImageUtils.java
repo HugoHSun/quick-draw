@@ -46,10 +46,8 @@ public class ImageUtils {
 
         if (c.equals(Color.white)) {
           imageOut.setRGB(i, j, Color.black.getRGB());
-        } else if (c.equals(Color.black)) {
-          imageOut.setRGB(i, j, Color.white.getRGB());
         } else {
-          imageOut.setRGB(i, j, image.getRGB(i, j));
+          imageOut.setRGB(i, j, Color.white.getRGB());
         }
       }
     }

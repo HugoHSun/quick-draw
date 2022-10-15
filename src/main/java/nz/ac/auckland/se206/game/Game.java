@@ -13,6 +13,8 @@ public class Game {
 
   private final Integer winningRank;
 
+  private final Integer topRank;
+
   private String categoryToDraw;
 
   private List<Classification> currentPredictions;
@@ -25,6 +27,7 @@ public class Game {
    */
   public Game(Integer gameTime, Difficulty difficulty) {
     winningRank = 3;
+    topRank = 1;
     remainingTime = gameTime;
     categoryToDraw = CategorySelector.getRandomCategory(difficulty);
     currentPredictions = null;
@@ -127,7 +130,8 @@ public class Game {
   }
 
   /**
-   * @param winningRank the prediction rank that the player need to get into to win
+   * winningRank the prediction rank that the player need to get into to win
+   *
    * @return true if the player has won, false otherwise
    */
   public boolean checkWon() {
@@ -144,5 +148,69 @@ public class Game {
     }
 
     return false;
+  }
+
+  /**
+   * topRank the prediction rank that the player need to get into to win in zen
+   *
+   * @return true if the player has won, false otherwise
+   */
+  public boolean checkWonZenMode() {
+    if (currentPredictions == null) {
+      return false;
+    }
+
+    // The player wins if top chosen number AI predictions include the category
+    for (int i = 0; i < topRank; i++) {
+      String currentPrediction = currentPredictions.get(i).getClassName().replaceAll("_", " ");
+      if (currentPrediction.equals(categoryToDraw)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  /**
+   * This is a helper method that builds a string
+   *
+   * @return a string containing the top x predictions
+   */
+  public String getTopPredictionsDisplayZenMode() {
+    // Build the string to display the top ten predictions
+    final StringBuilder sb = new StringBuilder();
+
+    for (int i = 0; i < topRank; i++) {
+      // Build the predictions string to be displayed
+      Classification currentClass = currentPredictions.get(i);
+      sb.append(currentClass.getClassName().replaceAll("_", " "))
+          .append(" : ")
+          .append(String.format("%d%%", Math.round(100 * currentClass.getProbability())))
+          .append(System.lineSeparator());
+    }
+
+    return sb.toString();
+  }
+
+  /**
+   * This is a helper method that builds a string of the current top 10 predictions, which can be
+   * displayed in a label.
+   *
+   * @return a string containing the top 10 predictions
+   */
+  public String getRemainingPredictionsDisplayZenMode() {
+    // Build the string to display the top ten predictions
+    final StringBuilder sb = new StringBuilder();
+
+    for (int i = topRank; i < 10; i++) {
+      // Build the predictions string to be displayed
+      Classification currentClass = currentPredictions.get(i);
+      sb.append(currentClass.getClassName().replaceAll("_", " "))
+          .append(" : ")
+          .append(String.format("%d%%", Math.round(100 * currentClass.getProbability())))
+          .append(System.lineSeparator());
+    }
+
+    return sb.toString();
   }
 }
