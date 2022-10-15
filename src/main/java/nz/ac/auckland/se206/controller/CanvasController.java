@@ -102,7 +102,7 @@ public class CanvasController {
 
   private DoodlePrediction model;
   
-  private Mode mode= Mode.MASTER;
+  private Mode mode= Mode.MEDIUM;
   
 
   // mouse coordinates

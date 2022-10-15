@@ -127,7 +127,7 @@ public class User {
 	  if (this.fastestWon <= 30) {
 		  newBadges.add(2);
 	  }
-	  if (previousResults.size() >= 3 && !(previousResults.subList(0, 3).contains(true))){
+	  if (previousResults.size() >= 3 && !(previousResults.subList(previousResults.size()-3, previousResults.size()).contains(true))){
 		  newBadges.add(3);
 	  }
 	  //implement badge 4
@@ -136,16 +136,16 @@ public class User {
 	  if (this.gamesWon == 10) {
 		  newBadges.add(5);
 	  }
-	  if (this.latestMode.equals(Mode.MEDIUM)) {
+	  if (this.latestMode.equals(Mode.MEDIUM) && previousResults.get(previousResults.size()-1).equals(true)) {
 		  newBadges.add(6);
 	  }
 	  if (this.fastestWon <= 15) {
 		  newBadges.add(7);
 	  }
 	  if (this.latestMode.equals(Mode.ZEN)) {
-		  newBadges.add(6);
+		  newBadges.add(8);
 	  }
-	  if (previousResults.size() >= 3 && !(previousResults.subList(0, 3).contains(false))) {
+	  if (previousResults.size() >= 3 && !(previousResults.subList(previousResults.size()-3, previousResults.size()).contains(false))) {
 		  newBadges.add(9);
 	  }
 	  
@@ -153,14 +153,14 @@ public class User {
 	  if (this.gamesWon == 50) {
 		  newBadges.add(10);
 	  }
-	  if (this.latestMode.equals(Mode.MASTER)) {
-		  newBadges.add(6);
+	  if (this.latestMode.equals(Mode.MASTER) && previousResults.get(previousResults.size()-1).equals(true)) {
+		  newBadges.add(11);
 	  }
 	  if (this.fastestWon <= 3) {
 		  newBadges.add(12);
 	  }
-	  if (this.latestMode.equals(Mode.HIDDEN)) {
-		  newBadges.add(6);
+	  if (this.latestMode.equals(Mode.HIDDEN) && previousResults.get(previousResults.size()-1).equals(true)) {
+		  newBadges.add(13);
 	  }
 	  if (previousResults.size() == 10 && !(previousResults.contains(false))) {
 		  newBadges.add(14);
