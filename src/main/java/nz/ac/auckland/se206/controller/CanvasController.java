@@ -50,7 +50,6 @@ import javax.imageio.ImageIO;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.CategorySelector.Difficulty;
 import nz.ac.auckland.se206.game.Game;
-import nz.ac.auckland.se206.game.GameFactory;
 import nz.ac.auckland.se206.ml.DoodlePrediction;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 import nz.ac.auckland.se206.user.User;
@@ -103,7 +102,7 @@ public class CanvasController {
 
   private DoodlePrediction model;
   
-  private Difficulty dif;
+  private List<Difficulty> dif;
   
 
   // mouse coordinates
@@ -122,20 +121,20 @@ public class CanvasController {
    */
   public void initialize() throws ModelException, IOException, TranslateException {
 	  
-	  Gson gson = new GsonBuilder().setPrettyPrinting().create();
-	    // construct Type that tells Gson about the generic type
-	  Type userListType = new TypeToken<List<User>>() {}.getType();
-	  FileReader fr = new FileReader(App.usersFileName);
-	  List<User> users = gson.fromJson(fr, userListType);
-	  fr.close();
-	  List<String> userNames = new ArrayList<String>();
-	  for (User user : users) {
-	    userNames.add(user.getName());
-	  }
-	  dif = users.get(userNames.indexOf(MenuController.currentActiveUser)).getCurrentDifficulty();
+	Gson gson = new GsonBuilder().setPrettyPrinting().create();
+	  // construct Type that tells Gson about the generic type
+	Type userListType = new TypeToken<List<User>>() {}.getType();
+	FileReader fr = new FileReader(App.usersFileName);
+	List<User> users = gson.fromJson(fr, userListType);
+	fr.close();
+	List<String> userNames = new ArrayList<String>();
+	for (User user : users) {
+	  userNames.add(user.getName());
+	}
+	dif = users.get(userNames.indexOf(MenuController.currentActiveUser)).getCurrentDifficulty();
 	
 	  
-    game = GameFactory.createGame(dif);
+    game = new Game(dif);
     category = game.getCategoryToDraw();
     difficulty = game.getCategoryDifficulty();
     categoryLabel.setText(category);
