@@ -25,7 +25,6 @@ import nz.ac.auckland.se206.user.User;
 public class SettingsController {
   @FXML private ToggleButton soundButton;
   @FXML private ToggleButton musicButton;
-<<<<<<< HEAD
   
   @FXML private ImageView easyAccuracyImage;
   @FXML private ImageView mediumAccuracyImage;
@@ -80,24 +79,7 @@ public class SettingsController {
   private Parent root;
   
   private List<Difficulty> dif;
-=======
-
-  @FXML private ImageView easyImage;
-  @FXML private ImageView mediumImage;
-  @FXML private ImageView hardImage;
-  @FXML private ImageView masterImage;
-
-  @FXML private Button easyButton;
-  @FXML private Button mediumButton;
-  @FXML private Button hardButton;
-  @FXML private Button masterButton;
-
-  @FXML private Label difficultyLabel;
-
-  private Parent root;
-
-  private Difficulty dif;
->>>>>>> 1d05a8d6876760c41f42b5fe985135122310fc33
+  
   private List<User> users;
 
   public void initialize() throws IOException {
@@ -114,7 +96,6 @@ public class SettingsController {
     dif = users.get(userNames.indexOf(MenuController.currentActiveUser)).getCurrentDifficulty();
     set(dif);
   }
-<<<<<<< HEAD
   
   private void set(List<Difficulty> dif) {
 	  if (dif.get(0).equals(Difficulty.E)) {
@@ -341,59 +322,6 @@ public class SettingsController {
 		  hardVisibilityImage.setOpacity(1.0);
 		  masterVisibilityImage.setOpacity(0.5);
 	  }
-=======
-
-  private void set(Difficulty dif) {
-    if (dif.equals(Difficulty.E)) {
-      easyButton.setDisable(true);
-      mediumButton.setDisable(false);
-      hardButton.setDisable(false);
-      masterButton.setDisable(false);
-
-      easyImage.setOpacity(0.5);
-      mediumImage.setOpacity(1.0);
-      hardImage.setOpacity(1.0);
-      masterImage.setOpacity(1.0);
-
-      difficultyLabel.setText("EASY");
-    } else if (dif.equals(Difficulty.M)) {
-      easyButton.setDisable(false);
-      mediumButton.setDisable(true);
-      hardButton.setDisable(false);
-      masterButton.setDisable(false);
-
-      easyImage.setOpacity(1.0);
-      mediumImage.setOpacity(0.5);
-      hardImage.setOpacity(1.0);
-      masterImage.setOpacity(1.0);
-
-      difficultyLabel.setText("MEDIUM");
-    } else if (dif.equals(Difficulty.H)) {
-      easyButton.setDisable(false);
-      mediumButton.setDisable(false);
-      hardButton.setDisable(true);
-      masterButton.setDisable(false);
-
-      easyImage.setOpacity(1.0);
-      mediumImage.setOpacity(1.0);
-      hardImage.setOpacity(0.5);
-      masterImage.setOpacity(1.0);
-
-      difficultyLabel.setText("HARD");
-    } else {
-      easyButton.setDisable(false);
-      mediumButton.setDisable(false);
-      hardButton.setDisable(false);
-      masterButton.setDisable(true);
-
-      easyImage.setOpacity(1.0);
-      mediumImage.setOpacity(1.0);
-      hardImage.setOpacity(1.0);
-      masterImage.setOpacity(0.5);
-
-      difficultyLabel.setText("MASTER");
-    }
->>>>>>> 1d05a8d6876760c41f42b5fe985135122310fc33
   }
 
   @FXML
@@ -426,43 +354,25 @@ public class SettingsController {
   }
 
   @FXML
-<<<<<<< HEAD
   private void onEasyAccuracyButton(ActionEvent event) {
 	  dif.set(0, Difficulty.E);
 	  set(dif);
-=======
-  private void onEasyButton(ActionEvent event) {
-    dif = Difficulty.E;
-    set(dif);
->>>>>>> 1d05a8d6876760c41f42b5fe985135122310fc33
   }
 
   @FXML
-<<<<<<< HEAD
+
   private void onMediumAccuracyButton(ActionEvent event) {
 	  dif.set(0, Difficulty.M);
 	  set(dif);
-=======
-  private void onMediumButton(ActionEvent event) {
-    dif = Difficulty.M;
-    set(dif);
->>>>>>> 1d05a8d6876760c41f42b5fe985135122310fc33
   }
 
   @FXML
-<<<<<<< HEAD
   private void onHardAccuracyButton(ActionEvent event) {
 	  dif.set(0, Difficulty.H);
 	  set(dif);
-=======
-  private void onHardButton(ActionEvent event) {
-    dif = Difficulty.H;
-    set(dif);
->>>>>>> 1d05a8d6876760c41f42b5fe985135122310fc33
   }
 
   @FXML
-<<<<<<< HEAD
   private void onMasterAccuracyButton(ActionEvent event) {
 	  dif.set(0, Difficulty.X);
 	  set(dif);
@@ -562,10 +472,5 @@ public class SettingsController {
   private void onMasterVisibilityButton(ActionEvent event) {
 	  dif.set(4, Difficulty.X);
 	  set(dif);
-=======
-  private void onMasterButton(ActionEvent event) {
-    dif = Difficulty.X;
-    set(dif);
->>>>>>> 1d05a8d6876760c41f42b5fe985135122310fc33
   }
 }

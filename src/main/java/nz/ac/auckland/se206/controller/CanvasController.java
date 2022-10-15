@@ -101,14 +101,8 @@ public class CanvasController {
   private GraphicsContext graphic;
 
   private DoodlePrediction model;
-<<<<<<< HEAD
   
   private List<Difficulty> dif;
-  
-=======
-
-  private Difficulty dif;
->>>>>>> 1d05a8d6876760c41f42b5fe985135122310fc33
 
   // mouse coordinates
   private double currentX;
@@ -125,8 +119,7 @@ public class CanvasController {
    * @throws TranslateException
    */
   public void initialize() throws ModelException, IOException, TranslateException {
-<<<<<<< HEAD
-	  
+ 
 	Gson gson = new GsonBuilder().setPrettyPrinting().create();
 	  // construct Type that tells Gson about the generic type
 	Type userListType = new TypeToken<List<User>>() {}.getType();
@@ -141,22 +134,7 @@ public class CanvasController {
 	
 	  
     game = new Game(dif);
-=======
 
-    Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    // construct Type that tells Gson about the generic type
-    Type userListType = new TypeToken<List<User>>() {}.getType();
-    FileReader fr = new FileReader(App.usersFileName);
-    List<User> users = gson.fromJson(fr, userListType);
-    fr.close();
-    List<String> userNames = new ArrayList<String>();
-    for (User user : users) {
-      userNames.add(user.getName());
-    }
-    dif = users.get(userNames.indexOf(MenuController.currentActiveUser)).getCurrentDifficulty();
-
-    game = GameFactory.createGame(dif);
->>>>>>> 1d05a8d6876760c41f42b5fe985135122310fc33
     category = game.getCategoryToDraw();
     difficulty = game.getCategoryDifficulty();
     categoryLabel.setText(category);
