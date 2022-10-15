@@ -213,7 +213,7 @@ public class MenuController {
     scene = ((Node) event.getSource()).getScene();
     try {
       // Load a new parent node
-      root = new FXMLLoader(App.class.getResource("/fxml/canvas.fxml")).load();
+      root = new FXMLLoader(App.class.getResource("/fxml/zenMode.fxml")).load();
     } catch (IOException e) {
       e.printStackTrace();
     }

@@ -1,5 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!--
+  Copyright (c) 2015, 2019, Gluon and/or its affiliates.
+  All rights reserved. Use is subject to license terms.
+
+  This file is available and licensed under the following license:
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions
+  are met:
+
+  - Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+  - Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in
+    the documentation and/or other materials provided with the distribution.
+  - Neither the name of Oracle Corporation nor the names of its
+    contributors may be used to endorse or promote products derived
+    from this software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.canvas.Canvas?>
@@ -14,7 +46,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="520.0" maxWidth="820.0" minHeight="520.0" minWidth="820.0" prefHeight="520.0" prefWidth="820.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controller.CanvasController">
+<AnchorPane maxHeight="520.0" maxWidth="820.0" minHeight="520.0" minWidth="820.0" prefHeight="520.0" prefWidth="820.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controller.zenModeController">
    <children>
       <ImageView fitHeight="520.0" fitWidth="820.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <image>
@@ -63,10 +95,10 @@
       </HBox>
       <VBox alignment="CENTER" layoutX="69.0" layoutY="96.0" prefHeight="460.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0">
          <children>
-          <Label alignment="CENTER" contentDisplay="RIGHT" prefHeight="23.0" prefWidth="355.0" text="Category To Draw:" textAlignment="CENTER">
-            <font>
-              <Font name="Segoe UI Black" size="20.0" />
-            </font>
+            <Label alignment="CENTER" contentDisplay="RIGHT" prefHeight="23.0" prefWidth="355.0" text="Category To Draw:" textAlignment="CENTER">
+               <font>
+                  <Font name="Segoe UI Black" size="20.0" />
+               </font>
                <graphic>
                   <Label fx:id="categoryLabel" text="Loading">
                      <font>
@@ -74,38 +106,14 @@
                      </font>
                   </Label>
                </graphic>
-          </Label>
-            <Label fx:id="timeLabel" alignment="CENTER" contentDisplay="RIGHT" prefHeight="24.0" prefWidth="240.0" text="Time Left: ">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-               <graphic>
-                  <Label fx:id="timerLabel" contentDisplay="RIGHT" prefHeight="24.0" prefWidth="135.0" text="60">
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font>
-                     <graphic>
-                        <Label prefHeight="24.0" prefWidth="80.0" text="seconds">
-                           <font>
-                              <Font name="System Bold" size="18.0" />
-                           </font>
-                        </Label>
-                     </graphic>
-                  </Label>
-               </graphic>
-            </Label>
-            <Label fx:id="winLostLabel" alignment="CENTER" prefHeight="40.0" prefWidth="400.0" text="Getting Closer.." textAlignment="CENTER">
-               <font>
-                  <Font name="Segoe UI Black" size="20.0" />
-               </font>
             </Label>
             <AnchorPane maxHeight="260.0" maxWidth="400.0" style="-fx-background-color: white;">
                <children>
-                <Canvas fx:id="canvas" disable="true" height="260.0" width="400.0">
-                  <cursor>
-                    <Cursor fx:constant="HAND" />
-                  </cursor>
-                </Canvas>
+                  <Canvas fx:id="canvas" disable="true" height="260.0" width="400.0">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Canvas>
                </children>
             </AnchorPane>
             <StackPane prefHeight="55.0">
@@ -120,7 +128,7 @@
                   </Button>
                   <HBox fx:id="toolBox" alignment="CENTER" spacing="10.0" visible="false">
                      <children>
-                      <Button fx:id="penButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onPen" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;">
+                        <Button fx:id="penButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onPen" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;">
                            <graphic>
                               <ImageView fitHeight="35.0" fitWidth="40.0" pickOnBounds="true">
                                  <image>
@@ -132,7 +140,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
-                    <Button fx:id="eraserButton" alignment="CENTER" mnemonicParsing="false" onAction="#onErase" prefHeight="35.0" prefWidth="40.0" style="-fx-background-color: transparent;">
+                        <Button fx:id="eraserButton" alignment="CENTER" mnemonicParsing="false" onAction="#onErase" prefHeight="35.0" prefWidth="40.0" style="-fx-background-color: transparent;">
                            <graphic>
                               <ImageView fitHeight="35.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -144,15 +152,16 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
-                    <Button alignment="CENTER" mnemonicParsing="false" onAction="#onClear" prefHeight="23.0" prefWidth="80.0" style="-fx-background-color: FFE5B4;" text="Clear">
+                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#onClear" prefHeight="23.0" prefWidth="80.0" style="-fx-background-color: FFE5B4;" text="Clear">
                            <cursor>
                               <Cursor fx:constant="HAND" />
-                           </cursor></Button>
+                           </cursor>
+                        </Button>
                      </children>
                   </HBox>
                   <HBox fx:id="endGameBox" alignment="CENTER" spacing="10.0" visible="false">
                      <children>
-                        <Button fx:id="saveDrawingButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onSaveDrawing" prefHeight="60.0" prefWidth="150.0" style="-fx-background-color: FFE5B4;" text="Save Your Drawing">
+                        <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#onSaveDrawing" prefHeight="60.0" prefWidth="150.0" style="-fx-background-color: FFE5B4;" text="Save Your Drawing">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -160,7 +169,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
-                        <Button fx:id="newRoundButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onPlayNewRound" prefHeight="60.0" prefWidth="150.0" style="-fx-background-color: FFE5B4;" text="Play Another Round">
+                        <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#onPlayNewRound" prefHeight="60.0" prefWidth="150.0" style="-fx-background-color: FFE5B4;" text="Play Another Round">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
