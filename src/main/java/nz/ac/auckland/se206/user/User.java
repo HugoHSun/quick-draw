@@ -23,12 +23,15 @@ public class User {
 
   private Difficulty currentDifficulty;
 
+  private Boolean soundStatus;
+
   public User(String name) {
     // Default values
     this.name = name;
     this.gamesWon = 0;
     this.gamesLost = 0;
     this.fastestWon = 61;
+    this.soundStatus = true;
 
     this.wordsEncountered = new HashMap<Difficulty, List<String>>();
     wordsEncountered.put(Difficulty.E, new ArrayList<String>());
@@ -66,6 +69,14 @@ public class User {
 
   public Difficulty getCurrentDifficulty() {
     return currentDifficulty;
+  }
+
+  public Boolean getSoundStatus() {
+    return soundStatus;
+  }
+
+  public void setSoundStatus(Boolean sound) {
+    soundStatus = sound;
   }
 
   public void setCurrentDifficulty(Difficulty dif) {
