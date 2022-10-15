@@ -76,7 +76,7 @@ public class CanvasController {
   @FXML private Label timeLabel;
 
   @FXML private Label timerLabel;
-  
+
   @FXML private Label usernameLabel;
 
   @FXML private Button startDrawingButton;
@@ -102,9 +102,8 @@ public class CanvasController {
   private GraphicsContext graphic;
 
   private DoodlePrediction model;
-  
+
   private Difficulty dif;
-  
 
   // mouse coordinates
   private double currentX;
@@ -121,20 +120,19 @@ public class CanvasController {
    * @throws TranslateException
    */
   public void initialize() throws ModelException, IOException, TranslateException {
-	  
-	  Gson gson = new GsonBuilder().setPrettyPrinting().create();
-	    // construct Type that tells Gson about the generic type
-	  Type userListType = new TypeToken<List<User>>() {}.getType();
-	  FileReader fr = new FileReader(App.usersFileName);
-	  List<User> users = gson.fromJson(fr, userListType);
-	  fr.close();
-	  List<String> userNames = new ArrayList<String>();
-	  for (User user : users) {
-	    userNames.add(user.getName());
-	  }
-	  dif = users.get(userNames.indexOf(MenuController.currentActiveUser)).getCurrentDifficulty();
-	
-	  
+
+    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    // construct Type that tells Gson about the generic type
+    Type userListType = new TypeToken<List<User>>() {}.getType();
+    FileReader fr = new FileReader(App.usersFileName);
+    List<User> users = gson.fromJson(fr, userListType);
+    fr.close();
+    List<String> userNames = new ArrayList<String>();
+    for (User user : users) {
+      userNames.add(user.getName());
+    }
+    dif = users.get(userNames.indexOf(MenuController.currentActiveUser)).getCurrentDifficulty();
+
     game = GameFactory.createGame(dif);
     category = game.getCategoryToDraw();
     difficulty = game.getCategoryDifficulty();
@@ -182,7 +180,7 @@ public class CanvasController {
     model = new DoodlePrediction();
     // By loading one prediction before the scene loads, it removes the GUI freezing
     model.getPredictions(getCurrentSnapshot(), 10);
-    
+
     usernameLabel.setText(MenuController.currentActiveUser);
     timerLabel.setText(game.getRemainingTime().toString());
   }
@@ -409,7 +407,7 @@ public class CanvasController {
     user.record(isWon);
 
     // Record the category played
-    user.newWord(difficulty,category);
+    user.newWord(difficulty, category);
 
     // Update any new badges
     user.obtainBadges();

@@ -1,16 +1,14 @@
 package nz.ac.auckland.se206.controller;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,92 +26,89 @@ import nz.ac.auckland.se206.user.User;
 public class SettingsController {
   @FXML private ToggleButton soundButton;
   @FXML private ToggleButton musicButton;
-  
+
   @FXML private ImageView easyImage;
   @FXML private ImageView mediumImage;
   @FXML private ImageView hardImage;
   @FXML private ImageView masterImage;
-  
+
   @FXML private Button easyButton;
   @FXML private Button mediumButton;
   @FXML private Button hardButton;
   @FXML private Button masterButton;
-  
+
   @FXML private Label difficultyLabel;
-  
+
   private Parent root;
-  
+
   private Difficulty dif;
   private List<User> users;
 
   public void initialize() throws IOException {
-	  Gson gson = new GsonBuilder().setPrettyPrinting().create();
-	    // construct Type that tells Gson about the generic type
-	  Type userListType = new TypeToken<List<User>>() {}.getType();
-	  FileReader fr = new FileReader(App.usersFileName);
-	  users = gson.fromJson(fr, userListType);
-	  fr.close();
-	  List<String> userNames = new ArrayList<String>();
-	  for (User user : users) {
-	    userNames.add(user.getName());
-	  }
-	  dif = users.get(userNames.indexOf(MenuController.currentActiveUser)).getCurrentDifficulty();
-	  set(dif);
+    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    // construct Type that tells Gson about the generic type
+    Type userListType = new TypeToken<List<User>>() {}.getType();
+    FileReader fr = new FileReader(App.usersFileName);
+    users = gson.fromJson(fr, userListType);
+    fr.close();
+    List<String> userNames = new ArrayList<String>();
+    for (User user : users) {
+      userNames.add(user.getName());
+    }
+    dif = users.get(userNames.indexOf(MenuController.currentActiveUser)).getCurrentDifficulty();
+    set(dif);
   }
-  
+
   private void set(Difficulty dif) {
-	  if (dif.equals(Difficulty.E)) {
-		  easyButton.setDisable(true);
-		  mediumButton.setDisable(false);
-		  hardButton.setDisable(false);
-		  masterButton.setDisable(false);
-		  
-		  easyImage.setOpacity(0.5);
-		  mediumImage.setOpacity(1.0);
-		  hardImage.setOpacity(1.0);
-		  masterImage.setOpacity(1.0);
-		  
-		  difficultyLabel.setText("EASY");
-	  }
-	  else if (dif.equals(Difficulty.M)) {
-		  easyButton.setDisable(false);
-		  mediumButton.setDisable(true);
-		  hardButton.setDisable(false);
-		  masterButton.setDisable(false);
-		  
-		  easyImage.setOpacity(1.0);
-		  mediumImage.setOpacity(0.5);
-		  hardImage.setOpacity(1.0);
-		  masterImage.setOpacity(1.0);
-		  
-		  difficultyLabel.setText("MEDIUM");
-	  }
-	  else if (dif.equals(Difficulty.H)) {
-		  easyButton.setDisable(false);
-		  mediumButton.setDisable(false);
-		  hardButton.setDisable(true);
-		  masterButton.setDisable(false);
-		  
-		  easyImage.setOpacity(1.0);
-		  mediumImage.setOpacity(1.0);
-		  hardImage.setOpacity(0.5);
-		  masterImage.setOpacity(1.0);
-		  
-		  difficultyLabel.setText("HARD");
-	  }
-	  else {
-		  easyButton.setDisable(false);
-		  mediumButton.setDisable(false);
-		  hardButton.setDisable(false);
-		  masterButton.setDisable(true);
-		  
-		  easyImage.setOpacity(1.0);
-		  mediumImage.setOpacity(1.0);
-		  hardImage.setOpacity(1.0);
-		  masterImage.setOpacity(0.5);
-		  
-		  difficultyLabel.setText("MASTER");
-	  }
+    if (dif.equals(Difficulty.E)) {
+      easyButton.setDisable(true);
+      mediumButton.setDisable(false);
+      hardButton.setDisable(false);
+      masterButton.setDisable(false);
+
+      easyImage.setOpacity(0.5);
+      mediumImage.setOpacity(1.0);
+      hardImage.setOpacity(1.0);
+      masterImage.setOpacity(1.0);
+
+      difficultyLabel.setText("EASY");
+    } else if (dif.equals(Difficulty.M)) {
+      easyButton.setDisable(false);
+      mediumButton.setDisable(true);
+      hardButton.setDisable(false);
+      masterButton.setDisable(false);
+
+      easyImage.setOpacity(1.0);
+      mediumImage.setOpacity(0.5);
+      hardImage.setOpacity(1.0);
+      masterImage.setOpacity(1.0);
+
+      difficultyLabel.setText("MEDIUM");
+    } else if (dif.equals(Difficulty.H)) {
+      easyButton.setDisable(false);
+      mediumButton.setDisable(false);
+      hardButton.setDisable(true);
+      masterButton.setDisable(false);
+
+      easyImage.setOpacity(1.0);
+      mediumImage.setOpacity(1.0);
+      hardImage.setOpacity(0.5);
+      masterImage.setOpacity(1.0);
+
+      difficultyLabel.setText("HARD");
+    } else {
+      easyButton.setDisable(false);
+      mediumButton.setDisable(false);
+      hardButton.setDisable(false);
+      masterButton.setDisable(true);
+
+      easyImage.setOpacity(1.0);
+      mediumImage.setOpacity(1.0);
+      hardImage.setOpacity(1.0);
+      masterImage.setOpacity(0.5);
+
+      difficultyLabel.setText("MASTER");
+    }
   }
 
   @FXML
@@ -124,17 +119,17 @@ public class SettingsController {
 
   @FXML
   private void onReturn(ActionEvent event) throws IOException {
-	  Gson gson = new GsonBuilder().setPrettyPrinting().create();
-	  List<String> userNames = new ArrayList<String>();
-	  for (User user : users) {
-	    userNames.add(user.getName());
-	  }
-	  users.get(userNames.indexOf(MenuController.currentActiveUser)).setCurrentDifficulty(dif);
-	  
-	    FileWriter fw = new FileWriter(App.usersFileName, false);
-	    gson.toJson(users, fw);
-	    fw.close();
-	 
+    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    List<String> userNames = new ArrayList<String>();
+    for (User user : users) {
+      userNames.add(user.getName());
+    }
+    users.get(userNames.indexOf(MenuController.currentActiveUser)).setCurrentDifficulty(dif);
+
+    FileWriter fw = new FileWriter(App.usersFileName, false);
+    gson.toJson(users, fw);
+    fw.close();
+
     Scene scene = ((Node) event.getSource()).getScene();
     try {
       // Load a new parent node
@@ -147,25 +142,25 @@ public class SettingsController {
 
   @FXML
   private void onEasyButton(ActionEvent event) {
-	  dif = Difficulty.E;
-	  set(dif);
+    dif = Difficulty.E;
+    set(dif);
   }
-  
+
   @FXML
   private void onMediumButton(ActionEvent event) {
-	  dif = Difficulty.M;
-	  set(dif);
+    dif = Difficulty.M;
+    set(dif);
   }
-  
+
   @FXML
   private void onHardButton(ActionEvent event) {
-	  dif = Difficulty.H;
-	  set(dif);
+    dif = Difficulty.H;
+    set(dif);
   }
-  
+
   @FXML
   private void onMasterButton(ActionEvent event) {
-	  dif = Difficulty.X;
-	  set(dif);
+    dif = Difficulty.X;
+    set(dif);
   }
 }

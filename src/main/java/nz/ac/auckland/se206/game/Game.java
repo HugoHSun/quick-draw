@@ -2,7 +2,6 @@ package nz.ac.auckland.se206.game;
 
 import ai.djl.modality.Classifications.Classification;
 import java.util.List;
-
 import nz.ac.auckland.se206.CategorySelector.Difficulty;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 
@@ -16,9 +15,9 @@ public class Game {
   protected category categoryToDraw;
 
   protected List<Classification> currentPredictions;
-  
+
   protected Double confidence;
-  
+
   protected Integer visiblePrediction;
 
   /** This method decreases the remaining time by 1 second */
@@ -57,9 +56,9 @@ public class Game {
   public String getCategoryToDraw() {
     return categoryToDraw.getCategoryToDraw();
   }
-  
+
   public Difficulty getCategoryDifficulty() {
-	  return categoryToDraw.getDifficulty();
+    return categoryToDraw.getDifficulty();
   }
 
   /**
@@ -135,7 +134,8 @@ public class Game {
     for (int i = 0; i < winningRank; i++) {
       String currentPrediction = currentPredictions.get(i).getClassName().replaceAll("_", " ");
       double currentProbability = currentPredictions.get(i).getProbability();
-      if (currentPrediction.equals(categoryToDraw.getCategoryToDraw()) && currentProbability > confidence) {
+      if (currentPrediction.equals(categoryToDraw.getCategoryToDraw())
+          && currentProbability > confidence) {
         return true;
       }
     }
