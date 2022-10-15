@@ -14,7 +14,9 @@ import nz.ac.auckland.se206.user.User;
 public class JsonReader {
 
   /**
-   * @return
+   * This method reads the local user Json file and return them as a list
+   *
+   * @return a list of User
    * @throws IOException
    */
   public static List<User> getUsers() throws IOException {
@@ -29,7 +31,9 @@ public class JsonReader {
   }
 
   /**
-   * @return
+   * This method reads the local user Json file and return their names as a list
+   *
+   * @return a List of user names String
    * @throws IOException
    */
   public static List<String> getUserNames() throws IOException {

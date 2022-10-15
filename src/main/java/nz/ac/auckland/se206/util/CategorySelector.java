@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Random;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.controller.MenuController;
-import nz.ac.auckland.se206.game.category;
+import nz.ac.auckland.se206.game.Category;
 import nz.ac.auckland.se206.user.User;
 
 /**
@@ -87,7 +87,7 @@ public class CategorySelector {
    * @param dif the difficulty of categories
    * @return a random category with the chosen difficulty
    */
-  public static category getRandomCategory(List<Difficulty> difficulty) {
+  public static Category getRandomCategory(List<Difficulty> difficulty) {
     String output = null;
     Difficulty currentDifficulty = null;
 
@@ -111,7 +111,7 @@ public class CategorySelector {
       e.printStackTrace();
     }
 
-    return new category(output, currentDifficulty);
+    return new Category(output, currentDifficulty);
   }
 
   /**

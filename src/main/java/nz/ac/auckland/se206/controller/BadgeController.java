@@ -100,7 +100,7 @@ public class BadgeController {
   }
 
   @FXML
-  public void onReturn(ActionEvent event) {
+  private void onReturn(ActionEvent event) {
     Scene scene = ((Node) event.getSource()).getScene();
     try {
       // Load a new parent node
@@ -112,7 +112,7 @@ public class BadgeController {
   }
 
   @FXML
-  public void onBadge(ActionEvent event) {
+  private void onBadge(ActionEvent event) {
     System.out.println("Hi");
   }
 }

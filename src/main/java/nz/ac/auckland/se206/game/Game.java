@@ -12,7 +12,7 @@ public class Game {
 
   protected Integer winningRank;
 
-  protected category categoryToDraw;
+  protected Category categoryToDraw;
 
   protected List<Classification> currentPredictions;
 

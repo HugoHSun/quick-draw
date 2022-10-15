@@ -5,20 +5,13 @@ import static nz.ac.auckland.se206.controller.MenuController.currentActiveUser;
 import ai.djl.ModelException;
 import ai.djl.modality.Classifications;
 import ai.djl.translate.TranslateException;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-import java.awt.*;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.PixelGrabber;
 import java.awt.image.RenderedImage;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -37,7 +30,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
@@ -49,6 +41,7 @@ import nz.ac.auckland.se206.ml.DoodlePrediction;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 import nz.ac.auckland.se206.user.User;
 import nz.ac.auckland.se206.util.CategorySelector.Difficulty;
+import nz.ac.auckland.se206.util.JsonReader;
 
 public class ZenModeController {
   @FXML private Button blueButton;
@@ -64,10 +57,6 @@ public class ZenModeController {
 
   @FXML private Label categoryLabel;
 
-  @FXML private Button startDrawingButton;
-
-  @FXML private HBox toolBox;
-
   @FXML private Button penButton;
 
   @FXML private Button eraserButton;
@@ -75,10 +64,6 @@ public class ZenModeController {
   @FXML private Label topPredictionsLabel;
 
   @FXML private Label remainingPredictionsLabel;
-
-  @FXML private Label winLostLabel;
-
-  @FXML private HBox endGameBox;
 
   private Parent root;
 
@@ -94,7 +79,6 @@ public class ZenModeController {
   private double currentX;
   private double currentY;
   private String category;
-  private Difficulty difficulty;
 
   /**
    * JavaFX calls this method once the GUI elements are loaded. In our case we create a listener for
@@ -105,21 +89,12 @@ public class ZenModeController {
    * @throws TranslateException
    */
   public void initialize() throws ModelException, IOException, TranslateException {
-    Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    // construct Type that tells Gson about the generic type
-    Type userListType = new TypeToken<List<User>>() {}.getType();
-    FileReader fr = new FileReader(App.usersFileName);
-    List<User> users = gson.fromJson(fr, userListType);
-    fr.close();
-    List<String> userNames = new ArrayList<String>();
-    for (User user : users) {
-      userNames.add(user.getName());
-    }
+    List<User> users = JsonReader.getUsers();
+    List<String> userNames = JsonReader.getUserNames();
     dif = users.get(userNames.indexOf(MenuController.currentActiveUser)).getCurrentDifficulty();
 
     game = GameFactory.createGame(dif);
     category = game.getCategoryToDraw();
-    difficulty = game.getCategoryDifficulty();
     categoryLabel.setText(category);
     usernameLabel.setText(currentActiveUser);
     Thread voiceOver =
@@ -130,13 +105,12 @@ public class ZenModeController {
     voiceOver.start();
     graphic = canvas.getGraphicsContext2D();
     onPen();
-    colours.setVisible(false);
-    endGameBox.setVisible(true);
     model = new DoodlePrediction();
     // By loading one prediction before the scene loads, it removes the GUI freezing
     model.getPredictions((BufferedImage) getCurrentSnapshot(), 10);
 
     usernameLabel.setText(MenuController.currentActiveUser);
+    startGame();
   }
 
   /** This method is called when the "Pen" button is presses */
@@ -144,13 +118,7 @@ public class ZenModeController {
   private void onPen() {
     penButton.setDisable(true);
     eraserButton.setDisable(false);
-    redButton.setDisable(false);
-    blueButton.setDisable(false);
-    greenButton.setDisable(false);
-    orangeButton.setDisable(false);
-    purpleButton.setDisable(false);
-    pinkButton.setDisable(false);
-    brownButton.setDisable(false);
+
     // Change the cursor icon to eraser
     URL cursorUrl = App.class.getResource("/images/Pencil-icon.png");
     Image pencilCursor = new Image(cursorUrl.toString());
@@ -229,15 +197,8 @@ public class ZenModeController {
     onPen();
   }
 
-  /** This method is called when the user click on "Start drawing" button */
-  @FXML
-  private void onStartDrawing() throws TranslateException {
-    // Turn on the canvas and change the start button to pen, eraser and clear
-    canvas.setDisable(false);
-    startDrawingButton.setVisible(false);
-    toolBox.setVisible(true);
-    colours.setVisible(true);
-
+  /** This method is called when the user go into Zen mode */
+  private void startGame() {
     // Create a background timer thread that executes the task after 1 second delay for the first
     // time, then executes every second
     Timer timer = new Timer();
@@ -303,42 +264,12 @@ public class ZenModeController {
   }
 
   /**
-   * This method records the game result and the category played of the current user
-   *
-   * @param userName the name of the user
-   * @throws IOException
-   */
-  private void recordResult(String userName) throws IOException {
-    Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    // construct Type that tells Gson about the generic type
-    Type userListType = new TypeToken<List<User>>() {}.getType();
-    FileReader fr = new FileReader(App.usersFileName);
-    List<User> users = gson.fromJson(fr, userListType);
-    fr.close();
-    List<String> userNames = new ArrayList<String>();
-    for (User user : users) {
-      userNames.add(user.getName());
-    }
-
-    User user = users.get(userNames.indexOf(userName));
-    // Record the category played
-    user.newWord(difficulty, category);
-
-    // Update any new badges
-    user.obtainBadges();
-
-    FileWriter fw = new FileWriter(App.usersFileName, false);
-    gson.toJson(users, fw);
-    fw.close();
-  }
-
-  /**
    * This method is called when "Play another round" button is pressed
    *
    * @param event the event of clicking the button
    */
   @FXML
-  private void onPlayNewRound(ActionEvent event) {
+  private void onChangeCategory(ActionEvent event) {
     Scene scene = ((Node) event.getSource()).getScene();
     try {
       // Load a new canvas FXML file which initializes everything
