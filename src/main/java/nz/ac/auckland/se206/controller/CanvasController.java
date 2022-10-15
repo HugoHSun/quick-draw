@@ -5,19 +5,14 @@ import static nz.ac.auckland.se206.controller.MenuController.currentActiveUser;
 import ai.djl.ModelException;
 import ai.djl.modality.Classifications.Classification;
 import ai.djl.translate.TranslateException;
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.PixelGrabber;
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -48,12 +43,13 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import javax.imageio.ImageIO;
 import nz.ac.auckland.se206.App;
-import nz.ac.auckland.se206.CategorySelector.Difficulty;
 import nz.ac.auckland.se206.game.Game;
 import nz.ac.auckland.se206.game.GameFactory;
 import nz.ac.auckland.se206.ml.DoodlePrediction;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 import nz.ac.auckland.se206.user.User;
+import nz.ac.auckland.se206.util.CategorySelector.Difficulty;
+import nz.ac.auckland.se206.util.JsonReader;
 
 /**
  * This is the controller of the canvas. You are free to modify this class and the corresponding
@@ -121,13 +117,8 @@ public class CanvasController {
    */
   public void initialize() throws ModelException, IOException, TranslateException {
 
-    Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    // construct Type that tells Gson about the generic type
-    Type userListType = new TypeToken<List<User>>() {}.getType();
-    FileReader fr = new FileReader(App.usersFileName);
-    List<User> users = gson.fromJson(fr, userListType);
-    fr.close();
-    List<String> userNames = new ArrayList<String>();
+    List<User> users = JsonReader.getUsers();
+    List<String> userNames = JsonReader.getUserNames();
     for (User user : users) {
       userNames.add(user.getName());
     }
@@ -383,13 +374,8 @@ public class CanvasController {
    * @throws IOException
    */
   private void recordResult(String userName, boolean isWon, int timeTaken) throws IOException {
-    Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    // construct Type that tells Gson about the generic type
-    Type userListType = new TypeToken<List<User>>() {}.getType();
-    FileReader fr = new FileReader(App.usersFileName);
-    List<User> users = gson.fromJson(fr, userListType);
-    fr.close();
-    List<String> userNames = new ArrayList<String>();
+    List<User> users = JsonReader.getUsers();
+    List<String> userNames = JsonReader.getUserNames();
     for (User user : users) {
       userNames.add(user.getName());
     }
@@ -413,7 +399,7 @@ public class CanvasController {
     user.obtainBadges();
 
     FileWriter fw = new FileWriter(App.usersFileName, false);
-    gson.toJson(users, fw);
+    new GsonBuilder().setPrettyPrinting().create().toJson(users, fw);
     fw.close();
   }
 

@@ -2,8 +2,8 @@ package nz.ac.auckland.se206.game;
 
 import java.util.ArrayList;
 import java.util.List;
-import nz.ac.auckland.se206.CategorySelector;
-import nz.ac.auckland.se206.CategorySelector.Difficulty;
+import nz.ac.auckland.se206.util.CategorySelector;
+import nz.ac.auckland.se206.util.CategorySelector.Difficulty;
 
 public class Master extends Game {
   public Master() {

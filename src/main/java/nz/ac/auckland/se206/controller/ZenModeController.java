@@ -43,14 +43,14 @@ import javafx.stage.FileChooser;
 import javafx.stage.Window;
 import javax.imageio.ImageIO;
 import nz.ac.auckland.se206.App;
-import nz.ac.auckland.se206.CategorySelector.Difficulty;
 import nz.ac.auckland.se206.game.Game;
 import nz.ac.auckland.se206.game.GameFactory;
 import nz.ac.auckland.se206.ml.DoodlePrediction;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 import nz.ac.auckland.se206.user.User;
+import nz.ac.auckland.se206.util.CategorySelector.Difficulty;
 
-public class zenModeController {
+public class ZenModeController {
   @FXML private Button blueButton;
   @FXML private Button greenButton;
   @FXML private Button orangeButton;

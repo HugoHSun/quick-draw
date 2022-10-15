@@ -46,7 +46,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="520.0" maxWidth="820.0" minHeight="520.0" minWidth="820.0" prefHeight="520.0" prefWidth="820.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controller.zenModeController">
+<AnchorPane maxHeight="520.0" maxWidth="820.0" minHeight="520.0" minWidth="820.0" prefHeight="520.0" prefWidth="820.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controller.ZenModeController">
    <children>
       <ImageView fitHeight="520.0" fitWidth="820.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <image>

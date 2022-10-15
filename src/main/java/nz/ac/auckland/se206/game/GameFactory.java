@@ -1,6 +1,6 @@
 package nz.ac.auckland.se206.game;
 
-import nz.ac.auckland.se206.CategorySelector.Difficulty;
+import nz.ac.auckland.se206.util.CategorySelector.Difficulty;
 
 public class GameFactory {
   public static Game createGame(Difficulty difficulty) {

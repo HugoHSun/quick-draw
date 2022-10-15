@@ -1,11 +1,6 @@
 package nz.ac.auckland.se206.controller;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.event.ActionEvent;
@@ -18,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.user.User;
+import nz.ac.auckland.se206.util.JsonReader;
 
 public class BadgeController {
   @FXML private Button menuButton;
@@ -50,13 +46,8 @@ public class BadgeController {
   @FXML private List<ImageView> fu = new ArrayList<ImageView>();
 
   public void initialize() throws IOException {
-    Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    // construct Type that tells Gson about the generic type
-    Type userListType = new TypeToken<List<User>>() {}.getType();
-    FileReader fr = new FileReader(App.usersFileName);
-    List<User> users = gson.fromJson(fr, userListType);
-    fr.close();
-    List<String> userNames = new ArrayList<String>();
+    List<User> users = JsonReader.getUsers();
+    List<String> userNames = JsonReader.getUserNames();
     for (User user : users) {
       userNames.add(user.getName());
     }

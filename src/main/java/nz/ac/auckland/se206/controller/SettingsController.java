@@ -20,8 +20,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.ImageView;
 import nz.ac.auckland.se206.App;
-import nz.ac.auckland.se206.CategorySelector.Difficulty;
 import nz.ac.auckland.se206.user.User;
+import nz.ac.auckland.se206.util.CategorySelector.Difficulty;
 
 public class SettingsController {
   @FXML private ToggleButton soundButton;

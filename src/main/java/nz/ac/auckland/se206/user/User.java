@@ -3,7 +3,7 @@ package nz.ac.auckland.se206.user;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import nz.ac.auckland.se206.CategorySelector.Difficulty;
+import nz.ac.auckland.se206.util.CategorySelector.Difficulty;
 
 public class User {
 

@@ -2,8 +2,8 @@ package nz.ac.auckland.se206.game;
 
 import ai.djl.modality.Classifications.Classification;
 import java.util.List;
-import nz.ac.auckland.se206.CategorySelector.Difficulty;
 import nz.ac.auckland.se206.speech.TextToSpeech;
+import nz.ac.auckland.se206.util.CategorySelector.Difficulty;
 
 public class Game {
 

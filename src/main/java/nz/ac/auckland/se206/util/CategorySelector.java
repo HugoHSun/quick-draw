@@ -1,4 +1,4 @@
-package nz.ac.auckland.se206;
+package nz.ac.auckland.se206.util;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.controller.MenuController;
 import nz.ac.auckland.se206.game.category;
 import nz.ac.auckland.se206.user.User;
@@ -44,7 +45,7 @@ public class CategorySelector {
    * @throws CsvException
    * @throws URISyntaxException
    */
-  protected static void loadCategories() throws IOException, CsvException, URISyntaxException {
+  public static void loadCategories() throws IOException, CsvException, URISyntaxException {
     categoryMap.put(Difficulty.E, new ArrayList<String>());
     categoryMap.put(Difficulty.M, new ArrayList<String>());
     categoryMap.put(Difficulty.H, new ArrayList<String>());
