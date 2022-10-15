@@ -2,32 +2,24 @@ package nz.ac.auckland.se206.game;
 
 import ai.djl.modality.Classifications.Classification;
 import java.util.List;
-import nz.ac.auckland.se206.CategorySelector;
+
 import nz.ac.auckland.se206.CategorySelector.Difficulty;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 
 public class Game {
 
   // In seconds
-  private Integer remainingTime;
+  protected Integer remainingTime;
 
-  private final Integer winningRank;
-  private String categoryToDraw;
+  protected Integer winningRank;
 
-  private List<Classification> currentPredictions;
+  protected category categoryToDraw;
 
-  /**
-   * This constructor instantiate a game with the specified time and difficulty
-   *
-   * @param gameTime the time for a game
-   * @param difficulty the difficulty of the game
-   */
-  public Game(Integer gameTime, Difficulty difficulty) {
-    winningRank = 3;
-    remainingTime = gameTime;
-    categoryToDraw = CategorySelector.getRandomCategory(difficulty);
-    currentPredictions = null;
-  }
+  protected List<Classification> currentPredictions;
+  
+  protected Double confidence;
+  
+  protected Integer visiblePrediction;
 
   /** This method decreases the remaining time by 1 second */
   public void decreaseTime() {
@@ -63,7 +55,11 @@ public class Game {
    * @return the category to be drawn of the game
    */
   public String getCategoryToDraw() {
-    return categoryToDraw;
+    return categoryToDraw.getCategoryToDraw();
+  }
+  
+  public Difficulty getCategoryDifficulty() {
+	  return categoryToDraw.getDifficulty();
   }
 
   /**
@@ -97,7 +93,7 @@ public class Game {
     // Build the string to display the top ten predictions
     final StringBuilder sb = new StringBuilder();
 
-    for (int i = winningRank; i < 10; i++) {
+    for (int i = winningRank; i < visiblePrediction; i++) {
       // Build the predictions string to be displayed
       Classification currentClass = currentPredictions.get(i);
       sb.append(currentClass.getClassName().replaceAll("_", " "))
@@ -138,7 +134,8 @@ public class Game {
     // The player wins if top chosen number AI predictions include the category
     for (int i = 0; i < winningRank; i++) {
       String currentPrediction = currentPredictions.get(i).getClassName().replaceAll("_", " ");
-      if (currentPrediction.equals(categoryToDraw)) {
+      double currentProbability = currentPredictions.get(i).getProbability();
+      if (currentPrediction.equals(categoryToDraw.getCategoryToDraw()) && currentProbability > confidence) {
         return true;
       }
     }
