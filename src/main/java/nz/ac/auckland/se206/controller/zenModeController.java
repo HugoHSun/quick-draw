@@ -43,8 +43,9 @@ import javafx.stage.FileChooser;
 import javafx.stage.Window;
 import javax.imageio.ImageIO;
 import nz.ac.auckland.se206.App;
-import nz.ac.auckland.se206.CategorySelector;
+import nz.ac.auckland.se206.CategorySelector.Difficulty;
 import nz.ac.auckland.se206.game.Game;
+import nz.ac.auckland.se206.game.GameFactory;
 import nz.ac.auckland.se206.ml.DoodlePrediction;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 import nz.ac.auckland.se206.user.User;
@@ -58,7 +59,7 @@ public class zenModeController {
   @FXML private Button brownButton;
   @FXML private Button redButton;
   @FXML private Label colours;
-  @FXML private Label currentUser;
+  @FXML private Label usernameLabel;
   @FXML private Canvas canvas;
 
   @FXML private Label categoryLabel;
@@ -87,10 +88,13 @@ public class zenModeController {
 
   private DoodlePrediction model;
 
+  private Difficulty dif;
+
   // mouse coordinates
   private double currentX;
   private double currentY;
   private String category;
+  private Difficulty difficulty;
 
   /**
    * JavaFX calls this method once the GUI elements are loaded. In our case we create a listener for
@@ -100,24 +104,39 @@ public class zenModeController {
    * @throws IOException If the model cannot be found on the file system.
    * @throws TranslateException
    */
-  public void initialize() throws ModelException, IOException {
-    // Initialize a game instance with 60 seconds and easy difficulty
-    game = new Game(60, CategorySelector.Difficulty.E);
+  public void initialize() throws ModelException, IOException, TranslateException {
+    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    // construct Type that tells Gson about the generic type
+    Type userListType = new TypeToken<List<User>>() {}.getType();
+    FileReader fr = new FileReader(App.usersFileName);
+    List<User> users = gson.fromJson(fr, userListType);
+    fr.close();
+    List<String> userNames = new ArrayList<String>();
+    for (User user : users) {
+      userNames.add(user.getName());
+    }
+    dif = users.get(userNames.indexOf(MenuController.currentActiveUser)).getCurrentDifficulty();
+
+    game = GameFactory.createGame(dif);
     category = game.getCategoryToDraw();
+    difficulty = game.getCategoryDifficulty();
     categoryLabel.setText(category);
-    currentUser.setText(currentActiveUser);
+    usernameLabel.setText(currentActiveUser);
     Thread voiceOver =
         new Thread(
             () -> {
               new TextToSpeech().speak("Please draw: " + category);
             });
     voiceOver.start();
-
     graphic = canvas.getGraphicsContext2D();
     onPen();
     colours.setVisible(false);
     endGameBox.setVisible(true);
     model = new DoodlePrediction();
+    // By loading one prediction before the scene loads, it removes the GUI freezing
+    model.getPredictions((BufferedImage) getCurrentSnapshot(), 10);
+
+    usernameLabel.setText(MenuController.currentActiveUser);
   }
 
   /** This method is called when the "Pen" button is presses */
@@ -303,7 +322,7 @@ public class zenModeController {
 
     User user = users.get(userNames.indexOf(userName));
     // Record the category played
-    user.newWord(category);
+    user.newWord(difficulty, category);
 
     // Update any new badges
     user.obtainBadges();
