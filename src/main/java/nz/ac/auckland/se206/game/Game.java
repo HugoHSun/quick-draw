@@ -1,7 +1,11 @@
 package nz.ac.auckland.se206.game;
 
 import ai.djl.modality.Classifications.Classification;
+
+import java.util.ArrayList;
 import java.util.List;
+
+import nz.ac.auckland.se206.CategorySelector;
 import nz.ac.auckland.se206.CategorySelector.Difficulty;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 
@@ -15,11 +19,91 @@ public class Game {
   protected category categoryToDraw;
 
   protected List<Classification> currentPredictions;
-
+  
   protected Double confidence;
-
+  
   protected Integer visiblePrediction;
+  
+  public Game(List<Difficulty> difficulty) {
+	if (difficulty.get(0).equals(Difficulty.E)) {
+		winningRank = 3;
+	}
+	else if (difficulty.get(0).equals(Difficulty.M)) {
+		winningRank = 2;
+	}
+	else if (difficulty.get(0).equals(Difficulty.H)) {
+		winningRank = 1;
+	}
+	else if (difficulty.get(0).equals(Difficulty.X)) {
+		winningRank = 1;
+	}
+	  
+	if (difficulty.get(1).equals(Difficulty.E)) {
+		List<Difficulty> dif = new ArrayList<Difficulty>();
+	    dif.add(Difficulty.E);
+	    categoryToDraw = CategorySelector.getRandomCategory(dif);
+	}
+	else if (difficulty.get(1).equals(Difficulty.M)) {
+		List<Difficulty> dif = new ArrayList<Difficulty>();
+	    dif.add(Difficulty.E);
+	    dif.add(Difficulty.M);
+	    categoryToDraw = CategorySelector.getRandomCategory(dif);
+	}
+	else if (difficulty.get(1).equals(Difficulty.H)) {
+		List<Difficulty> dif = new ArrayList<Difficulty>();
+	    dif.add(Difficulty.E);
+	    dif.add(Difficulty.M);
+	    dif.add(Difficulty.H);
+	    categoryToDraw = CategorySelector.getRandomCategory(dif);
+	}
+	else if (difficulty.get(1).equals(Difficulty.X)) {
+		List<Difficulty> dif = new ArrayList<Difficulty>();
+	    dif.add(Difficulty.H);
+	    categoryToDraw = CategorySelector.getRandomCategory(dif);
+	}
 
+	if (difficulty.get(2).equals(Difficulty.E)) {
+		remainingTime = 60;
+	}
+	else if (difficulty.get(2).equals(Difficulty.M)) {
+		remainingTime = 45;
+	}
+	else if (difficulty.get(2).equals(Difficulty.H)) {
+		remainingTime = 30;
+	}
+	else if (difficulty.get(2).equals(Difficulty.X)) {
+		remainingTime = 15;
+	}
+
+	if (difficulty.get(3).equals(Difficulty.E)) {
+		confidence = 0.01;
+	}
+	else if (difficulty.get(3).equals(Difficulty.M)) {
+		confidence = 0.1;
+	}
+	else if (difficulty.get(3).equals(Difficulty.H)) {
+		confidence = 0.25;
+	}
+	else if (difficulty.get(3).equals(Difficulty.X)) {
+		confidence = 0.5;
+	}
+	
+	if (difficulty.get(4).equals(Difficulty.E)) {
+		visiblePrediction = 10;
+	}
+	else if (difficulty.get(4).equals(Difficulty.M)) {
+		visiblePrediction = 8;
+	}
+	else if (difficulty.get(4).equals(Difficulty.H)) {
+		visiblePrediction = 5;
+	}
+	else if (difficulty.get(4).equals(Difficulty.X)) {
+		visiblePrediction = 3;
+	}
+	
+	currentPredictions = null;
+  }
+  
   /** This method decreases the remaining time by 1 second */
   public void decreaseTime() {
     remainingTime--;
@@ -56,9 +140,9 @@ public class Game {
   public String getCategoryToDraw() {
     return categoryToDraw.getCategoryToDraw();
   }
-
+  
   public Difficulty getCategoryDifficulty() {
-    return categoryToDraw.getDifficulty();
+	  return categoryToDraw.getDifficulty();
   }
 
   /**
@@ -134,8 +218,7 @@ public class Game {
     for (int i = 0; i < winningRank; i++) {
       String currentPrediction = currentPredictions.get(i).getClassName().replaceAll("_", " ");
       double currentProbability = currentPredictions.get(i).getProbability();
-      if (currentPrediction.equals(categoryToDraw.getCategoryToDraw())
-          && currentProbability > confidence) {
+      if (currentPrediction.equals(categoryToDraw.getCategoryToDraw()) && currentProbability > confidence) {
         return true;
       }
     }
