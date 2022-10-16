@@ -58,18 +58,30 @@
             </Label>
          </children>
       </HBox>
-      <VBox alignment="CENTER" layoutX="69.0" layoutY="45.0" prefHeight="460.0" prefWidth="400.0" AnchorPane.bottomAnchor="15.0">
+      <VBox fx:id="leftVBox" alignment="CENTER" layoutX="69.0" layoutY="45.0" prefHeight="460.0" prefWidth="400.0" AnchorPane.bottomAnchor="15.0">
          <children>
             <Label fx:id="categoryContext" alignment="CENTER" contentDisplay="RIGHT" prefHeight="23.0" prefWidth="355.0" text="Category To Draw:" textAlignment="CENTER">
                <font>
                   <Font name="Segoe UI Black" size="20.0" />
                </font>
             </Label>
-            <Label fx:id="categoryLabel" alignment="CENTER" prefHeight="50.0" prefWidth="400.0" text="Loading">
-               <font>
-                  <Font name="Segoe UI Black" size="30.0" />
-               </font>
-            </Label>
+            <StackPane prefHeight="150.0" prefWidth="200.0">
+               <children>
+                  <Label fx:id="categoryLabel" alignment="CENTER" prefHeight="50.0" prefWidth="400.0" text="Loading">
+                     <font>
+                        <Font name="Segoe UI Black" size="30.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="definitionButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="210.0" style="-fx-background-color: FFE5B4;" stylesheets="@../css/buttons.css" text="SEE DEFINITION" visible="false">
+                     <tooltip>
+                        <Tooltip fx:id="definitionToolTip" />
+                     </tooltip>
+                     <font>
+                        <Font name="Segoe UI Black" size="20.0" />
+                     </font>
+                  </Button>
+               </children>
+            </StackPane>
             <Label fx:id="timeLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="30.0" prefWidth="258.0" text="Time Left: ">
                <font>
                   <Font name="Segoe UI Black" size="20.0" />

@@ -43,8 +43,6 @@ public class BadgeController {
   @FXML private ImageView diamondFour;
   @FXML private ImageView diamondFive;
 
-  @FXML private List<ImageView> fu = new ArrayList<ImageView>();
-
   public void initialize() throws IOException {
     List<User> users = JsonReader.getUsers();
     List<String> userNames = JsonReader.getUserNames();
