@@ -1,7 +1,5 @@
 package nz.ac.auckland.se206.controller;
 
-import static nz.ac.auckland.se206.controller.MenuController.currentActiveUser;
-
 import ai.djl.ModelException;
 import ai.djl.modality.Classifications.Classification;
 import ai.djl.translate.TranslateException;
@@ -180,7 +178,6 @@ public class CanvasController {
     }
 
     difficulty = game.getCategoryDifficulty();
-    usernameLabel.setText(currentActiveUser);
     graphic = canvas.getGraphicsContext2D();
 
     // Initialise drawing sound effect
@@ -427,7 +424,7 @@ public class CanvasController {
     canvas.setDisable(true);
     canvas.setOnMouseDragged(null);
     try {
-      recordResult(currentActiveUser, isWon, 60 - game.getRemainingTime());
+      recordResult(MenuController.currentActiveUser, isWon, 60 - game.getRemainingTime());
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -538,9 +535,9 @@ public class CanvasController {
     fileChooser
         .getExtensionFilters()
         .addAll(
-            new FileChooser.ExtensionFilter("img", "*.bmp"),
-            new FileChooser.ExtensionFilter("img", "*.png"),
-            new FileChooser.ExtensionFilter("img", "*.jpeg"));
+            new FileChooser.ExtensionFilter("BMP File", "*.bmp"),
+            new FileChooser.ExtensionFilter("PNG File", "*.png"),
+            new FileChooser.ExtensionFilter("JPG File", "*.jpeg"));
 
     // open file dialog box
     Window stage = canvas.getScene().getWindow();

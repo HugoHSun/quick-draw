@@ -1,20 +1,15 @@
 package nz.ac.auckland.se206.controller;
 
 import ai.djl.ModelException;
-import ai.djl.modality.Classifications;
 import ai.djl.translate.TranslateException;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.awt.image.PixelGrabber;
 import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -36,14 +31,11 @@ import javafx.stage.FileChooser;
 import javafx.stage.Window;
 import javax.imageio.ImageIO;
 import nz.ac.auckland.se206.App;
-import nz.ac.auckland.se206.game.Game;
-import nz.ac.auckland.se206.ml.DoodlePrediction;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 import nz.ac.auckland.se206.user.User;
-import nz.ac.auckland.se206.util.CategorySelector.Difficulty;
 import nz.ac.auckland.se206.util.JsonReader;
 
-public class ZenModeController {
+public class SandBoxModeController {
   @FXML private Button blueButton;
   @FXML private Button greenButton;
   @FXML private Button orangeButton;
@@ -55,40 +47,26 @@ public class ZenModeController {
   @FXML private Label usernameLabel;
   @FXML private Canvas canvas;
 
-  @FXML private Label categoryLabel;
-
   @FXML private Button penButton;
 
   @FXML private Button eraserButton;
 
-  @FXML private Label topPredictionsLabel;
-
-  @FXML private Label remainingPredictionsLabel;
-
   private Parent root;
 
-  private Game game;
-
   private GraphicsContext graphic;
-
-  private DoodlePrediction model;
 
   private Boolean sound;
 
   private Boolean music;
-  private List<Difficulty> dif;
 
   // mouse coordinates
   private double currentX;
   private double currentY;
-  private String category;
 
   private MediaPlayer playerDrawSFX;
   private MediaPlayer playerEraseSFX;
 
   private MediaPlayer playerBackgroundMusic;
-  
-  private Timer timer = new Timer();
 
   private Color penColour;
   private String penCursor = null;
@@ -106,29 +84,19 @@ public class ZenModeController {
     List<String> userNames = JsonReader.getUserNames();
 
     // reads difficulty, sound status, and music status from user's json
-    dif = users.get(userNames.indexOf(MenuController.currentActiveUser)).getCurrentDifficulty();
     sound = users.get(userNames.indexOf(MenuController.currentActiveUser)).getSoundStatus();
     music = users.get(userNames.indexOf(MenuController.currentActiveUser)).getMusicStatus();
-
-    game = new Game(dif);
-    category = game.getCategoryToDraw();
-    categoryLabel.setText(category);
 
     // start speech to speak out the word to draw
     Thread voiceOver =
         new Thread(
             () -> {
-              new TextToSpeech().speak("Please draw: " + category);
+              new TextToSpeech().speak("Draw whatever you want");
             });
     voiceOver.start();
     graphic = canvas.getGraphicsContext2D();
 
     onPen();
-
-    model = new DoodlePrediction();
-    // By loading one prediction before the scene loads, it removes the GUI freezing
-    model.getPredictions((BufferedImage) getCurrentSnapshot(), 10);
-
     usernameLabel.setText(MenuController.currentActiveUser);
 
     // Initialise drawing, eraser, and background music sound effect
@@ -147,7 +115,6 @@ public class ZenModeController {
     if (music) {
       playerBackgroundMusic.play();
     }
-    startGame();
   }
 
   /** This method is called when the "Pen" button is presses */
@@ -253,89 +220,6 @@ public class ZenModeController {
     graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
     onPen();
   }
-
-  /** This method is called when the user go into Zen mode */
-  private void startGame() {
-    // Create a background timer thread that executes the task after 1 second delay for the first
-    // time, then executes every second
-    timer.scheduleAtFixedRate(
-        new TimerTask() {
-          public void run() {
-            // Ask the GUI thread to update predictions display
-            Platform.runLater(
-                () -> {
-                  if (checkEmptyCanvas()) {
-                    topPredictionsLabel.setText("EMPTY CANVAS!!");
-                    remainingPredictionsLabel.setText("");
-                    game.updatePredictions(null);
-                    // Update the predictions value and display
-                  } else {
-                    try {
-                      List<Classifications.Classification> currentPredictions =
-                          model.getPredictions((BufferedImage) getCurrentSnapshot(), 10);
-                      game.updatePredictions(currentPredictions);
-                      topPredictionsLabel.setText(game.getTopPredictionsDisplay());
-                      remainingPredictionsLabel.setText(game.getRemainingPredictionsDisplay());
-                    } catch (TranslateException e) {
-                      e.printStackTrace();
-                    }
-                  }
-                });
-          }
-        },
-        1000,
-        1000);
-  }
-
-  /**
-   * This method checks whether the canvas is empty and returns a boolean
-   *
-   * @return true if the canvas is empty, false otherwise
-   */
-  private boolean checkEmptyCanvas() {
-    // Get the current canvas as an image
-    final Image snapshot = canvas.snapshot(null, null);
-    final BufferedImage image = SwingFXUtils.fromFXImage(snapshot, null);
-    final int width = image.getWidth();
-    final int height = image.getHeight();
-
-    // Grab all the pixels
-    int[] pixels = new int[width * height];
-    PixelGrabber pg = new PixelGrabber(image, 0, 0, width, height, pixels, 0, width);
-    try {
-      pg.grabPixels();
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
-
-    // Check each pixel to see if they are all white
-    for (int pixel : pixels) {
-      java.awt.Color color = new java.awt.Color(pixel);
-      if (color.getAlpha() == 0 || color.getRGB() != java.awt.Color.WHITE.getRGB()) {
-        return false;
-      }
-    }
-
-    return true;
-  }
-
-  /**
-   * This method is called when "Change category" button is pressed
-   *
-   * @param event the event of clicking the button
-   */
-  @FXML
-  private void onChangeCategory(ActionEvent event) {
-    Scene scene = ((Node) event.getSource()).getScene();
-    try {
-      // Load a new canvas FXML file which initializes everything
-      Parent root = new FXMLLoader(App.class.getResource("/fxml/zenMode.fxml")).load();
-      scene.setRoot(root);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-  }
-
   /**
    * This method is called when back button is pressed to return user to main menu
    *
@@ -343,7 +227,6 @@ public class ZenModeController {
    */
   @FXML
   private void onReturn(ActionEvent event) {
-	timer.cancel();
     playerBackgroundMusic.stop();
     Scene scene = ((Node) event.getSource()).getScene();
     try {
@@ -383,9 +266,9 @@ public class ZenModeController {
     fileChooser
         .getExtensionFilters()
         .addAll(
-            new FileChooser.ExtensionFilter("img", "*.bmp"),
-            new FileChooser.ExtensionFilter("img", "*.png"),
-            new FileChooser.ExtensionFilter("img", "*.jpeg"));
+        	new FileChooser.ExtensionFilter("BMP File", "*.bmp"),
+            new FileChooser.ExtensionFilter("PNG File", "*.png"),
+            new FileChooser.ExtensionFilter("JPG File", "*.jpeg"));
 
     // open file dialog box
     Window stage = canvas.getScene().getWindow();

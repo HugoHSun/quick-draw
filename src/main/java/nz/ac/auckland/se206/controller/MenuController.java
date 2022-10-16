@@ -223,6 +223,27 @@ public class MenuController {
     }
     scene.setRoot(root);
   }
+  
+  @FXML
+  private void onStartSandBoxGame(ActionEvent event) {
+	// When no user is selected
+	    if (currentActiveUser == null) {
+	      Alert noChosenUser = new Alert(AlertType.INFORMATION);
+	      noChosenUser.setHeaderText("You need to chose an user to start playing!");
+	      noChosenUser.show();
+	      return;
+	    }
+
+	    // Get the current scene
+	    scene = ((Node) event.getSource()).getScene();
+	    try {
+	      // Load a new parent node
+	      root = new FXMLLoader(App.class.getResource("/fxml/sandBoxMode.fxml")).load();
+	    } catch (IOException e) {
+	      e.printStackTrace();
+	    }
+	    scene.setRoot(root);
+  }
 
   /**
    * This method is called when the user clicks on "Add User" button, which go to the new user UI
