@@ -36,7 +36,6 @@ import javafx.stage.Window;
 import javax.imageio.ImageIO;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.game.Game;
-import nz.ac.auckland.se206.game.GameFactory;
 import nz.ac.auckland.se206.ml.DoodlePrediction;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 import nz.ac.auckland.se206.user.User;
@@ -73,7 +72,7 @@ public class ZenModeController {
 
   private DoodlePrediction model;
 
-  private Difficulty dif;
+  private List<Difficulty> dif;
 
   // mouse coordinates
   private double currentX;
@@ -93,7 +92,7 @@ public class ZenModeController {
     List<String> userNames = JsonReader.getUserNames();
     dif = users.get(userNames.indexOf(MenuController.currentActiveUser)).getCurrentDifficulty();
 
-    game = GameFactory.createGame(dif);
+    game = new Game(dif);
     category = game.getCategoryToDraw();
     categoryLabel.setText(category);
     usernameLabel.setText(currentActiveUser);

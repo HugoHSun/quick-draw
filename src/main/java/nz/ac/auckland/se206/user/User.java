@@ -21,7 +21,8 @@ public class User {
 
   private List<Boolean> previousResults;
 
-  private Difficulty currentDifficulty;
+  // 5 element arraylist -> Accuracy, Word difficulty, Time, Confidence, Visibility
+  private List<Difficulty> currentDifficulty;
 
   public User(String name) {
     // Default values
@@ -37,7 +38,11 @@ public class User {
 
     this.badgesEarned = new ArrayList<Integer>();
     this.previousResults = new ArrayList<Boolean>();
-    this.currentDifficulty = Difficulty.E;
+    this.currentDifficulty = new ArrayList<Difficulty>();
+    // Initialise everything as Easy when first created
+    for (int i = 0; i < 5; i++) {
+      currentDifficulty.add(Difficulty.E);
+    }
   }
 
   public String getName() {
@@ -64,11 +69,11 @@ public class User {
     return badgesEarned;
   }
 
-  public Difficulty getCurrentDifficulty() {
+  public List<Difficulty> getCurrentDifficulty() {
     return currentDifficulty;
   }
 
-  public void setCurrentDifficulty(Difficulty dif) {
+  public void setCurrentDifficulty(List<Difficulty> dif) {
     currentDifficulty = dif;
   }
 
@@ -132,7 +137,7 @@ public class User {
     if (this.gamesWon == 10) {
       newBadges.add(5);
     }
-    if (this.currentDifficulty.equals(Difficulty.M)
+    if (this.currentDifficulty.get(1).equals(Difficulty.M)
         && previousResults.get(previousResults.size() - 1).equals(true)) {
       newBadges.add(6);
     }
@@ -151,7 +156,7 @@ public class User {
     if (this.gamesWon == 50) {
       newBadges.add(10);
     }
-    if (this.currentDifficulty.equals(Difficulty.X)
+    if (this.currentDifficulty.get(1).equals(Difficulty.X)
         && previousResults.get(previousResults.size() - 1).equals(true)) {
       newBadges.add(11);
     }
