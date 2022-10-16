@@ -17,8 +17,6 @@ public class StatsController {
   @FXML private Label statLabel;
   private Parent root;
 
-  public StatsController() {}
-
   public void initialize() throws IOException {
     List<User> users = JsonReader.getUsers();
     List<String> userNames = JsonReader.getUserNames();
