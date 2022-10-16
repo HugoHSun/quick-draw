@@ -17,6 +17,11 @@ public class StatsController {
   @FXML private Label statLabel;
   private Parent root;
 
+  /**
+   * When user enters stats page, initialize by going through the user data
+   * 
+   * @throws IOException
+   */
   public void initialize() throws IOException {
     List<User> users = JsonReader.getUsers();
     List<String> userNames = JsonReader.getUserNames();
@@ -24,6 +29,11 @@ public class StatsController {
     statLabel.setText(users.get(userNames.indexOf(MenuController.currentActiveUser)).toString());
   }
 
+  /**
+   * When user presses the return button, return to the main menu
+   * 
+   * @param event
+   */
   @FXML
   private void onReturn(ActionEvent event) {
     Scene scene = ((Node) event.getSource()).getScene();

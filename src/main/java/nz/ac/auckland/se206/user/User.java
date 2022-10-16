@@ -33,6 +33,12 @@ public class User {
   private Boolean playHidden;
   private Boolean visitAboutUs;
 
+  /**
+   * Constructor for the User class, when made a new user.
+   * Default values are shown below, only the name is initialized correspondingly.
+   * 
+   * @param name Name of the user
+   */
   public User(String name) {
     // Default values
     this.name = name;
@@ -60,76 +66,169 @@ public class User {
     this.visitAboutUs = false;
   }
 
+  /**
+   * Getter for name
+   * 
+   * @return Name
+   */
   public String getName() {
     return name;
   }
-
+  
+  /**
+   * Getter for games won
+   * 
+   * @return Games won
+   */
   public int getGamesWon() {
     return gamesWon;
   }
-
+  
+  /**
+   * Getter for games lost
+   * 
+   * @return Games lost
+   */
   public int getGamesLost() {
     return gamesLost;
   }
 
+  /**
+   * Getter for fastest won
+   * 
+   * @return Fastest won
+   */
   public int getFastestWon() {
     return fastestWon;
   }
 
+  /**
+   * Getter for the list of words encountered at specific difficulty
+   * 
+   * @param diff Difficulty of words
+   * @return List of string of words
+   */
   public List<String> getWordsEncountered(Difficulty diff) {
     return wordsEncountered.get(diff);
   }
 
+  /**
+   * Getter for badges earned
+   * 
+   * @return List of badges earned
+   */
   public List<Integer> getBadgesEarned() {
     return badgesEarned;
   }
-
+  
+  /**
+   * Getter for current difficulty settings
+   * 
+   * @return Current difficulty settings
+   */
   public List<Difficulty> getCurrentDifficulty() {
     return currentDifficulty;
   }
 
+  /**
+   * Getter for the sound status
+   * 
+   * @return Boolean sound status
+   */
   public Boolean getSoundStatus() {
     return soundStatus;
   }
 
+  /**
+   * Setter for sound status
+   * 
+   * @param sound
+   */
   public void setSoundStatus(Boolean sound) {
     soundStatus = sound;
   }
 
+  /**
+   * Getter for music status
+   * 
+   * @return Boolean music status
+   */
   public Boolean getMusicStatus() {
     return musicStatus;
   }
   
+  /**
+   * Getter for visit about us
+   * 
+   * @return Boolean visit about us
+   */
   public Boolean getVisitAboutUs() {
 	  return visitAboutUs;
   }
 
+  /**
+   * Setter for music status
+   * 
+   * @param music
+   */
   public void setMusicStatus(Boolean music) {
     musicStatus = music;
   }
 
+  /**
+   * Setter for current difficulty for specific difficulty
+   * 
+   * @param dif
+   */
   public void setCurrentDifficulty(List<Difficulty> dif) {
     currentDifficulty = dif;
   }
   
+  /**
+   * Setter for boolean if they reached top ten
+   * 
+   * @param isWon They won
+   * @param finalIndex Final index of correct prediction
+   */
   public void setTopTen(Boolean isWon, int finalIndex) {
 	  if (!isWon && finalIndex < 10) {
 		  topTen = true;
 	  }
   }
   
+  /**
+   * Setter for boolean if they played hidden
+   * 
+   * @param isWordHidden
+   */
   public void setPlayHidden(Boolean isWordHidden) {
 	 playHidden = isWordHidden;
   }
   
+  /**
+   * Setter for boolean if they visit about us
+   * 
+   * @param visit
+   */
   public void setVisitAboutUs(Boolean visit) {
 	  visitAboutUs = visit;
   }
 
+  /**
+   * Add new word at specific difficulty
+   * 
+   * @param diff
+   * @param word
+   */
   public void newWord(Difficulty diff, String word) {
     wordsEncountered.get(diff).add(word);
   }
 
+  /**
+   * Add new badge it they never got the badge
+   * 
+   * @param newBadges
+   */
   public void newBadge(List<Integer> newBadges) {
     for (int newBadge : newBadges) {
       if (!(badgesEarned.contains(newBadge))) {
@@ -138,14 +237,25 @@ public class User {
     }
   }
 
+  /**
+   * Add number of wins
+   */
   public void won() {
     gamesWon++;
   }
 
+  /**
+   * Add number of losses
+   */
   public void lost() {
     gamesLost++;
   }
 
+  /**
+   * Record the result if they won or not
+   * 
+   * @param isWon
+   */
   public void record(boolean isWon) {
     if (previousResults.size() < 10) {
       previousResults.add(isWon);
@@ -155,12 +265,20 @@ public class User {
     }
   }
 
+  /**
+   * Update the fastest won
+   * 
+   * @param fasterWon
+   */
   public void updateFastestWon(int fasterWon) {
     if (fasterWon < fastestWon) {
       fastestWon = fasterWon;
     }
   }
 
+  /**
+   * Obtain badges with corresponding rules
+   */
   public void obtainBadges() {
     List<Integer> newBadges = new ArrayList<Integer>();
 
@@ -246,6 +364,9 @@ public class User {
     newBadge(newBadges);
   }
 
+  /**
+   * Overriden function that changes to string
+   */
   public String toString() {
     double winRate = 100.0 * (double) gamesWon / (gamesWon + gamesLost);
     String fastestTime = String.valueOf(fastestWon);

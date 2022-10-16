@@ -224,6 +224,12 @@ public class MenuController {
     scene.setRoot(root);
   }
   
+  /**
+   * This method is called when the user clicks on the "SandBox Mode" button, which starts a game
+   * with no restrictions.
+   * 
+   * @param event
+   */
   @FXML
   private void onStartSandBoxGame(ActionEvent event) {
 	// When no user is selected
@@ -330,6 +336,12 @@ public class MenuController {
     scene.setRoot(root);
   }
 
+  /**
+   * This method is called when the user selects the "settings" icon.
+   * Sets the scene to the settings page.
+   * 
+   * @param event
+   */
   @FXML
   private void onSettings(ActionEvent event) {
     if (userComboBox.getValue() == null) {
@@ -348,6 +360,13 @@ public class MenuController {
     scene.setRoot(root);
   }
 
+  /**
+   * This method is called when the user selects the "badges" icon
+   * Sets the scene to the badges page.
+   * 
+   * @param event
+   * @throws IOException
+   */
   @FXML
   private void onBadges(ActionEvent event) throws IOException {
     if (userComboBox.getValue() == null) {

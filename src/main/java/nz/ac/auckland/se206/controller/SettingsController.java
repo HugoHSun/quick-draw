@@ -83,6 +83,11 @@ public class SettingsController {
   private Boolean sound;
   private Boolean music;
 
+  /**
+   * Grab the current settings for difficulty and music from the user data
+   * 
+   * @throws IOException
+   */
   public void initialize() throws IOException {
     users = JsonReader.getUsers();
     List<String> userNames = JsonReader.getUserNames();
@@ -118,6 +123,12 @@ public class SettingsController {
     }
   }
 
+  /**
+   * A helper function which checks the list of difficulty consisting of
+   * accuracy, word difficulty, time, confidence and visibility
+   * 
+   * @param dif
+   */
   private void set(List<Difficulty> dif) {
     if (dif.get(0).equals(Difficulty.E)) {
       easyAccuracyButton.setDisable(true);
@@ -354,6 +365,13 @@ public class SettingsController {
     setMusicState(music);
   }
 
+  /**
+   * When the user presses the return button, if there was any changes to the settings
+   * update to the user data.
+   * 
+   * @param event
+   * @throws IOException
+   */
   @FXML
   private void onReturn(ActionEvent event) throws IOException {
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -379,120 +397,219 @@ public class SettingsController {
     scene.setRoot(root);
   }
 
+  /**
+   * When user selects level easy for accuracy
+   * 
+   * @param event
+   */
   @FXML
   private void onEasyAccuracyButton(ActionEvent event) {
     dif.set(0, Difficulty.E);
     set(dif);
   }
 
+  /**
+   * When user selects level medium for accuracy
+   * 
+   * @param event
+   */
   @FXML
   private void onMediumAccuracyButton(ActionEvent event) {
     dif.set(0, Difficulty.M);
     set(dif);
   }
 
+  /**
+   * When user selects level hard for accuracy
+   * 
+   * @param event
+   */
   @FXML
   private void onHardAccuracyButton(ActionEvent event) {
     dif.set(0, Difficulty.H);
     set(dif);
   }
 
+  /**
+   * When user selects level master for accuracy
+   * 
+   * @param event
+   */
   @FXML
   private void onMasterAccuracyButton(ActionEvent event) {
     dif.set(0, Difficulty.X);
     set(dif);
   }
 
+  /**
+   * When user selects level easy for word difficulty
+   * 
+   * @param event
+   */
   @FXML
   private void onEasyWordButton(ActionEvent event) {
     dif.set(1, Difficulty.E);
     set(dif);
   }
 
+  /**
+   * When user selects level medium for word difficulty
+   * 
+   * @param event
+   */
   @FXML
   private void onMediumWordButton(ActionEvent event) {
     dif.set(1, Difficulty.M);
     set(dif);
   }
 
+  /**
+   * When user selects level hard for word difficulty
+   * 
+   * @param event
+   */
   @FXML
   private void onHardWordButton(ActionEvent event) {
     dif.set(1, Difficulty.H);
     set(dif);
   }
 
+  /**
+   * When user selects level master for word difficulty
+   * 
+   * @param event
+   */
   @FXML
   private void onMasterWordButton(ActionEvent event) {
     dif.set(1, Difficulty.X);
     set(dif);
   }
 
+  /**
+   * When user selects level easy for time
+   * 
+   * @param event
+   */
   @FXML
   private void onEasyTimeButton(ActionEvent event) {
     dif.set(2, Difficulty.E);
     set(dif);
   }
 
+  /**
+   * When user selects level medium for time
+   * 
+   * @param event
+   */
   @FXML
   private void onMediumTimeButton(ActionEvent event) {
     dif.set(2, Difficulty.M);
     set(dif);
   }
 
+  /**
+   * When user selects level hard for time
+   * 
+   * @param event
+   */
   @FXML
   private void onHardTimeButton(ActionEvent event) {
     dif.set(2, Difficulty.H);
     set(dif);
   }
-
+  /**
+   * When user selects level master for time
+   * 
+   * @param event
+   */
   @FXML
   private void onMasterTimeButton(ActionEvent event) {
     dif.set(2, Difficulty.X);
     set(dif);
   }
 
+  /**
+   * When user selects level easy for confidence
+   * 
+   * @param event
+   */
   @FXML
   private void onEasyConfidenceButton(ActionEvent event) {
     dif.set(3, Difficulty.E);
     set(dif);
   }
 
+  /**
+   * When user selects level medium for confidence
+   * 
+   * @param event
+   */
   @FXML
   private void onMediumConfidenceButton(ActionEvent event) {
     dif.set(3, Difficulty.M);
     set(dif);
   }
 
+  /**
+   * When user selects level hard for confidence
+   * 
+   * @param event
+   */
   @FXML
   private void onHardConfidenceButton(ActionEvent event) {
     dif.set(3, Difficulty.H);
     set(dif);
   }
 
+  /**
+   * When user selects level master for confidence
+   * 
+   * @param event
+   */
   @FXML
   private void onMasterConfidenceButton(ActionEvent event) {
     dif.set(3, Difficulty.X);
     set(dif);
   }
 
+  /**
+   * When user selects level easy for visibility
+   * 
+   * @param event
+   */
   @FXML
   private void onEasyVisibilityButton(ActionEvent event) {
     dif.set(4, Difficulty.E);
     set(dif);
   }
 
+  /**
+   * When user selects level medium for visibility
+   * 
+   * @param event
+   */
   @FXML
   private void onMediumVisibilityButton(ActionEvent event) {
     dif.set(4, Difficulty.M);
     set(dif);
   }
 
+  /**
+   * When user selects level hard for visibility
+   * 
+   * @param event
+   */
   @FXML
   private void onHardVisibilityButton(ActionEvent event) {
     dif.set(4, Difficulty.H);
     set(dif);
   }
 
+  /**
+   * When user selects level master for visibility
+   * 
+   * @param event
+   */
   @FXML
   private void onMasterVisibilityButton(ActionEvent event) {
     dif.set(4, Difficulty.X);

@@ -22,6 +22,12 @@ public class Game {
 
   protected Integer visiblePrediction;
 
+  /**
+   * Constructor for the game. It gets input list of difficulties, consisting of
+   * accuracy, word difficulty, time, confidence and visibility. Assign variable with specific rules from client
+   * 
+   * @param difficulty
+   */
   public Game(List<Difficulty> difficulty) {
     if (difficulty.get(0).equals(Difficulty.E)) {
       winningRank = 3;

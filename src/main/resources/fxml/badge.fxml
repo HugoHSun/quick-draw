@@ -28,7 +28,7 @@
             </Label>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#onBadge" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
+                  <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
                      <graphic>
                         <ImageView fx:id="bronzeOne" fitHeight="80.0" fitWidth="80.0" opacity="0.3" pickOnBounds="true" preserveRatio="true">
                            <image>
