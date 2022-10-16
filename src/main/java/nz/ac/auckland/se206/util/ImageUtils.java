@@ -44,6 +44,7 @@ public class ImageUtils {
       for (int j = 0; j < image.getHeight(); j++) {
         final Color c = new Color(image.getRGB(i, j));
 
+        // Other colour that is not white is inverted to white
         if (c.equals(Color.white)) {
           imageOut.setRGB(i, j, Color.black.getRGB());
         } else {

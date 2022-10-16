@@ -22,6 +22,11 @@ import nz.ac.auckland.se206.user.User;
  */
 public class CategorySelector {
 
+  /**
+   * This it the enum for different difficulty
+   *
+   * @author H
+   */
   public enum Difficulty {
     E,
     M,
@@ -113,7 +118,7 @@ public class CategorySelector {
    * This method returns all the unplayed, specific difficulty categories by the player
    *
    * @param dif the difficulty of categories
-   * @return unplayed, specific difficulty categories by the player
+   * @return unplayed specific difficulty categories by the player
    * @throws IOException
    */
   private static List<String> getUnplayedCategories(Difficulty dif) throws IOException {
