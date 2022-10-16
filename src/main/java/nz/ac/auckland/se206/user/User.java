@@ -27,6 +27,9 @@ public class User {
   private Boolean soundStatus;
 
   private Boolean musicStatus;
+  
+  private Boolean topTen;
+  private Boolean playHidden;
 
   public User(String name) {
     // Default values
@@ -49,6 +52,9 @@ public class User {
     for (int i = 0; i < 5; i++) {
       currentDifficulty.add(Difficulty.E);
     }
+    
+    this.topTen = false;
+    this.playHidden = false;
   }
 
   public String getName() {
@@ -97,6 +103,16 @@ public class User {
 
   public void setCurrentDifficulty(List<Difficulty> dif) {
     currentDifficulty = dif;
+  }
+  
+  public void setTopTen(Boolean isWon, int finalIndex) {
+	  if (!isWon && finalIndex < 10) {
+		  topTen = true;
+	  }
+  }
+  
+  public void setPlayHidden(Boolean isWordHidden) {
+	 playHidden = isWordHidden;
   }
 
   public void newWord(Difficulty diff, String word) {
@@ -153,7 +169,9 @@ public class User {
             .contains(true))) {
       newBadges.add(3);
     }
-    // implement badge 4
+    if (this.topTen == true) {
+    	newBadges.add(4);
+    }
 
     // Silver badges
     if (this.gamesWon == 10) {
@@ -166,7 +184,10 @@ public class User {
     if (this.fastestWon <= 15) {
       newBadges.add(7);
     }
-    // Implement badge 8
+    if (this.currentDifficulty.get(1).equals(Difficulty.H)
+            && previousResults.get(previousResults.size() - 1).equals(true)) {
+          newBadges.add(8);
+        }
     if (previousResults.size() >= 3
         && !(previousResults
             .subList(previousResults.size() - 3, previousResults.size())
@@ -185,7 +206,9 @@ public class User {
     if (this.fastestWon <= 3) {
       newBadges.add(12);
     }
-    // Implement badge 13
+    if (this.playHidden == true) {
+    	newBadges.add(13);
+    }
     if (previousResults.size() == 10 && !(previousResults.contains(false))) {
       newBadges.add(14);
     }
@@ -227,7 +250,7 @@ public class User {
         + "\nGames Lost : "
         + gamesLost
         + "\nWin Rate : "
-        + winRate
+        + (int)winRate
         + "%\nFastest time to victory (secs): "
         + fastestTime
         + "\nDifficulty Setting : "
