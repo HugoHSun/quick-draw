@@ -127,7 +127,7 @@
                   </Button>
                   <HBox fx:id="toolBox" alignment="CENTER" spacing="10.0" visible="false">
                      <children>
-                        <Button fx:id="penButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onPressPen" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;">
+                        <Button fx:id="penButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onPressPen" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
                            <graphic>
                               <ImageView fitHeight="35.0" fitWidth="40.0" pickOnBounds="true">
                                  <image>
@@ -136,7 +136,7 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button fx:id="eraserButton" alignment="CENTER" mnemonicParsing="false" onAction="#onErase" prefHeight="35.0" prefWidth="40.0" style="-fx-background-color: transparent;">
+                        <Button fx:id="eraserButton" alignment="CENTER" mnemonicParsing="false" onAction="#onErase" prefHeight="35.0" prefWidth="40.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
                            <graphic>
                               <ImageView fitHeight="35.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -145,7 +145,7 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#onClear" prefHeight="23.0" prefWidth="80.0" style="-fx-background-color: FFE5B4;" text="Clear" />
+                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#onClear" prefHeight="23.0" prefWidth="80.0" style="-fx-background-color: FFE5B4;" stylesheets="@../css/buttons.css" text="Clear" />
                      </children>
                   </HBox>
                   <HBox fx:id="endGameBox" alignment="CENTER" spacing="10.0" visible="false">

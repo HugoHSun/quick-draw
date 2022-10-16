@@ -14,9 +14,9 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="820.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controller.BadgeController">
    <children>
-      <ImageView fitHeight="520.0" fitWidth="820.0" layoutX="14.0" layoutY="-14.0" opacity="0.18" pickOnBounds="true">
+      <ImageView fitHeight="520.0" fitWidth="820.0" opacity="0.18" pickOnBounds="true">
          <image>
-            <Image url="@../images/generalBackground.png" />
+            <Image url="@../images/badgesbg.png" />
          </image>
       </ImageView>
       <VBox alignment="CENTER" layoutX="75.0" layoutY="47.0" prefHeight="404.0" prefWidth="671.0">
@@ -284,7 +284,7 @@
             </HBox>
          </children>
       </VBox>
-      <Button fx:id="menuButton" layoutX="10.0" layoutY="20.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onReturn" prefHeight="30.0" prefWidth="40.0" style="-fx-background-color: transparent;">
+      <Button fx:id="menuButton" layoutX="10.0" layoutY="20.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onReturn" prefHeight="30.0" prefWidth="40.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
          <padding>
             <Insets left="20.0" />
          </padding>

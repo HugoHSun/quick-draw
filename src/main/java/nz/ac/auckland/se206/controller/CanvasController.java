@@ -199,6 +199,7 @@ public class CanvasController {
     // if user's music status is true, not mute, play background music
     if (music) {
       playerBackgroundMusic.play();
+      playerBackgroundMusic.setVolume(0.1);
     }
     onPressPen();
     model = new DoodlePrediction();
