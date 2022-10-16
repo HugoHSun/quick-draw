@@ -85,7 +85,7 @@ public class SettingsController {
 
   /**
    * Grab the current settings for difficulty and music from the user data
-   * 
+   *
    * @throws IOException
    */
   public void initialize() throws IOException {
@@ -124,216 +124,236 @@ public class SettingsController {
   }
 
   /**
-   * A helper function which checks the list of difficulty consisting of
-   * accuracy, word difficulty, time, confidence and visibility
-   * 
+   * A helper function which checks the list of difficulty consisting of accuracy, word difficulty,
+   * time, confidence and visibility
+   *
    * @param dif
    */
   private void set(List<Difficulty> dif) {
+    // If the accuracy level is Easy
     if (dif.get(0).equals(Difficulty.E)) {
       easyAccuracyButton.setDisable(true);
       mediumAccuracyButton.setDisable(false);
       hardAccuracyButton.setDisable(false);
       masterAccuracyButton.setDisable(false);
-
+      // Set opacity correspondingly
       easyAccuracyImage.setOpacity(0.5);
       mediumAccuracyImage.setOpacity(1.0);
       hardAccuracyImage.setOpacity(1.0);
       masterAccuracyImage.setOpacity(1.0);
+      // If the accuracy level is Medium
     } else if (dif.get(0).equals(Difficulty.M)) {
       easyAccuracyButton.setDisable(false);
       mediumAccuracyButton.setDisable(true);
       hardAccuracyButton.setDisable(false);
       masterAccuracyButton.setDisable(false);
-
+      // Set opacity correspondingly
       easyAccuracyImage.setOpacity(1.0);
       mediumAccuracyImage.setOpacity(0.5);
       hardAccuracyImage.setOpacity(1.0);
       masterAccuracyImage.setOpacity(1.0);
+      // If the accuracy level is Hard
     } else if (dif.get(0).equals(Difficulty.H)) {
       easyAccuracyButton.setDisable(false);
       mediumAccuracyButton.setDisable(false);
       hardAccuracyButton.setDisable(true);
       masterAccuracyButton.setDisable(false);
-
+      // Set opacity correspondingly
       easyAccuracyImage.setOpacity(1.0);
       mediumAccuracyImage.setOpacity(1.0);
       hardAccuracyImage.setOpacity(0.5);
       masterAccuracyImage.setOpacity(1.0);
+      // If the accuracy level is Master
     } else if (dif.get(0).equals(Difficulty.X)) {
       easyAccuracyButton.setDisable(false);
       mediumAccuracyButton.setDisable(false);
       hardAccuracyButton.setDisable(false);
       masterAccuracyButton.setDisable(true);
-
+      // Set opacity correspondingly
       easyAccuracyImage.setOpacity(1.0);
       mediumAccuracyImage.setOpacity(1.0);
       hardAccuracyImage.setOpacity(1.0);
       masterAccuracyImage.setOpacity(0.5);
     }
 
+    // If the word difficulty level is Easy
     if (dif.get(1).equals(Difficulty.E)) {
       easyWordButton.setDisable(true);
       mediumWordButton.setDisable(false);
       hardWordButton.setDisable(false);
       masterWordButton.setDisable(false);
-
+      // Set opacity correspondingly
       easyWordImage.setOpacity(0.5);
       mediumWordImage.setOpacity(1.0);
       hardWordImage.setOpacity(1.0);
       masterWordImage.setOpacity(1.0);
+      // If the word difficulty level is Medium
     } else if (dif.get(1).equals(Difficulty.M)) {
       easyWordButton.setDisable(false);
       mediumWordButton.setDisable(true);
       hardWordButton.setDisable(false);
       masterWordButton.setDisable(false);
-
+      // Set opacity correspondingly
       easyWordImage.setOpacity(1.0);
       mediumWordImage.setOpacity(0.5);
       hardWordImage.setOpacity(1.0);
       masterWordImage.setOpacity(1.0);
+      // If the word difficulty level is Hard
     } else if (dif.get(1).equals(Difficulty.H)) {
       easyWordButton.setDisable(false);
       mediumWordButton.setDisable(false);
       hardWordButton.setDisable(true);
       masterWordButton.setDisable(false);
-
+      // Set opacity correspondingly
       easyWordImage.setOpacity(1.0);
       mediumWordImage.setOpacity(1.0);
       hardWordImage.setOpacity(0.5);
       masterWordImage.setOpacity(1.0);
+      // If the word difficulty level is Master
     } else if (dif.get(1).equals(Difficulty.X)) {
       easyWordButton.setDisable(false);
       mediumWordButton.setDisable(false);
       hardWordButton.setDisable(false);
       masterWordButton.setDisable(true);
-
+      // Set opacity correspondingly
       easyWordImage.setOpacity(1.0);
       mediumWordImage.setOpacity(1.0);
       hardWordImage.setOpacity(1.0);
       masterWordImage.setOpacity(0.5);
     }
 
+    // If the time level is Easy
     if (dif.get(2).equals(Difficulty.E)) {
       easyTimeButton.setDisable(true);
       mediumTimeButton.setDisable(false);
       hardTimeButton.setDisable(false);
       masterTimeButton.setDisable(false);
-
+      // Set opacity correspondingly
       easyTimeImage.setOpacity(0.5);
       mediumTimeImage.setOpacity(1.0);
       hardTimeImage.setOpacity(1.0);
       masterTimeImage.setOpacity(1.0);
+      // If the time level is Medium
     } else if (dif.get(2).equals(Difficulty.M)) {
       easyTimeButton.setDisable(false);
       mediumTimeButton.setDisable(true);
       hardTimeButton.setDisable(false);
       masterTimeButton.setDisable(false);
-
+      // Set opacity correspondingly
       easyTimeImage.setOpacity(1.0);
       mediumTimeImage.setOpacity(0.5);
       hardTimeImage.setOpacity(1.0);
       masterTimeImage.setOpacity(1.0);
+      // If the time level is Hard
     } else if (dif.get(2).equals(Difficulty.H)) {
       easyTimeButton.setDisable(false);
       mediumTimeButton.setDisable(false);
       hardTimeButton.setDisable(true);
       masterTimeButton.setDisable(false);
-
+      // Set opacity correspondingly
       easyTimeImage.setOpacity(1.0);
       mediumTimeImage.setOpacity(1.0);
       hardTimeImage.setOpacity(0.5);
       masterTimeImage.setOpacity(1.0);
+      // If the time level is Master
     } else if (dif.get(2).equals(Difficulty.X)) {
       easyTimeButton.setDisable(false);
       mediumTimeButton.setDisable(false);
       hardTimeButton.setDisable(false);
       masterTimeButton.setDisable(true);
-
+      // Set opacity correspondingly
       easyTimeImage.setOpacity(1.0);
       mediumTimeImage.setOpacity(1.0);
       hardTimeImage.setOpacity(1.0);
       masterTimeImage.setOpacity(0.5);
     }
 
+    // If the confidence level is Easy
     if (dif.get(3).equals(Difficulty.E)) {
       easyConfidenceButton.setDisable(true);
       mediumConfidenceButton.setDisable(false);
       hardConfidenceButton.setDisable(false);
       masterConfidenceButton.setDisable(false);
-
+      // Set opacity correspondingly
       easyConfidenceImage.setOpacity(0.5);
       mediumConfidenceImage.setOpacity(1.0);
       hardConfidenceImage.setOpacity(1.0);
       masterConfidenceImage.setOpacity(1.0);
+      // If the confidence level is Medium
     } else if (dif.get(3).equals(Difficulty.M)) {
       easyConfidenceButton.setDisable(false);
       mediumConfidenceButton.setDisable(true);
       hardConfidenceButton.setDisable(false);
       masterConfidenceButton.setDisable(false);
-
+      // Set opacity correspondingly
       easyConfidenceImage.setOpacity(1.0);
       mediumConfidenceImage.setOpacity(0.5);
       hardConfidenceImage.setOpacity(1.0);
       masterConfidenceImage.setOpacity(1.0);
+      // If the confidence level is Hard
     } else if (dif.get(3).equals(Difficulty.H)) {
       easyConfidenceButton.setDisable(false);
       mediumConfidenceButton.setDisable(false);
       hardConfidenceButton.setDisable(true);
       masterConfidenceButton.setDisable(false);
-
+      // Set opacity correspondingly
       easyConfidenceImage.setOpacity(1.0);
       mediumConfidenceImage.setOpacity(1.0);
       hardConfidenceImage.setOpacity(0.5);
       masterConfidenceImage.setOpacity(1.0);
+      // If the confidence level is Master
     } else if (dif.get(3).equals(Difficulty.X)) {
       easyConfidenceButton.setDisable(false);
       mediumConfidenceButton.setDisable(false);
       hardConfidenceButton.setDisable(false);
       masterConfidenceButton.setDisable(true);
-
+      // Set opacity correspondingly
       easyConfidenceImage.setOpacity(1.0);
       mediumConfidenceImage.setOpacity(1.0);
       hardConfidenceImage.setOpacity(1.0);
       masterConfidenceImage.setOpacity(0.5);
     }
 
+    // If the visibility level is Easy
     if (dif.get(4).equals(Difficulty.E)) {
       easyVisibilityButton.setDisable(true);
       mediumVisibilityButton.setDisable(false);
       hardVisibilityButton.setDisable(false);
       masterVisibilityButton.setDisable(false);
-
+      // Set opacity correspondingly
       easyVisibilityImage.setOpacity(0.5);
       mediumVisibilityImage.setOpacity(1.0);
       hardVisibilityImage.setOpacity(1.0);
       masterVisibilityImage.setOpacity(1.0);
+      // If the visibility level is Medium
     } else if (dif.get(4).equals(Difficulty.M)) {
       easyVisibilityButton.setDisable(false);
       mediumVisibilityButton.setDisable(true);
       hardVisibilityButton.setDisable(false);
       masterVisibilityButton.setDisable(false);
-
+      // Set opacity correspondingly
       easyVisibilityImage.setOpacity(1.0);
       mediumVisibilityImage.setOpacity(0.5);
       hardVisibilityImage.setOpacity(1.0);
       masterVisibilityImage.setOpacity(1.0);
+      // If the visibility level is Hard
     } else if (dif.get(4).equals(Difficulty.H)) {
       easyVisibilityButton.setDisable(false);
       mediumVisibilityButton.setDisable(false);
       hardVisibilityButton.setDisable(true);
       masterVisibilityButton.setDisable(false);
-
+      // Set opacity correspondingly
       easyVisibilityImage.setOpacity(1.0);
       mediumVisibilityImage.setOpacity(1.0);
       hardVisibilityImage.setOpacity(0.5);
       masterVisibilityImage.setOpacity(1.0);
+      // If the visibility level is Master
     } else if (dif.get(4).equals(Difficulty.X)) {
       easyVisibilityButton.setDisable(false);
       mediumVisibilityButton.setDisable(false);
       hardVisibilityButton.setDisable(false);
       masterVisibilityButton.setDisable(true);
-
+      // Set opacity correspondingly
       easyVisibilityImage.setOpacity(1.0);
       mediumVisibilityImage.setOpacity(1.0);
       hardVisibilityImage.setOpacity(1.0);
@@ -348,7 +368,7 @@ public class SettingsController {
    * @param event when sound button is pressed
    */
   @FXML
-  private void onSound(ActionEvent event) {
+  private void onPressSound(ActionEvent event) {
     sound = !soundButton.isSelected();
     setSoundState(sound);
   }
@@ -360,15 +380,15 @@ public class SettingsController {
    * @param event when music button is pressed
    */
   @FXML
-  private void onMusic(ActionEvent event) {
+  private void onPressMusic(ActionEvent event) {
     music = !musicButton.isSelected();
     setMusicState(music);
   }
 
   /**
-   * When the user presses the return button, if there was any changes to the settings
-   * update to the user data.
-   * 
+   * When the user presses the return button, if there was any changes to the settings update to the
+   * user data.
+   *
    * @param event
    * @throws IOException
    */
@@ -379,6 +399,7 @@ public class SettingsController {
     for (User user : users) {
       userNames.add(user.getName());
     }
+    // Record the changed settings to the user data
     users.get(userNames.indexOf(MenuController.currentActiveUser)).setCurrentDifficulty(dif);
     users.get(userNames.indexOf(MenuController.currentActiveUser)).setSoundStatus(sound);
     users.get(userNames.indexOf(MenuController.currentActiveUser)).setMusicStatus(music);
@@ -399,219 +420,219 @@ public class SettingsController {
 
   /**
    * When user selects level easy for accuracy
-   * 
+   *
    * @param event
    */
   @FXML
-  private void onEasyAccuracyButton(ActionEvent event) {
+  private void onPressEasyAccuracyButton(ActionEvent event) {
     dif.set(0, Difficulty.E);
     set(dif);
   }
 
   /**
    * When user selects level medium for accuracy
-   * 
+   *
    * @param event
    */
   @FXML
-  private void onMediumAccuracyButton(ActionEvent event) {
+  private void onPressMediumAccuracyButton(ActionEvent event) {
     dif.set(0, Difficulty.M);
     set(dif);
   }
 
   /**
    * When user selects level hard for accuracy
-   * 
+   *
    * @param event
    */
   @FXML
-  private void onHardAccuracyButton(ActionEvent event) {
+  private void onPressHardAccuracyButton(ActionEvent event) {
     dif.set(0, Difficulty.H);
     set(dif);
   }
 
   /**
    * When user selects level master for accuracy
-   * 
+   *
    * @param event
    */
   @FXML
-  private void onMasterAccuracyButton(ActionEvent event) {
+  private void onPressMasterAccuracyButton(ActionEvent event) {
     dif.set(0, Difficulty.X);
     set(dif);
   }
 
   /**
    * When user selects level easy for word difficulty
-   * 
+   *
    * @param event
    */
   @FXML
-  private void onEasyWordButton(ActionEvent event) {
+  private void onPressEasyWordButton(ActionEvent event) {
     dif.set(1, Difficulty.E);
     set(dif);
   }
 
   /**
    * When user selects level medium for word difficulty
-   * 
+   *
    * @param event
    */
   @FXML
-  private void onMediumWordButton(ActionEvent event) {
+  private void onPressMediumWordButton(ActionEvent event) {
     dif.set(1, Difficulty.M);
     set(dif);
   }
 
   /**
    * When user selects level hard for word difficulty
-   * 
+   *
    * @param event
    */
   @FXML
-  private void onHardWordButton(ActionEvent event) {
+  private void onPressHardWordButton(ActionEvent event) {
     dif.set(1, Difficulty.H);
     set(dif);
   }
 
   /**
    * When user selects level master for word difficulty
-   * 
+   *
    * @param event
    */
   @FXML
-  private void onMasterWordButton(ActionEvent event) {
+  private void onPressMasterWordButton(ActionEvent event) {
     dif.set(1, Difficulty.X);
     set(dif);
   }
 
   /**
    * When user selects level easy for time
-   * 
+   *
    * @param event
    */
   @FXML
-  private void onEasyTimeButton(ActionEvent event) {
+  private void onPressEasyTimeButton(ActionEvent event) {
     dif.set(2, Difficulty.E);
     set(dif);
   }
 
   /**
    * When user selects level medium for time
-   * 
+   *
    * @param event
    */
   @FXML
-  private void onMediumTimeButton(ActionEvent event) {
+  private void onPressMediumTimeButton(ActionEvent event) {
     dif.set(2, Difficulty.M);
     set(dif);
   }
 
   /**
    * When user selects level hard for time
-   * 
+   *
    * @param event
    */
   @FXML
-  private void onHardTimeButton(ActionEvent event) {
+  private void onPressHardTimeButton(ActionEvent event) {
     dif.set(2, Difficulty.H);
     set(dif);
   }
   /**
    * When user selects level master for time
-   * 
+   *
    * @param event
    */
   @FXML
-  private void onMasterTimeButton(ActionEvent event) {
+  private void onPressMasterTimeButton(ActionEvent event) {
     dif.set(2, Difficulty.X);
     set(dif);
   }
 
   /**
    * When user selects level easy for confidence
-   * 
+   *
    * @param event
    */
   @FXML
-  private void onEasyConfidenceButton(ActionEvent event) {
+  private void onPressEasyConfidenceButton(ActionEvent event) {
     dif.set(3, Difficulty.E);
     set(dif);
   }
 
   /**
    * When user selects level medium for confidence
-   * 
+   *
    * @param event
    */
   @FXML
-  private void onMediumConfidenceButton(ActionEvent event) {
+  private void onPressMediumConfidenceButton(ActionEvent event) {
     dif.set(3, Difficulty.M);
     set(dif);
   }
 
   /**
    * When user selects level hard for confidence
-   * 
+   *
    * @param event
    */
   @FXML
-  private void onHardConfidenceButton(ActionEvent event) {
+  private void onPressHardConfidenceButton(ActionEvent event) {
     dif.set(3, Difficulty.H);
     set(dif);
   }
 
   /**
    * When user selects level master for confidence
-   * 
+   *
    * @param event
    */
   @FXML
-  private void onMasterConfidenceButton(ActionEvent event) {
+  private void onPressMasterConfidenceButton(ActionEvent event) {
     dif.set(3, Difficulty.X);
     set(dif);
   }
 
   /**
    * When user selects level easy for visibility
-   * 
+   *
    * @param event
    */
   @FXML
-  private void onEasyVisibilityButton(ActionEvent event) {
+  private void onPressEasyVisibilityButton(ActionEvent event) {
     dif.set(4, Difficulty.E);
     set(dif);
   }
 
   /**
    * When user selects level medium for visibility
-   * 
+   *
    * @param event
    */
   @FXML
-  private void onMediumVisibilityButton(ActionEvent event) {
+  private void onPressMediumVisibilityButton(ActionEvent event) {
     dif.set(4, Difficulty.M);
     set(dif);
   }
 
   /**
    * When user selects level hard for visibility
-   * 
+   *
    * @param event
    */
   @FXML
-  private void onHardVisibilityButton(ActionEvent event) {
+  private void onPressHardVisibilityButton(ActionEvent event) {
     dif.set(4, Difficulty.H);
     set(dif);
   }
 
   /**
    * When user selects level master for visibility
-   * 
+   *
    * @param event
    */
   @FXML
-  private void onMasterVisibilityButton(ActionEvent event) {
+  private void onPressMasterVisibilityButton(ActionEvent event) {
     dif.set(4, Difficulty.X);
     set(dif);
   }

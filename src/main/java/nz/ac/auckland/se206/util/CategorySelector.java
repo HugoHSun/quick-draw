@@ -94,14 +94,17 @@ public class CategorySelector {
     try {
       List<String> unplayedCategories = new ArrayList<String>();
       for (Difficulty dif : difficulty) {
+        // In the selected difficulties, concatenante the unplayed categories
         unplayedCategories.addAll(getUnplayedCategories(dif));
       }
       // Generating a random index for retrieving element
       int randomIndex = new Random().nextInt(unplayedCategories.size());
+      // randomly selecting an element from the concatenated list
       output = unplayedCategories.get(randomIndex);
 
       for (Difficulty dif : difficulty) {
         if (getUnplayedCategories(dif).contains(output)) {
+          // Find the difficulty of the word played for tracking / recording
           currentDifficulty = dif;
           break;
         }

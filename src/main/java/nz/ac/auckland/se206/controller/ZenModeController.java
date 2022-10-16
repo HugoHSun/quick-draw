@@ -121,8 +121,8 @@ public class ZenModeController {
     voiceOver.start();
     graphic = canvas.getGraphicsContext2D();
 
-    onPen();
-
+    onPressPen();
+    // Unlike sandbox mode, zen mode requires predictions
     model = new DoodlePrediction();
     // By loading one prediction before the scene loads, it removes the GUI freezing
     model.getPredictions(CanvasUtils.getCurrentSnapshot(canvas), 10);
@@ -149,7 +149,7 @@ public class ZenModeController {
 
   /** This method is called when the "Pen" button is presses */
   @FXML
-  private void onPen() {
+  private void onPressPen() {
     penButton.setDisable(true);
     eraserButton.setDisable(false);
 
@@ -200,7 +200,7 @@ public class ZenModeController {
 
   /** This method is called when the "Eraser" button is pressed */
   @FXML
-  private void onErase() {
+  private void onPressErase() {
     penButton.setDisable(false);
     eraserButton.setDisable(true);
     // Change the cursor to eraser
@@ -248,7 +248,7 @@ public class ZenModeController {
   @FXML
   private void onClear() {
     graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-    onPen();
+    onPressPen();
   }
 
   /** This method is called when the user go into Zen mode */
@@ -268,6 +268,7 @@ public class ZenModeController {
                     // Update the predictions value and display
                   } else {
                     try {
+                      // Get all 345 to track the confidence of the correct predictions
                       List<Classifications.Classification> currentPredictions =
                           model.getPredictions(CanvasUtils.getCurrentSnapshot(canvas), 345);
                       game.updatePredictions(currentPredictions);
@@ -340,14 +341,14 @@ public class ZenModeController {
    * @param event the event of clicking the button
    */
   @FXML
-  private void onBlue(ActionEvent event) {
+  private void onPressBlue(ActionEvent event) {
     enableAllColours();
     blueButton.setDisable(true);
 
     // Change to blue pen cursor icon and pen colour
     penCursor = "bluePen.png";
     penColour = Color.web("#00B5FF");
-    onPen();
+    onPressPen();
   }
 
   /**
@@ -356,14 +357,14 @@ public class ZenModeController {
    * @param event the event of clicking the button
    */
   @FXML
-  private void onRed(ActionEvent event) {
+  private void onPressRed(ActionEvent event) {
     enableAllColours();
     redButton.setDisable(true);
 
     // Change to red pen cursor icon and pen colour
     penCursor = "redPen.png";
     penColour = Color.RED;
-    onPen();
+    onPressPen();
   }
 
   /**
@@ -372,14 +373,14 @@ public class ZenModeController {
    * @param event the event of clicking the button
    */
   @FXML
-  private void onGreen(ActionEvent event) {
+  private void onPressGreen(ActionEvent event) {
     enableAllColours();
     greenButton.setDisable(true);
 
     // Change to green pen cursor icon and pen colour
     penCursor = "greenPen.png";
     penColour = Color.web("#0FDD00");
-    onPen();
+    onPressPen();
   }
 
   /**
@@ -388,14 +389,14 @@ public class ZenModeController {
    * @param event the event of clicking the button
    */
   @FXML
-  private void onOrange(ActionEvent event) {
+  private void onPressOrange(ActionEvent event) {
     enableAllColours();
     orangeButton.setDisable(true);
 
     // Change to orange pen cursor icon and pen colour
     penCursor = "orangePen.png";
     penColour = Color.web("#FF7A00");
-    onPen();
+    onPressPen();
   }
 
   /**
@@ -404,14 +405,14 @@ public class ZenModeController {
    * @param event the event of clicking the button
    */
   @FXML
-  private void onPurple(ActionEvent event) {
+  private void onPressPurple(ActionEvent event) {
     enableAllColours();
     purpleButton.setDisable(true);
 
     // Change to purple pen cursor icon and pen colour
     penCursor = "purplePen.png";
     penColour = Color.web("#8E00FF");
-    onPen();
+    onPressPen();
   }
 
   /**
@@ -420,14 +421,14 @@ public class ZenModeController {
    * @param event the event of clicking the button
    */
   @FXML
-  private void onPink(ActionEvent event) {
+  private void onPressPink(ActionEvent event) {
     enableAllColours();
     pinkButton.setDisable(true);
 
     // Change to pink pen cursor icon and pen colour
     penCursor = "pinkPen.png";
     penColour = Color.web("#FF00C9");
-    onPen();
+    onPressPen();
   }
 
   /**
@@ -436,14 +437,14 @@ public class ZenModeController {
    * @param event the event of clicking the button
    */
   @FXML
-  private void onBrown(ActionEvent event) {
+  private void onPressBrown(ActionEvent event) {
     enableAllColours();
     brownButton.setDisable(true);
 
     // Change to brown pen cursor icon and pen colour
     penCursor = "brownPen.png";
     penColour = Color.web("#894800");
-    onPen();
+    onPressPen();
   }
 
   /**
@@ -452,14 +453,14 @@ public class ZenModeController {
    * @param event the event of clicking the button
    */
   @FXML
-  private void onBlack(ActionEvent event) {
+  private void onPressBlack(ActionEvent event) {
     enableAllColours();
     blackButton.setDisable(true);
 
     // Change to black pen cursor icon and pen colour
     penCursor = "Pencil-icon.png";
     penColour = Color.BLACK;
-    onPen();
+    onPressPen();
   }
 
   /** This method is called to enable all coloured pens before disabling the current coloured pen */

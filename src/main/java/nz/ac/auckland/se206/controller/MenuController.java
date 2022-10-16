@@ -102,7 +102,7 @@ public class MenuController {
 
   /** This method is called when the user clicks on "about us" button */
   @FXML
-  private void onAboutUs(ActionEvent event) {
+  private void onPressAboutUs(ActionEvent event) {
     scene = ((Node) event.getSource()).getScene();
     try {
       // Load a new parent node
@@ -119,7 +119,7 @@ public class MenuController {
    * @param event the event of the combo box changing value
    */
   @FXML
-  private void onUserComboBox(ActionEvent event) {
+  private void onChangeUserComboBox(ActionEvent event) {
     currentActiveUser = userComboBox.getValue();
     currentUserLabel.setText(currentActiveUser);
     // Move the combo box to the top right corner
@@ -159,6 +159,7 @@ public class MenuController {
     // Get the current scene
     scene = ((Node) event.getSource()).getScene();
     try {
+      // Since it is not hidden word mode, set the boolean to false
       CanvasController.setHiddenWord(false);
       // Load a new parent node
       root = new FXMLLoader(App.class.getResource("/fxml/canvas.fxml")).load();
@@ -187,6 +188,7 @@ public class MenuController {
     // Get the current scene
     scene = ((Node) event.getSource()).getScene();
     try {
+      // Since it is hidden word mode, set the boolean to true
       CanvasController.setHiddenWord(true);
       // Load a new parent node
       root = new FXMLLoader(App.class.getResource("/fxml/canvas.fxml")).load();
@@ -223,32 +225,32 @@ public class MenuController {
     }
     scene.setRoot(root);
   }
-  
+
   /**
    * This method is called when the user clicks on the "SandBox Mode" button, which starts a game
    * with no restrictions.
-   * 
+   *
    * @param event
    */
   @FXML
   private void onStartSandBoxGame(ActionEvent event) {
-	// When no user is selected
-	    if (currentActiveUser == null) {
-	      Alert noChosenUser = new Alert(AlertType.INFORMATION);
-	      noChosenUser.setHeaderText("You need to chose an user to start playing!");
-	      noChosenUser.show();
-	      return;
-	    }
+    // When no user is selected
+    if (currentActiveUser == null) {
+      Alert noChosenUser = new Alert(AlertType.INFORMATION);
+      noChosenUser.setHeaderText("You need to chose an user to start playing!");
+      noChosenUser.show();
+      return;
+    }
 
-	    // Get the current scene
-	    scene = ((Node) event.getSource()).getScene();
-	    try {
-	      // Load a new parent node
-	      root = new FXMLLoader(App.class.getResource("/fxml/sandBoxMode.fxml")).load();
-	    } catch (IOException e) {
-	      e.printStackTrace();
-	    }
-	    scene.setRoot(root);
+    // Get the current scene
+    scene = ((Node) event.getSource()).getScene();
+    try {
+      // Load a new parent node
+      root = new FXMLLoader(App.class.getResource("/fxml/sandBoxMode.fxml")).load();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    scene.setRoot(root);
   }
 
   /**
@@ -319,7 +321,8 @@ public class MenuController {
    * @throws IOException
    */
   @FXML
-  private void onStatistics(ActionEvent event) throws IOException {
+  private void onPressStatistics(ActionEvent event) throws IOException {
+    // If no user is chosen
     if (userComboBox.getValue() == null) {
       Alert noChosenUser = new Alert(AlertType.INFORMATION);
       noChosenUser.setHeaderText("You must choose a profile!");
@@ -337,13 +340,14 @@ public class MenuController {
   }
 
   /**
-   * This method is called when the user selects the "settings" icon.
-   * Sets the scene to the settings page.
-   * 
+   * This method is called when the user selects the "settings" icon. Sets the scene to the settings
+   * page.
+   *
    * @param event
    */
   @FXML
-  private void onSettings(ActionEvent event) {
+  private void onPressSettings(ActionEvent event) {
+    // If no user is chosen
     if (userComboBox.getValue() == null) {
       Alert noChosenUser = new Alert(AlertType.INFORMATION);
       noChosenUser.setHeaderText("You must choose a profile!");
@@ -361,14 +365,15 @@ public class MenuController {
   }
 
   /**
-   * This method is called when the user selects the "badges" icon
-   * Sets the scene to the badges page.
-   * 
+   * This method is called when the user selects the "badges" icon Sets the scene to the badges
+   * page.
+   *
    * @param event
    * @throws IOException
    */
   @FXML
-  private void onBadges(ActionEvent event) throws IOException {
+  private void onPressBadges(ActionEvent event) throws IOException {
+    // If no user is chosen
     if (userComboBox.getValue() == null) {
       Alert noChosenUser = new Alert(AlertType.INFORMATION);
       noChosenUser.setHeaderText("You must choose a profile!");

@@ -156,9 +156,12 @@ public class CanvasController {
 
     category = game.getCategoryToDraw();
 
+    // If the user shoe hidden word mode, play the hidden word mode.
     if (isHiddenWord) {
+      System.out.println(category);
       initializeHiddenWord();
     } else {
+      // Set category as to itself, not the definition
       categoryLabel.setText(category);
       Thread voiceOver =
           new Thread(
@@ -168,6 +171,7 @@ public class CanvasController {
       voiceOver.start();
     }
 
+    // Collect difficulty to record in the database
     difficulty = game.getCategoryDifficulty();
     graphic = canvas.getGraphicsContext2D();
 
@@ -187,12 +191,14 @@ public class CanvasController {
     // if user's music status is true, not mute, play background music
     if (music) {
       playerBackgroundMusic.play();
+      playerBackgroundMusic.setVolume(0.1);
     }
-    onPen();
+    onPressPen();
     model = new DoodlePrediction();
     // By loading one prediction before the scene loads, it removes the GUI freezing
     model.getPredictions(CanvasUtils.getCurrentSnapshot(canvas), 10);
 
+    // Set the name of the user as the current user
     usernameLabel.setText(MenuController.currentActiveUser);
     timerLabel.setText(game.getRemainingTime().toString());
   }
@@ -252,7 +258,7 @@ public class CanvasController {
 
   /** This method is called when the "Pen" button is presses */
   @FXML
-  private void onPen() {
+  private void onPressPen() {
     penButton.setDisable(true);
     eraserButton.setDisable(false);
     // Change the cursor icon to eraser
@@ -349,7 +355,7 @@ public class CanvasController {
   @FXML
   private void onClear() {
     graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-    onPen();
+    onPressPen();
   }
 
   /** This method is called when the user click on "Start drawing" button */
@@ -395,6 +401,7 @@ public class CanvasController {
                     // Update the predictions value and display
                   } else {
                     try {
+                      // Collect all 345 predictions to track the correct answers confidence
                       List<Classification> currentPredictions =
                           model.getPredictions(CanvasUtils.getCurrentSnapshot(canvas), 345);
                       game.updatePredictions(currentPredictions);
@@ -421,12 +428,14 @@ public class CanvasController {
     canvas.setDisable(true);
     canvas.setOnMouseDragged(null);
     try {
+      // Record result with corresponding inputs
       recordResult(MenuController.currentActiveUser, isWon, 60 - game.getRemainingTime());
     } catch (IOException e) {
       e.printStackTrace();
     }
     endGameBox.setVisible(true);
 
+    // If the mode is hidden word, then show the correct category at top
     if (isHiddenWord) {
       definitionButton.setVisible(false);
       categoryLabel.setVisible(true);
@@ -434,6 +443,7 @@ public class CanvasController {
       Platform.runLater(() -> categoryLabel.setText("The category was : " + category));
     }
 
+    // Use text to speech to tell us the result
     TextToSpeech textToSpeech = new TextToSpeech();
     if (isWon) {
       Platform.runLater(() -> winLostLabel.setText("YOU WON!!!"));

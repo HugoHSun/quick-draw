@@ -27,23 +27,24 @@ public class StatsController {
   @FXML private Label winRateLabel;
   @FXML private PieChart winPieChart;
   private Parent root;
-  
+
   private int wins;
   private int losses;
 
   private Scene scene;
 
   public StatsController() {}
-  
+
   /**
    * When user enters stats page, initialize by going through the user data
-   * 
+   *
    * @throws IOException
    */
   public void initialize() throws IOException {
+    // Get user data from the json file
     List<User> users = JsonReader.getUsers();
     List<String> userNames = JsonReader.getUserNames();
-
+    // Set the statistics with the corresponding user data
     nameLabel.setText(users.get(userNames.indexOf(MenuController.currentActiveUser)).getName());
     easyWordsLabel.setText(
         users.get(userNames.indexOf(MenuController.currentActiveUser)).getEasyWords());
@@ -63,6 +64,7 @@ public class StatsController {
     wins = users.get(userNames.indexOf(MenuController.currentActiveUser)).getGamesWon();
     losses = users.get(userNames.indexOf(MenuController.currentActiveUser)).getGamesLost();
 
+    // Using FXCollections, create pie chart
     ObservableList<PieChart.Data> pieChartData =
         FXCollections.observableArrayList(
             new PieChart.Data("wins", wins), new PieChart.Data("losses", losses));
@@ -71,7 +73,7 @@ public class StatsController {
 
   /**
    * When user presses the return button, return to the main menu
-   * 
+   *
    * @param event
    */
   @FXML

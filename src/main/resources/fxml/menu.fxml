@@ -58,7 +58,7 @@
                               <Font name="Segoe UI Semibold" size="28.0" />
                            </font>
                         </Label>
-                        <ComboBox fx:id="userComboBox" onAction="#onUserComboBox" prefHeight="23.0" prefWidth="120.0" style="-fx-background-color: #ffb347;" visibleRowCount="6">
+                        <ComboBox fx:id="userComboBox" onAction="#onChangeUserComboBox" prefHeight="23.0" prefWidth="120.0" style="-fx-background-color: #ffb347;" visibleRowCount="6">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor></ComboBox>
@@ -131,7 +131,7 @@
                   <Image url="@../images/app-logo.PNG" />
                </image>
             </ImageView>
-            <Button alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#onAboutUs" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css" text="About Us&#10;Speedy Sketchers" textAlignment="CENTER">
+            <Button alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#onPressAboutUs" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css" text="About Us&#10;Speedy Sketchers" textAlignment="CENTER">
                <font>
                   <Font name="Segoe UI Black" size="12.0" />
                </font>
@@ -194,7 +194,7 @@
             <Separator prefWidth="200.0" />
             <HBox prefHeight="50.0" prefWidth="200.0" spacing="100.0">
                <children>
-                  <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onBadges" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
+                  <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onPressBadges" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
                      <graphic>
                         <ImageView fitHeight="70.0" fitWidth="70.0" pickOnBounds="true">
                            <image>
@@ -216,7 +216,7 @@
                         </Tooltip>
                      </tooltip>
                   </Button>
-                  <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onStatistics" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
+                  <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onPressStatistics" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
                      <tooltip>
                         <Tooltip style="-fx-background-color: ffb347;" text="Show Statistics">
                            <font>
@@ -238,7 +238,7 @@
                         <Insets top="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSettings" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
+                  <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onPressSettings" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
                      <tooltip>
                         <Tooltip text="Settings" />
                      </tooltip>

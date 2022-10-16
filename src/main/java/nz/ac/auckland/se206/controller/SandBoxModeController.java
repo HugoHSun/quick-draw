@@ -96,7 +96,9 @@ public class SandBoxModeController {
     voiceOver.start();
     graphic = canvas.getGraphicsContext2D();
 
-    onPen();
+    // NO deep learning model is used, because no prediction is required
+    onPressPen();
+    // set the username to corresponding string
     usernameLabel.setText(MenuController.currentActiveUser);
 
     // Initialise drawing, eraser, and background music sound effect
@@ -114,12 +116,13 @@ public class SandBoxModeController {
     // if user's music status is true, not mute, play background music
     if (music) {
       playerBackgroundMusic.play();
+      playerBackgroundMusic.setVolume(0.1);
     }
   }
 
   /** This method is called when the "Pen" button is presses */
   @FXML
-  private void onPen() {
+  private void onPressPen() {
     penButton.setDisable(true);
     eraserButton.setDisable(false);
 
@@ -170,7 +173,7 @@ public class SandBoxModeController {
 
   /** This method is called when the "Eraser" button is pressed */
   @FXML
-  private void onErase() {
+  private void onPressErase() {
     penButton.setDisable(false);
     eraserButton.setDisable(true);
     // Change the cursor to eraser
@@ -218,7 +221,7 @@ public class SandBoxModeController {
   @FXML
   private void onClear() {
     graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-    onPen();
+    onPressPen();
   }
   /**
    * This method is called when back button is pressed to return user to main menu
@@ -266,7 +269,7 @@ public class SandBoxModeController {
     fileChooser
         .getExtensionFilters()
         .addAll(
-        	new FileChooser.ExtensionFilter("BMP File", "*.bmp"),
+            new FileChooser.ExtensionFilter("BMP File", "*.bmp"),
             new FileChooser.ExtensionFilter("PNG File", "*.png"),
             new FileChooser.ExtensionFilter("JPG File", "*.jpeg"));
 
@@ -316,8 +319,8 @@ public class SandBoxModeController {
    * @param event the event of clicking the button
    */
   @FXML
-  private void onBlue(ActionEvent event) {
-    penDisable(
+  private void onPressBlue(ActionEvent event) {
+    disablePen(
         penButton,
         eraserButton,
         redButton,
@@ -330,9 +333,9 @@ public class SandBoxModeController {
     blueButton.setDisable(true);
     // Change the cursor icon to eraser
     penCursor = "bluePen.png";
-
+    // Change the pen colour to blue
     penColour = Color.web("#00B5FF");
-    onPen();
+    onPressPen();
   }
 
   /**
@@ -341,8 +344,8 @@ public class SandBoxModeController {
    * @param event the event of clicking the button
    */
   @FXML
-  private void onRed(ActionEvent event) {
-    penDisable(
+  private void onPressRed(ActionEvent event) {
+    disablePen(
         penButton,
         eraserButton,
         redButton,
@@ -355,9 +358,9 @@ public class SandBoxModeController {
     redButton.setDisable(true);
     // Change the cursor icon to eraser
     penCursor = "redPen.png";
-
+    // Change the pen colour to red
     penColour = Color.RED;
-    onPen();
+    onPressPen();
   }
 
   /**
@@ -366,8 +369,8 @@ public class SandBoxModeController {
    * @param event the event of clicking the button
    */
   @FXML
-  private void onGreen(ActionEvent event) {
-    penDisable(
+  private void onPressGreen(ActionEvent event) {
+    disablePen(
         penButton,
         eraserButton,
         redButton,
@@ -380,9 +383,9 @@ public class SandBoxModeController {
     greenButton.setDisable(true);
     // Change the cursor icon to eraser
     penCursor = "greenPen.png";
-
+    // Change the pen colour to green
     penColour = Color.web("#0FDD00");
-    onPen();
+    onPressPen();
   }
 
   /**
@@ -391,8 +394,8 @@ public class SandBoxModeController {
    * @param event the event of clicking the button
    */
   @FXML
-  private void onOrange(ActionEvent event) {
-    penDisable(
+  private void onPressOrange(ActionEvent event) {
+    disablePen(
         penButton,
         eraserButton,
         redButton,
@@ -405,9 +408,9 @@ public class SandBoxModeController {
     orangeButton.setDisable(true);
     // Change the cursor icon to eraser
     penCursor = "orangePen.png";
-
+    // Change the pen colour to orange
     penColour = Color.web("#FF7A00");
-    onPen();
+    onPressPen();
   }
 
   /**
@@ -416,8 +419,8 @@ public class SandBoxModeController {
    * @param event the event of clicking the button
    */
   @FXML
-  private void onPurple(ActionEvent event) {
-    penDisable(
+  private void onPressPurple(ActionEvent event) {
+    disablePen(
         penButton,
         eraserButton,
         redButton,
@@ -430,9 +433,9 @@ public class SandBoxModeController {
     purpleButton.setDisable(true);
     // Change the cursor icon to eraser
     penCursor = "purplePen.png";
-
+    // Change the pen colour to purple
     penColour = Color.web("#8E00FF");
-    onPen();
+    onPressPen();
   }
 
   /**
@@ -441,8 +444,8 @@ public class SandBoxModeController {
    * @param event the event of clicking the button
    */
   @FXML
-  private void onPink(ActionEvent event) {
-    penDisable(
+  private void onPressPink(ActionEvent event) {
+    disablePen(
         penButton,
         eraserButton,
         redButton,
@@ -455,9 +458,9 @@ public class SandBoxModeController {
     pinkButton.setDisable(true);
     // Change the cursor icon to eraser
     penCursor = "pinkPen.png";
-
+    // Change the pen colour to pink
     penColour = Color.web("#FF00C9");
-    onPen();
+    onPressPen();
   }
 
   /**
@@ -466,8 +469,8 @@ public class SandBoxModeController {
    * @param event the event of clicking the button
    */
   @FXML
-  private void onBrown(ActionEvent event) {
-    penDisable(
+  private void onPressBrown(ActionEvent event) {
+    disablePen(
         penButton,
         eraserButton,
         redButton,
@@ -481,9 +484,9 @@ public class SandBoxModeController {
 
     // Change the cursor icon to eraser
     penCursor = "brownPen.png";
-
+    // Change the pen colour to brown
     penColour = Color.web("#894800");
-    onPen();
+    onPressPen();
   }
 
   /**
@@ -492,8 +495,8 @@ public class SandBoxModeController {
    * @param event the event of clicking the button
    */
   @FXML
-  private void onBlack(ActionEvent event) {
-    penDisable(
+  private void onPressBlack(ActionEvent event) {
+    disablePen(
         penButton,
         eraserButton,
         redButton,
@@ -507,15 +510,16 @@ public class SandBoxModeController {
 
     // Change the cursor icon to eraser
     penCursor = "Pencil-icon.png";
+    // Change the pen colour to black
     penColour = Color.BLACK;
-    onPen();
+    onPressPen();
   }
 
   /**
    * This method is called to enable all pens before disabling the current pen in their respective
    * method
    */
-  private void penDisable(
+  private void disablePen(
       Button penButton,
       Button eraserButton,
       Button redButton,
@@ -525,6 +529,7 @@ public class SandBoxModeController {
       Button purpleButton,
       Button pinkButton,
       Button brownButton) {
+    // Disable all buttons
     penButton.setDisable(false);
     eraserButton.setDisable(false);
     redButton.setDisable(false);

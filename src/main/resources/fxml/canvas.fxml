@@ -99,7 +99,7 @@
                   </Label>
                </graphic>
             </Label>
-            <Label fx:id="winLostLabel" alignment="CENTER" prefHeight="40.0" prefWidth="400.0" textAlignment="CENTER">
+            <Label fx:id="winLostLabel" alignment="CENTER" prefHeight="40.0" prefWidth="400.0" text="Getting Closer.." textAlignment="CENTER">
                <font>
                   <Font name="Segoe UI Black" size="20.0" />
                </font>
@@ -132,7 +132,8 @@
                   </Button>
                   <HBox fx:id="toolBox" alignment="CENTER" spacing="25.0" visible="false">
                      <children>
-                        <Button fx:id="penButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onPen" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: transparent;">
+
+                        <Button fx:id="penButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onPressPen" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
                            <graphic>
                               <ImageView fitHeight="35.0" fitWidth="40.0" pickOnBounds="true">
                                  <image>
@@ -144,7 +145,8 @@
                               <Tooltip text="Change To Pen" />
                            </tooltip>
                         </Button>
-                        <Button fx:id="eraserButton" alignment="CENTER" mnemonicParsing="false" onAction="#onErase" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: transparent;">
+
+                        <Button fx:id="eraserButton" alignment="CENTER" mnemonicParsing="false" onAction="#onErase" prefHeight="35.0" prefWidth="40.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
                            <graphic>
                               <ImageView fitHeight="35.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -156,6 +158,7 @@
                               <Tooltip text="Change To Eraser" />
                            </tooltip>
                         </Button>
+
                         <Button alignment="CENTER" mnemonicParsing="false" onAction="#onClear" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: transparent;">
                            <graphic>
                               <ImageView fitHeight="35.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
@@ -167,13 +170,16 @@
                            <tooltip>
                               <Tooltip text="Clear Canvas" />
                            </tooltip></Button>
+
                      </children>
                   </HBox>
                   <HBox fx:id="endGameBox" alignment="CENTER" spacing="10.0" visible="false">
                      <children>
+
                         <Button fx:id="newRoundButton" contentDisplay="TOP" mnemonicParsing="false" onAction="#onPlayNewRound" prefHeight="60.0" prefWidth="150.0" style="-fx-background-color: FFE5B4;" stylesheets="@../css/buttons.css" text="Play Again">
+
                            <font>
-                              <Font name="Segoe UI Black" size="16.0" />
+                              <Font name="System Bold" size="12.0" />
                            </font>
                            <graphic>
                               <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
@@ -184,8 +190,9 @@
                            </graphic>
                         </Button>
                         <Button fx:id="saveDrawingButton" contentDisplay="TOP" mnemonicParsing="false" onAction="#onSaveDrawing" prefHeight="60.0" prefWidth="150.0" style="-fx-background-color: FFE5B4;" stylesheets="@../css/buttons.css" text="Save Drawing">
+
                            <font>
-                              <Font name="Segoe UI Black" size="16.0" />
+                              <Font name="System Bold" size="12.0" />
                            </font>
                            <graphic>
                               <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
