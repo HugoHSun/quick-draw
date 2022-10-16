@@ -372,9 +372,6 @@ public class CanvasController {
   private void recordResult(String userName, boolean isWon, int timeTaken) throws IOException {
     List<User> users = JsonReader.getUsers();
     List<String> userNames = JsonReader.getUserNames();
-    for (User user : users) {
-      userNames.add(user.getName());
-    }
 
     User user = users.get(userNames.indexOf(userName));
 

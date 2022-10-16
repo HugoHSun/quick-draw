@@ -2,11 +2,8 @@ package nz.ac.auckland.se206.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.event.ActionEvent;
@@ -21,6 +18,7 @@ import javafx.scene.image.ImageView;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.user.User;
 import nz.ac.auckland.se206.util.CategorySelector.Difficulty;
+import nz.ac.auckland.se206.util.JsonReader;
 
 public class SettingsController {
   @FXML private ToggleButton soundButton;
@@ -83,16 +81,8 @@ public class SettingsController {
   private List<User> users;
 
   public void initialize() throws IOException {
-    Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    // construct Type that tells Gson about the generic type
-    Type userListType = new TypeToken<List<User>>() {}.getType();
-    FileReader fr = new FileReader(App.usersFileName);
-    users = gson.fromJson(fr, userListType);
-    fr.close();
-    List<String> userNames = new ArrayList<String>();
-    for (User user : users) {
-      userNames.add(user.getName());
-    }
+    users = JsonReader.getUsers();
+    List<String> userNames = JsonReader.getUserNames();
     dif = users.get(userNames.indexOf(MenuController.currentActiveUser)).getCurrentDifficulty();
     set(dif);
   }
