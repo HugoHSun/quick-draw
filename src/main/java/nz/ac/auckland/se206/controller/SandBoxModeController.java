@@ -72,8 +72,8 @@ public class SandBoxModeController {
   private String penCursor = null;
 
   /**
-   * JavaFX calls this method once the GUI elements are loaded. In our case we create a listener for
-   * the drawing, and we load the ML model.
+   * JavaFX calls this method once the GUI elements are loaded. Since in sandbox mode no predictions
+   * and no target category exists, only load the sound, music and the canvas.
    *
    * @throws ModelException If there is an error in reading the input/output of the DL model.
    * @throws IOException If the model cannot be found on the file system.

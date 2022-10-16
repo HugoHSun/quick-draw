@@ -2,7 +2,6 @@ package nz.ac.auckland.se206.controller;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.GsonBuilder;
@@ -22,6 +21,12 @@ public class AboutUsController {
 
   private Parent root;
   
+  /**
+   * Initializes the JavaFX scene. If the user (if any) has
+   * not yet got the badge for entering the About Us page, give the badge.
+   * 
+   * @throws IOException
+   */
   @FXML
   private void initialize() throws IOException {
 	  if (MenuController.currentActiveUser != null) {
@@ -39,6 +44,9 @@ public class AboutUsController {
 	  }
   }
 
+  /**
+   * When clicked the return button it loads the main menu
+   */
   @FXML
   private void onReturn(ActionEvent event) {
     scene = ((Node) event.getSource()).getScene();

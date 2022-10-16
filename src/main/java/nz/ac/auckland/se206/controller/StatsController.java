@@ -27,14 +27,19 @@ public class StatsController {
   @FXML private Label winRateLabel;
   @FXML private PieChart winPieChart;
   private Parent root;
-
+  
   private int wins;
   private int losses;
 
   private Scene scene;
 
   public StatsController() {}
-
+  
+  /**
+   * When user enters stats page, initialize by going through the user data
+   * 
+   * @throws IOException
+   */
   public void initialize() throws IOException {
     List<User> users = JsonReader.getUsers();
     List<String> userNames = JsonReader.getUserNames();
@@ -64,6 +69,11 @@ public class StatsController {
     winPieChart.setData(pieChartData);
   }
 
+  /**
+   * When user presses the return button, return to the main menu
+   * 
+   * @param event
+   */
   @FXML
   private void onReturn(ActionEvent event) {
     scene = ((Node) event.getSource()).getScene();

@@ -53,7 +53,7 @@ public class ZenModeController {
   @FXML private Button brownButton;
   @FXML private Button redButton;
 
-  @FXML private Label userNameLabel;
+  @FXML private Label usernameLabel;
 
   @FXML private Canvas canvas;
 
@@ -115,7 +115,7 @@ public class ZenModeController {
     game = new Game(dif);
     category = game.getCategoryToDraw();
     categoryLabel.setText(category);
-    userNameLabel.setText(MenuController.currentActiveUser);
+    usernameLabel.setText(MenuController.currentActiveUser);
 
     // start speech to speak out the word to draw
     Thread voiceOver =

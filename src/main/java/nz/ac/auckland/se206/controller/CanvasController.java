@@ -129,6 +129,12 @@ public class CanvasController {
 
   private Timer timer = new Timer();
 
+  /**
+   * Set the static variable, isHiddenWord, depending on if
+   * the user selects hidden word or normal mode
+   * 
+   * @param isWordHidden
+   */
   public static void setHiddenWord(boolean isWordHidden) {
     isHiddenWord = isWordHidden;
   }
@@ -367,6 +373,12 @@ public class CanvasController {
         1000);
   }
 
+  /**
+   * This method checks if the index (confidence) of the correct prediction is improving
+   * or getting worse, and displays to the user
+   * 
+   * @param currentPredictions List of all 345 predictions made by the model
+   */
   private void checkGettingCloser(List<Classification> currentPredictions) {
     for (int i = 0; i < 340; i++) {
       String prediction = currentPredictions.get(i).getClassName().replaceAll("_", " ");
@@ -578,6 +590,12 @@ public class CanvasController {
     return imageBinary;
   }
 
+  /**
+   * When the user presses the return button. Stop the timer (thread)
+   * Stop the music and set the scene to main menu.
+   * 
+   * @param event
+   */
   @FXML
   private void onReturn(ActionEvent event) {
     timer.cancel();
