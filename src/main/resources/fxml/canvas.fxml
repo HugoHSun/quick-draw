@@ -101,7 +101,7 @@
                   </Label>
                </graphic>
             </Label>
-            <Label fx:id="winLostLabel" alignment="CENTER" prefHeight="40.0" prefWidth="400.0" textAlignment="CENTER">
+            <Label fx:id="winLostLabel" alignment="CENTER" prefHeight="40.0" prefWidth="400.0" text="Getting Closer.." textAlignment="CENTER">
                <font>
                   <Font name="Segoe UI Black" size="20.0" />
                </font>
@@ -127,7 +127,7 @@
                   </Button>
                   <HBox fx:id="toolBox" alignment="CENTER" spacing="10.0" visible="false">
                      <children>
-                        <Button fx:id="penButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onPen" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;">
+                        <Button fx:id="penButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onPressPen" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;">
                            <graphic>
                               <ImageView fitHeight="35.0" fitWidth="40.0" pickOnBounds="true">
                                  <image>
@@ -145,29 +145,19 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#onClear" prefHeight="35.0" prefWidth="45.0" style="-fx-background-color: transparent;">
-                           <graphic>
-                              <ImageView fitHeight="35.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../images/clearCanvas.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                           <tooltip>
-                              <Tooltip text="Clear Canvas" />
-                           </tooltip></Button>
+                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#onClear" prefHeight="23.0" prefWidth="80.0" style="-fx-background-color: FFE5B4;" text="Clear" />
                      </children>
                   </HBox>
                   <HBox fx:id="endGameBox" alignment="CENTER" spacing="10.0" visible="false">
                      <children>
-                        <Button fx:id="saveDrawingButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onSaveDrawing" prefHeight="60.0" prefWidth="150.0" style="-fx-background-color: FFE5B4;" stylesheets="@../css/buttons.css" text="Save Drawing">
+                        <Button fx:id="saveDrawingButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onSaveDrawing" prefHeight="60.0" prefWidth="150.0" style="-fx-background-color: FFE5B4;" text="Save Your Drawing">
                            <font>
-                              <Font name="Segoe UI Black" size="16.0" />
+                              <Font name="System Bold" size="12.0" />
                            </font>
                         </Button>
-                        <Button fx:id="newRoundButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onPlayNewRound" prefHeight="60.0" prefWidth="150.0" style="-fx-background-color: FFE5B4;" stylesheets="@../css/buttons.css" text="Play Again">
+                        <Button fx:id="newRoundButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onPlayNewRound" prefHeight="60.0" prefWidth="150.0" style="-fx-background-color: FFE5B4;" text="Play Another Round">
                            <font>
-                              <Font name="Segoe UI Black" size="16.0" />
+                              <Font name="System Bold" size="12.0" />
                            </font>
                         </Button>
                      </children>

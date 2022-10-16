@@ -31,7 +31,7 @@ public class NewUserController {
    * @throws IOException
    */
   @FXML
-  private void onNameEntered(ActionEvent event) throws IOException {
+  private void onEnteredName(ActionEvent event) throws IOException {
     List<User> users = JsonReader.getUsers();
     // If it was an empty one create initial list
     if (users == null) {
@@ -51,7 +51,7 @@ public class NewUserController {
 
     scene = ((Node) event.getSource()).getScene();
     try {
-      // Load a new parent node
+      // Load a new parent node when they press the enter button
       root = new FXMLLoader(App.class.getResource("/fxml/menu.fxml")).load();
     } catch (IOException e) {
       e.printStackTrace();

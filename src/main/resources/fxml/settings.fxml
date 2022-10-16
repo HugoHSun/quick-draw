@@ -33,12 +33,12 @@
             </ImageView>
          </graphic>
       </Button>
-      <ToggleButton fx:id="soundButton" layoutX="159.0" layoutY="216.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSound" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
+      <ToggleButton fx:id="soundButton" layoutX="159.0" layoutY="216.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onPressSound" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </ToggleButton>
-      <ToggleButton fx:id="musicButton" layoutX="257.0" layoutY="216.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onMusic" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
+      <ToggleButton fx:id="musicButton" layoutX="257.0" layoutY="216.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onPressMusic" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -153,7 +153,7 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="29.0" prefWidth="296.0">
                            <children>
-                              <Button fx:id="easyAccuracyButton" mnemonicParsing="false" onAction="#onEasyAccuracyButton" style="-fx-background-color: transparent;">
+                              <Button fx:id="easyAccuracyButton" mnemonicParsing="false" onAction="#onPressEasyAccuracyButton" style="-fx-background-color: transparent;">
                                  <HBox.margin>
                                     <Insets right="20.0" />
                                  </HBox.margin>
@@ -171,7 +171,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <Button fx:id="mediumAccuracyButton" mnemonicParsing="false" onAction="#onMediumAccuracyButton" style="-fx-background-color: transparent;">
+                              <Button fx:id="mediumAccuracyButton" mnemonicParsing="false" onAction="#onPressMediumAccuracyButton" style="-fx-background-color: transparent;">
                                  <graphic>
                                     <ImageView fx:id="mediumAccuracyImage" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -189,7 +189,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <Button fx:id="hardAccuracyButton" mnemonicParsing="false" onAction="#onHardAccuracyButton" style="-fx-background-color: transparent;">
+                              <Button fx:id="hardAccuracyButton" mnemonicParsing="false" onAction="#onPressHardAccuracyButton" style="-fx-background-color: transparent;">
                                  <graphic>
                                     <ImageView fx:id="hardAccuracyImage" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -207,7 +207,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <Button fx:id="masterAccuracyButton" mnemonicParsing="false" onAction="#onMasterAccuracyButton" style="-fx-background-color: transparent;">
+                              <Button fx:id="masterAccuracyButton" mnemonicParsing="false" onAction="#onPressMasterAccuracyButton" style="-fx-background-color: transparent;">
                                  <graphic>
                                     <ImageView fx:id="masterAccuracyImage" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -229,7 +229,7 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="29.0" prefWidth="296.0">
                            <children>
-                              <Button fx:id="easyWordButton" mnemonicParsing="false" onAction="#onEasyWordButton" style="-fx-background-color: transparent;">
+                              <Button fx:id="easyWordButton" mnemonicParsing="false" onAction="#onPressEasyWordButton" style="-fx-background-color: transparent;">
                                  <HBox.margin>
                                     <Insets right="20.0" />
                                  </HBox.margin>
@@ -247,7 +247,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <Button fx:id="mediumWordButton" mnemonicParsing="false" onAction="#onMediumWordButton" style="-fx-background-color: transparent;">
+                              <Button fx:id="mediumWordButton" mnemonicParsing="false" onAction="#onPressMediumWordButton" style="-fx-background-color: transparent;">
                                  <graphic>
                                     <ImageView fx:id="mediumWordImage" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -265,7 +265,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <Button fx:id="hardWordButton" mnemonicParsing="false" onAction="#onHardWordButton" style="-fx-background-color: transparent;">
+                              <Button fx:id="hardWordButton" mnemonicParsing="false" onAction="#onPressHardWordButton" style="-fx-background-color: transparent;">
                                  <graphic>
                                     <ImageView fx:id="hardWordImage" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -283,7 +283,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <Button fx:id="masterWordButton" mnemonicParsing="false" onAction="#onMasterWordButton" style="-fx-background-color: transparent;">
+                              <Button fx:id="masterWordButton" mnemonicParsing="false" onAction="#onPressMasterWordButton" style="-fx-background-color: transparent;">
                                  <HBox.margin>
                                     <Insets left="20.0" />
                                  </HBox.margin>
@@ -305,7 +305,7 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="29.0" prefWidth="296.0">
                            <children>
-                              <Button fx:id="easyTimeButton" mnemonicParsing="false" onAction="#onEasyTimeButton" style="-fx-background-color: transparent;">
+                              <Button fx:id="easyTimeButton" mnemonicParsing="false" onAction="#onPressEasyTimeButton" style="-fx-background-color: transparent;">
                                  <HBox.margin>
                                     <Insets right="20.0" />
                                  </HBox.margin>
@@ -323,7 +323,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <Button fx:id="mediumTimeButton" mnemonicParsing="false" onAction="#onMediumTimeButton" style="-fx-background-color: transparent;">
+                              <Button fx:id="mediumTimeButton" mnemonicParsing="false" onAction="#onPressMediumTimeButton" style="-fx-background-color: transparent;">
                                  <graphic>
                                     <ImageView fx:id="mediumTimeImage" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -341,7 +341,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <Button fx:id="hardTimeButton" mnemonicParsing="false" onAction="#onHardTimeButton" style="-fx-background-color: transparent;">
+                              <Button fx:id="hardTimeButton" mnemonicParsing="false" onAction="#onPressHardTimeButton" style="-fx-background-color: transparent;">
                                  <graphic>
                                     <ImageView fx:id="hardTimeImage" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -359,7 +359,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <Button fx:id="masterTimeButton" mnemonicParsing="false" onAction="#onMasterTimeButton" style="-fx-background-color: transparent;">
+                              <Button fx:id="masterTimeButton" mnemonicParsing="false" onAction="#onPressMasterTimeButton" style="-fx-background-color: transparent;">
                                  <HBox.margin>
                                     <Insets left="20.0" />
                                  </HBox.margin>
@@ -381,7 +381,7 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="29.0" prefWidth="296.0">
                            <children>
-                              <Button fx:id="easyConfidenceButton" mnemonicParsing="false" onAction="#onEasyConfidenceButton" style="-fx-background-color: transparent;">
+                              <Button fx:id="easyConfidenceButton" mnemonicParsing="false" onAction="#onPressEasyConfidenceButton" style="-fx-background-color: transparent;">
                                  <HBox.margin>
                                     <Insets right="20.0" />
                                  </HBox.margin>
@@ -399,7 +399,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <Button fx:id="mediumConfidenceButton" mnemonicParsing="false" onAction="#onMediumConfidenceButton" style="-fx-background-color: transparent;">
+                              <Button fx:id="mediumConfidenceButton" mnemonicParsing="false" onAction="#onPressMediumConfidenceButton" style="-fx-background-color: transparent;">
                                  <graphic>
                                     <ImageView fx:id="mediumConfidenceImage" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -417,7 +417,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <Button fx:id="hardConfidenceButton" mnemonicParsing="false" onAction="#onHardConfidenceButton" style="-fx-background-color: transparent;">
+                              <Button fx:id="hardConfidenceButton" mnemonicParsing="false" onAction="#onPressHardConfidenceButton" style="-fx-background-color: transparent;">
                                  <graphic>
                                     <ImageView fx:id="hardConfidenceImage" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -435,7 +435,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <Button fx:id="masterConfidenceButton" mnemonicParsing="false" onAction="#onMasterConfidenceButton" style="-fx-background-color: transparent;">
+                              <Button fx:id="masterConfidenceButton" mnemonicParsing="false" onAction="#onPressMasterConfidenceButton" style="-fx-background-color: transparent;">
                                  <HBox.margin>
                                     <Insets left="20.0" />
                                  </HBox.margin>
@@ -457,7 +457,7 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="29.0" prefWidth="296.0">
                            <children>
-                              <Button fx:id="easyVisibilityButton" mnemonicParsing="false" onAction="#onEasyVisibilityButton" style="-fx-background-color: transparent;">
+                              <Button fx:id="easyVisibilityButton" mnemonicParsing="false" onAction="#onPressEasyVisibilityButton" style="-fx-background-color: transparent;">
                                  <HBox.margin>
                                     <Insets right="20.0" />
                                  </HBox.margin>
@@ -475,7 +475,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <Button fx:id="mediumVisibilityButton" mnemonicParsing="false" onAction="#onMediumVisibilityButton" style="-fx-background-color: transparent;">
+                              <Button fx:id="mediumVisibilityButton" mnemonicParsing="false" onAction="#onPressMediumVisibilityButton" style="-fx-background-color: transparent;">
                                  <graphic>
                                     <ImageView fx:id="mediumVisibilityImage" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -493,7 +493,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <Button fx:id="hardVisibilityButton" mnemonicParsing="false" onAction="#onHardVisibilityButton" style="-fx-background-color: transparent;">
+                              <Button fx:id="hardVisibilityButton" mnemonicParsing="false" onAction="#onPressHardVisibilityButton" style="-fx-background-color: transparent;">
                                  <graphic>
                                     <ImageView fx:id="hardVisibilityImage" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -511,7 +511,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <Button fx:id="masterVisibilityButton" mnemonicParsing="false" onAction="#onMasterVisibilityButton" style="-fx-background-color: transparent;">
+                              <Button fx:id="masterVisibilityButton" mnemonicParsing="false" onAction="#onPressMasterVisibilityButton" style="-fx-background-color: transparent;">
                                  <HBox.margin>
                                     <Insets left="20.0" />
                                  </HBox.margin>

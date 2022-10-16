@@ -31,6 +31,8 @@ public class Game {
    * @param difficulty
    */
   public Game(List<Difficulty> difficulty) {
+	  // Chaange the winning rank setting by the accuracy setting
+	  // Initially it is at 344, the last
     prevRank = 344;
     if (difficulty.get(0).equals(Difficulty.E)) {
       winningRank = 3;
@@ -42,27 +44,33 @@ public class Game {
       winningRank = 1;
     }
 
+    // Change the word difficulty setting from the user setting
     if (difficulty.get(1).equals(Difficulty.E)) {
       List<Difficulty> dif = new ArrayList<Difficulty>();
+      // Only add Easy words
       dif.add(Difficulty.E);
       categoryToDraw = CategorySelector.getRandomCategory(dif);
     } else if (difficulty.get(1).equals(Difficulty.M)) {
       List<Difficulty> dif = new ArrayList<Difficulty>();
+      // Add Easy and medium words
       dif.add(Difficulty.E);
       dif.add(Difficulty.M);
       categoryToDraw = CategorySelector.getRandomCategory(dif);
     } else if (difficulty.get(1).equals(Difficulty.H)) {
       List<Difficulty> dif = new ArrayList<Difficulty>();
+      // Add Easy, medium and hard words
       dif.add(Difficulty.E);
       dif.add(Difficulty.M);
       dif.add(Difficulty.H);
       categoryToDraw = CategorySelector.getRandomCategory(dif);
     } else if (difficulty.get(1).equals(Difficulty.X)) {
       List<Difficulty> dif = new ArrayList<Difficulty>();
+      // Add Hard words only
       dif.add(Difficulty.H);
       categoryToDraw = CategorySelector.getRandomCategory(dif);
     }
 
+    // Change the time setting from user setting
     if (difficulty.get(2).equals(Difficulty.E)) {
       remainingTime = 60;
     } else if (difficulty.get(2).equals(Difficulty.M)) {
@@ -72,7 +80,7 @@ public class Game {
     } else if (difficulty.get(2).equals(Difficulty.X)) {
       remainingTime = 15;
     }
-
+    // Change confidence setting from user setting
     if (difficulty.get(3).equals(Difficulty.E)) {
       confidence = 0.01;
     } else if (difficulty.get(3).equals(Difficulty.M)) {
@@ -82,7 +90,7 @@ public class Game {
     } else if (difficulty.get(3).equals(Difficulty.X)) {
       confidence = 0.5;
     }
-
+    // Change visible prediction setting from user setting
     if (difficulty.get(4).equals(Difficulty.E)) {
       visiblePrediction = 10;
     } else if (difficulty.get(4).equals(Difficulty.M)) {
@@ -92,7 +100,7 @@ public class Game {
     } else if (difficulty.get(4).equals(Difficulty.X)) {
       visiblePrediction = 3;
     }
-
+    // Initialize current prediction as null
     currentPredictions = null;
   }
 
@@ -107,6 +115,7 @@ public class Game {
    * @param reminderTime the time to remind the user
    */
   public void remindTimeLeft(int reminderTime) {
+	  // When there is 10 seconds left (default) remind the user
     if (remainingTime == (reminderTime + 1)) {
       Thread timeReminder =
           new Thread(
@@ -207,6 +216,7 @@ public class Game {
   }
 
   private Integer getCurrentPredictionRank() {
+	  // Return the rank of the current prediction
     for (int i = 0; i < currentPredictions.size(); i++) {
       String currentPrediction = currentPredictions.get(i).getClassName().replaceAll("_", " ");
       if (currentPrediction.equals(categoryToDraw.getCategoryToDraw())) {
@@ -238,6 +248,7 @@ public class Game {
     for (int i = 0; i < winningRank; i++) {
       String currentPrediction = currentPredictions.get(i).getClassName().replaceAll("_", " ");
       double currentProbability = currentPredictions.get(i).getProbability();
+      // The category should be in the top k, and with sufficient confidence
       if (currentPrediction.equals(categoryToDraw.getCategoryToDraw())
           && currentProbability > confidence) {
         return true;

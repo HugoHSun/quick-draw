@@ -29,14 +29,18 @@ public class AboutUsController {
    */
   @FXML
   private void initialize() throws IOException {
+	  // The user can access about us without logging in
 	  if (MenuController.currentActiveUser != null) {
 		  List<User> users = JsonReader.getUsers();
 		  List<String> userNames = JsonReader.getUserNames();
 		  User user = users.get(userNames.indexOf(MenuController.currentActiveUser));
+		  // If the user never visited about us
 		  if (!user.getVisitAboutUs()) {
-			  
+			  //Set the boolean to true
 			  user.setVisitAboutUs(true);
 			  user.obtainBadges();
+			  
+			  // Rewrite on the json file
 			  FileWriter fw = new FileWriter(App.usersFileName, false);
 			  new GsonBuilder().setPrettyPrinting().create().toJson(users, fw);
 			  fw.close();

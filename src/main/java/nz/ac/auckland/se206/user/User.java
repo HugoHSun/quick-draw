@@ -44,10 +44,11 @@ public class User {
     this.name = name;
     this.gamesWon = 0;
     this.gamesLost = 0;
+    // Since the slowest "win" in the game is 60 seconds, default value as 60 seconds
     this.fastestWon = 61;
     this.soundStatus = true;
     this.musicStatus = true;
-
+    // Separate the words encountered by the difficulties
     this.wordsEncountered = new HashMap<Difficulty, List<String>>();
     wordsEncountered.put(Difficulty.E, new ArrayList<String>());
     wordsEncountered.put(Difficulty.M, new ArrayList<String>());
@@ -61,6 +62,7 @@ public class User {
       currentDifficulty.add(Difficulty.E);
     }
 
+    // Initialize the booleans as false
     this.topTen = false;
     this.playHidden = false;
     this.visitAboutUs = false;
@@ -283,40 +285,50 @@ public class User {
     List<Integer> newBadges = new ArrayList<Integer>();
 
     // Bronze badges
+    // If they ever win one game
     if (this.gamesWon == 1) {
       newBadges.add(0);
     }
+    // If they ever lose one game
     if (this.gamesLost == 1) {
       newBadges.add(1);
     }
+    // If they win before 30 seconds
     if (this.fastestWon <= 30) {
       newBadges.add(2);
     }
+    // If they lose three times in a row
     if (previousResults.size() >= 3
         && !(previousResults
             .subList(previousResults.size() - 3, previousResults.size())
             .contains(true))) {
       newBadges.add(3);
     }
+    // If they lose with the target in the top ten
     if (this.topTen) {
       newBadges.add(4);
     }
 
     // Silver badges
+    // If they win 10 times
     if (this.gamesWon == 10) {
       newBadges.add(5);
     }
+    // If they win any game at medium
     if (this.currentDifficulty.get(1).equals(Difficulty.M)
         && previousResults.get(previousResults.size() - 1).equals(true)) {
       newBadges.add(6);
     }
+    // If they win in less then 15 seconds
     if (this.fastestWon <= 15) {
       newBadges.add(7);
     }
+    // IF they win any game in hard
     if (this.currentDifficulty.get(1).equals(Difficulty.H)
         && previousResults.get(previousResults.size() - 1).equals(true)) {
       newBadges.add(8);
     }
+    // If they win three times in a row
     if (previousResults.size() >= 3
         && !(previousResults
             .subList(previousResults.size() - 3, previousResults.size())
@@ -325,31 +337,39 @@ public class User {
     }
 
     // Gold badges
+    // If they win 50 times
     if (this.gamesWon == 50) {
       newBadges.add(10);
     }
+    // If they every win in master
     if (this.currentDifficulty.get(1).equals(Difficulty.X)
         && previousResults.get(previousResults.size() - 1).equals(true)) {
       newBadges.add(11);
     }
+    // If they win in less then 3 seconds
     if (this.fastestWon <= 3) {
       newBadges.add(12);
     }
+    // If they play hidden mode
     if (this.playHidden) {
       newBadges.add(13);
     }
+    // If they win 10 times in a row
     if (previousResults.size() == 10 && !(previousResults.contains(false))) {
       newBadges.add(14);
     }
 
     // Diamond badges
+    // If they play 50 games with win rate more then 90%
     double winRate = 100.0 * (double) gamesWon / (gamesWon + gamesLost);
     if ((this.gamesWon + this.gamesLost >= 50) && winRate > 0.9) {
       newBadges.add(15);
     }
+    // If they play 100 games
     if (this.gamesWon + this.gamesLost >= 100) {
       newBadges.add(16);
     }
+    // If they win with all master
     List<Difficulty> masterList =
         new ArrayList<Difficulty>(
             Arrays.asList(Difficulty.X, Difficulty.X, Difficulty.X, Difficulty.X, Difficulty.X));
@@ -357,9 +377,11 @@ public class User {
         && previousResults.get(previousResults.size() - 1).equals(true)) {
       newBadges.add(17);
     }
+    // If they visit about us
     if (visitAboutUs) {
       newBadges.add(18);
     }
+    // If they earn all other badges
     if (badgesEarned.size() >= 19) {
       newBadges.add(19);
     }

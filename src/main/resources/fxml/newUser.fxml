@@ -32,7 +32,7 @@
       </Label>
       <Separator layoutX="176.0" layoutY="200.0" prefHeight="6.0" prefWidth="470.0" />
       <TextField fx:id="newUsername" layoutX="231.0" layoutY="220.0" prefHeight="29.0" prefWidth="359.0" promptText="Name" />
-      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="385.0" layoutY="276.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onNameEntered" prefHeight="50.0" prefWidth="50.0" stylesheets="@../css/buttons.css">
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="385.0" layoutY="276.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onEnteredName" prefHeight="50.0" prefWidth="50.0" stylesheets="@../css/buttons.css">
          <graphic>
             <ImageView fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
                <image>

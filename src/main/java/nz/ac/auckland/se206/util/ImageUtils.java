@@ -22,6 +22,7 @@ public class ImageUtils {
 
     for (int i = 0; i < width - 1; i++) {
       for (int j = 0; j < height - 1; j++) {
+    	  // Change RGB to black image
         image.setRGB(i, j, Color.black.getRGB());
       }
     }
@@ -39,10 +40,12 @@ public class ImageUtils {
    */
   public static BufferedImage invertBlackAndWhite(final BufferedImage image) {
     final BufferedImage imageOut = getBlackImage(image.getWidth(), image.getHeight());
+    // Get buffered image
 
     for (int i = 0; i < image.getWidth(); i++) {
       for (int j = 0; j < image.getHeight(); j++) {
         final Color c = new Color(image.getRGB(i, j));
+        // Change RGB to BW images
 
         if (c.equals(Color.white)) {
           imageOut.setRGB(i, j, Color.black.getRGB());
