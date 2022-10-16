@@ -66,6 +66,7 @@ public class App extends Application {
     }
 
     SceneManager.addUi(SceneManager.AppUi.MAIN_MENU, loadFxml("menu"));
+    // Create the scene with fixed dimension
     final Scene scene = new Scene(SceneManager.getUi(AppUi.MAIN_MENU), 820, 520);
 
     stage.setScene(scene);

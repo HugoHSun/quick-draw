@@ -50,17 +50,23 @@ public class BadgeController {
    * @throws IOException
    */
   public void initialize() throws IOException {
+	  // The opacity of the badge icon is 0.2 initially, and if the user got the badge it should be 1.0
     List<User> users = JsonReader.getUsers();
     List<String> userNames = JsonReader.getUserNames();
 
+    // Get the list of badges obtained by the user
     List<Integer> badgesIdx =
         users.get(userNames.indexOf(MenuController.currentActiveUser)).getBadgesEarned();
     for (int badgeIdx : badgesIdx) {
+    	// Go through the list, each element should be one of the 20 badges
       if (badgeIdx == 0) {
+    	  // Badge index of 0 corresponds to badge bronzeOne
         bronzeOne.setOpacity(1.0);
       } else if (badgeIdx == 1) {
+    	  // Badge index of 1 corresponds to badge BronzeTwo
         bronzeTwo.setOpacity(1.0);
       } else if (badgeIdx == 2) {
+    	  // Badge index of 2 corresponds to badge BronzeThree and so on
         bronzeThree.setOpacity(1.0);
       } else if (badgeIdx == 3) {
         bronzeFour.setOpacity(1.0);

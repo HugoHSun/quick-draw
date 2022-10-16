@@ -40,7 +40,7 @@ public class DoodlePrediction {
           "You are not providing the correct arguments. You need to provide the path of the file"
               + " and the number of top K predictions to print.");
     }
-
+    // Print the prediction from files
     printPredictions(
         new DoodlePrediction().getPredictions(new File(args[0]), Integer.parseInt(args[1])));
   }
@@ -54,7 +54,7 @@ public class DoodlePrediction {
     final StringBuilder sb = new StringBuilder();
 
     int i = 1;
-
+    // String builder for the top k predictions
     for (final Classifications.Classification classification : predictions) {
       sb.append("TOP ")
           .append(i)
