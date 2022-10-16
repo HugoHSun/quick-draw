@@ -18,9 +18,9 @@
 
 <AnchorPane prefHeight="520.0" prefWidth="820.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controller.MenuController">
    <children>
-      <ImageView fitHeight="520.0" fitWidth="820.0">
+      <ImageView fitHeight="520.0" fitWidth="820.0" opacity="0.5">
          <image>
-            <Image url="@../images/mainBg.png" />
+            <Image url="@../images/menuBackground.png" />
          </image>
       </ImageView>
       <VBox alignment="TOP_CENTER" layoutX="185.0" layoutY="90.0" prefHeight="320.0" prefWidth="450.0" AnchorPane.bottomAnchor="90.0" AnchorPane.topAnchor="90.0">
@@ -115,20 +115,18 @@
       </VBox>
       <HBox layoutX="8.0" layoutY="14.0" prefHeight="60.0" prefWidth="300.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
-            <Label style="-fx-background-color: FF8200;">
+            <Button alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#onAboutUs" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css" text="About Us&#10;Speedy Sketchers" textAlignment="CENTER">
+               <font>
+                  <Font name="Segoe UI Black" size="12.0" />
+               </font>
                <graphic>
-                  <Button alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css" text="Speedy Sketchers">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Button>
+                  <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../images/app-logo.PNG" />
+                     </image>
+                  </ImageView>
                </graphic>
-            </Label>
-            <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true">
-               <image>
-                  <Image url="@../images/app-logo.PNG" />
-               </image>
-            </ImageView>
+            </Button>
          </children>
       </HBox>
       <HBox fx:id="editUserBox" alignment="TOP_RIGHT" layoutX="475.0" layoutY="7.0" prefHeight="60.0" prefWidth="300.0" spacing="30.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
