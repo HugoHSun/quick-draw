@@ -11,6 +11,7 @@ import java.awt.image.PixelGrabber;
 import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.List;
 import java.util.Timer;
@@ -30,6 +31,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
@@ -72,12 +75,22 @@ public class ZenModeController {
 
   private DoodlePrediction model;
 
+  private Boolean sound;
+
+  private Boolean music;
   private List<Difficulty> dif;
 
   // mouse coordinates
   private double currentX;
   private double currentY;
   private String category;
+
+  MediaPlayer playerDrawSFX;
+  MediaPlayer playerEraseSFX;
+
+  MediaPlayer playerBackgroundMusic;
+
+  Color penColour;
 
   /**
    * JavaFX calls this method once the GUI elements are loaded. In our case we create a listener for
@@ -90,12 +103,18 @@ public class ZenModeController {
   public void initialize() throws ModelException, IOException, TranslateException {
     List<User> users = JsonReader.getUsers();
     List<String> userNames = JsonReader.getUserNames();
+
+    // reads difficulty, sound status, and music status from user's json
     dif = users.get(userNames.indexOf(MenuController.currentActiveUser)).getCurrentDifficulty();
+    sound = users.get(userNames.indexOf(MenuController.currentActiveUser)).getSoundStatus();
+    music = users.get(userNames.indexOf(MenuController.currentActiveUser)).getMusicStatus();
 
     game = new Game(dif);
     category = game.getCategoryToDraw();
     categoryLabel.setText(category);
     usernameLabel.setText(currentActiveUser);
+
+    // start speech to speak out the word to draw
     Thread voiceOver =
         new Thread(
             () -> {
@@ -103,17 +122,35 @@ public class ZenModeController {
             });
     voiceOver.start();
     graphic = canvas.getGraphicsContext2D();
+
     onPen();
+
     model = new DoodlePrediction();
     // By loading one prediction before the scene loads, it removes the GUI freezing
     model.getPredictions((BufferedImage) getCurrentSnapshot(), 10);
 
     usernameLabel.setText(MenuController.currentActiveUser);
+
+    // Initialise drawing, eraser, and background music sound effect
+    try {
+      Media drawSFX = new Media(App.class.getResource("/sounds/drawSFX.mp3").toURI().toString());
+      playerDrawSFX = new MediaPlayer(drawSFX);
+      Media eraseSFX = new Media(App.class.getResource("/sounds/eraserSFX.mp3").toURI().toString());
+      playerEraseSFX = new MediaPlayer(eraseSFX);
+      Media backgroundMusic =
+          new Media(App.class.getResource("/sounds/zenMusic.wav").toURI().toString());
+      playerBackgroundMusic = new MediaPlayer(backgroundMusic);
+    } catch (URISyntaxException e) {
+      e.printStackTrace();
+    }
+    // if user's music status is true, not mute, play background music
+    if (music) {
+      playerBackgroundMusic.play();
+    }
     startGame();
   }
 
   /** This method is called when the "Pen" button is presses */
-  @FXML
   private void onPen() {
     penButton.setDisable(true);
     eraserButton.setDisable(false);
@@ -139,7 +176,8 @@ public class ZenModeController {
           final double y = e.getY() - size / 2;
 
           // This is the colour of the brush.
-          graphic.setStroke(Color.BLACK);
+          Color colour = getColour();
+          graphic.setStroke(colour);
           graphic.setLineWidth(size);
 
           // Create a line that goes from the point (currentX, currentY) and (x,y)
@@ -148,6 +186,17 @@ public class ZenModeController {
           // update the coordinates
           currentX = x;
           currentY = y;
+
+          // play drawing sound effect
+          if (sound) {
+            playerDrawSFX.play();
+          }
+        });
+
+    canvas.setOnMouseReleased(
+        e -> {
+          // stop drawing sound effect
+          playerDrawSFX.stop();
         });
   }
 
@@ -186,6 +235,17 @@ public class ZenModeController {
           // update the coordinates
           currentX = x;
           currentY = y;
+
+          // play drawing sound effect
+          if (sound) {
+            playerEraseSFX.play();
+          }
+        });
+
+    canvas.setOnMouseReleased(
+        e -> {
+          // stop drawing sound effect
+          playerEraseSFX.stop();
         });
   }
 
@@ -279,8 +339,14 @@ public class ZenModeController {
     }
   }
 
+  /**
+   * This method is called when back button is pressed to return user to main menu
+   *
+   * @param event the event of clicking the button
+   */
   @FXML
   private void onReturn(ActionEvent event) {
+    playerBackgroundMusic.stop();
     Scene scene = ((Node) event.getSource()).getScene();
     try {
       // Load a new parent node
@@ -363,230 +429,255 @@ public class ZenModeController {
     return imageBinary;
   }
 
+  /**
+   * This method is called to switch to blue coloured pen to draw
+   *
+   * @param event the event of clicking the button
+   */
   @FXML
-  private void onBlue(ActionEvent actionEvent) {
-    penButton.setDisable(false);
-    eraserButton.setDisable(false);
-    redButton.setDisable(false);
+  private void onBlue(ActionEvent event) {
+    penDisable(
+        penButton,
+        eraserButton,
+        redButton,
+        blueButton,
+        greenButton,
+        orangeButton,
+        purpleButton,
+        pinkButton,
+        brownButton);
     blueButton.setDisable(true);
-    greenButton.setDisable(false);
-    orangeButton.setDisable(false);
-    purpleButton.setDisable(false);
-    pinkButton.setDisable(false);
-    brownButton.setDisable(false);
     // Change the cursor icon to eraser
     URL cursorUrl = App.class.getResource("/images/bluePen.png");
     Image pencilCursor = new Image(cursorUrl.toString());
     canvas.setCursor(new ImageCursor(pencilCursor, 0, pencilCursor.getHeight()));
 
-    canvas.setOnMouseDragged(
-        e -> {
-          // Brush size (you can change this, it should not be too small or too large).
-          final double size = 6;
-
-          final double x = e.getX() - size / 2;
-          final double y = e.getY() - size / 2;
-
-          // This is the colour of the brush.
-          graphic.setStroke(Color.web("#00B5FF"));
-          graphic.setLineWidth(size);
-
-          // Create a line that goes from the point (currentX, currentY) and (x,y)
-          graphic.strokeLine(currentX, currentY, x, y);
-
-          // update the coordinates
-          currentX = x;
-          currentY = y;
-        });
+    setColour(Color.web("#00B5FF"));
+    onPen();
   }
 
+  /**
+   * This method is called to switch to red coloured pen to draw
+   *
+   * @param event the event of clicking the button
+   */
   @FXML
-  private void onRed(ActionEvent actionEvent) {
-    penButton.setDisable(false);
-    eraserButton.setDisable(false);
+  private void onRed(ActionEvent event) {
+    penDisable(
+        penButton,
+        eraserButton,
+        redButton,
+        blueButton,
+        greenButton,
+        orangeButton,
+        purpleButton,
+        pinkButton,
+        brownButton);
     redButton.setDisable(true);
-    blueButton.setDisable(false);
-    greenButton.setDisable(false);
-    orangeButton.setDisable(false);
-    purpleButton.setDisable(false);
-    pinkButton.setDisable(false);
-    brownButton.setDisable(false);
     // Change the cursor icon to eraser
     URL cursorUrl = App.class.getResource("/images/redPen.png");
     Image pencilCursor = new Image(cursorUrl.toString());
     canvas.setCursor(new ImageCursor(pencilCursor, 0, pencilCursor.getHeight()));
 
-    canvas.setOnMouseDragged(
-        e -> {
-          // Brush size (you can change this, it should not be too small or too large).
-          final double size = 6;
-
-          final double x = e.getX() - size / 2;
-          final double y = e.getY() - size / 2;
-
-          // This is the colour of the brush.
-          graphic.setStroke(Color.web("#FF0000"));
-          graphic.setLineWidth(size);
-
-          // Create a line that goes from the point (currentX, currentY) and (x,y)
-          graphic.strokeLine(currentX, currentY, x, y);
-
-          // update the coordinates
-          currentX = x;
-          currentY = y;
-        });
+    setColour(Color.RED);
+    onPen();
   }
 
+  /**
+   * This method is called to switch to green coloured pen to draw
+   *
+   * @param event the event of clicking the button
+   */
   @FXML
-  private void onGreen(ActionEvent actionEvent) {
-    penButton.setDisable(false);
-    eraserButton.setDisable(false);
-    redButton.setDisable(false);
-    blueButton.setDisable(false);
+  private void onGreen(ActionEvent event) {
+    penDisable(
+        penButton,
+        eraserButton,
+        redButton,
+        blueButton,
+        greenButton,
+        orangeButton,
+        purpleButton,
+        pinkButton,
+        brownButton);
     greenButton.setDisable(true);
-    orangeButton.setDisable(false);
-    purpleButton.setDisable(false);
-    pinkButton.setDisable(false);
-    brownButton.setDisable(false);
     // Change the cursor icon to eraser
     URL cursorUrl = App.class.getResource("/images/greenPen.png");
     Image pencilCursor = new Image(cursorUrl.toString());
     canvas.setCursor(new ImageCursor(pencilCursor, 0, pencilCursor.getHeight()));
 
-    canvas.setOnMouseDragged(
-        e -> {
-          // Brush size (you can change this, it should not be too small or too large).
-          final double size = 6;
-
-          final double x = e.getX() - size / 2;
-          final double y = e.getY() - size / 2;
-
-          // This is the colour of the brush.
-          graphic.setStroke(Color.web("#0FDD00"));
-          graphic.setLineWidth(size);
-
-          // Create a line that goes from the point (currentX, currentY) and (x,y)
-          graphic.strokeLine(currentX, currentY, x, y);
-
-          // update the coordinates
-          currentX = x;
-          currentY = y;
-        });
+    setColour(Color.web("#0FDD00"));
+    onPen();
   }
 
+  /**
+   * This method is called to switch to orange coloured pen to draw
+   *
+   * @param event the event of clicking the button
+   */
   @FXML
-  private void onOrange(ActionEvent actionEvent) {
-    penButton.setDisable(false);
-    eraserButton.setDisable(false);
-    redButton.setDisable(false);
-    blueButton.setDisable(false);
-    greenButton.setDisable(false);
+  private void onOrange(ActionEvent event) {
+    penDisable(
+        penButton,
+        eraserButton,
+        redButton,
+        blueButton,
+        greenButton,
+        orangeButton,
+        purpleButton,
+        pinkButton,
+        brownButton);
     orangeButton.setDisable(true);
-    purpleButton.setDisable(false);
-    pinkButton.setDisable(false);
-    brownButton.setDisable(false);
     // Change the cursor icon to eraser
     URL cursorUrl = App.class.getResource("/images/orangePen.png");
     Image pencilCursor = new Image(cursorUrl.toString());
     canvas.setCursor(new ImageCursor(pencilCursor, 0, pencilCursor.getHeight()));
 
-    canvas.setOnMouseDragged(
-        e -> {
-          // Brush size (you can change this, it should not be too small or too large).
-          final double size = 6;
-
-          final double x = e.getX() - size / 2;
-          final double y = e.getY() - size / 2;
-
-          // This is the colour of the brush.
-          graphic.setStroke(Color.web("#FF7A00"));
-          graphic.setLineWidth(size);
-
-          // Create a line that goes from the point (currentX, currentY) and (x,y)
-          graphic.strokeLine(currentX, currentY, x, y);
-
-          // update the coordinates
-          currentX = x;
-          currentY = y;
-        });
+    setColour(Color.web("#FF7A00"));
+    onPen();
   }
 
+  /**
+   * This method is called to switch to purple coloured pen to draw
+   *
+   * @param event the event of clicking the button
+   */
   @FXML
-  private void onPurple(ActionEvent actionEvent) {
-    penButton.setDisable(false);
-    eraserButton.setDisable(false);
-    redButton.setDisable(false);
-    blueButton.setDisable(false);
-    greenButton.setDisable(false);
-    orangeButton.setDisable(false);
+  private void onPurple(ActionEvent event) {
+    penDisable(
+        penButton,
+        eraserButton,
+        redButton,
+        blueButton,
+        greenButton,
+        orangeButton,
+        purpleButton,
+        pinkButton,
+        brownButton);
     purpleButton.setDisable(true);
-    pinkButton.setDisable(false);
-    brownButton.setDisable(false);
     // Change the cursor icon to eraser
     URL cursorUrl = App.class.getResource("/images/purplePen.png");
     Image pencilCursor = new Image(cursorUrl.toString());
     canvas.setCursor(new ImageCursor(pencilCursor, 0, pencilCursor.getHeight()));
 
-    canvas.setOnMouseDragged(
-        e -> {
-          // Brush size (you can change this, it should not be too small or too large).
-          final double size = 6;
-
-          final double x = e.getX() - size / 2;
-          final double y = e.getY() - size / 2;
-
-          // This is the colour of the brush.
-          graphic.setStroke(Color.web("#8E00FF"));
-          graphic.setLineWidth(size);
-
-          // Create a line that goes from the point (currentX, currentY) and (x,y)
-          graphic.strokeLine(currentX, currentY, x, y);
-
-          // update the coordinates
-          currentX = x;
-          currentY = y;
-        });
+    setColour(Color.web("#8E00FF"));
+    onPen();
   }
 
+  /**
+   * This method is called to switch to pink coloured pen to draw
+   *
+   * @param event the event of clicking the button
+   */
   @FXML
-  private void onPink(ActionEvent actionEvent) {
-    penButton.setDisable(false);
-    eraserButton.setDisable(false);
-    redButton.setDisable(false);
-    blueButton.setDisable(false);
-    greenButton.setDisable(false);
-    orangeButton.setDisable(false);
-    purpleButton.setDisable(false);
+  private void onPink(ActionEvent event) {
+    penDisable(
+        penButton,
+        eraserButton,
+        redButton,
+        blueButton,
+        greenButton,
+        orangeButton,
+        purpleButton,
+        pinkButton,
+        brownButton);
     pinkButton.setDisable(true);
-    brownButton.setDisable(false);
     // Change the cursor icon to eraser
     URL cursorUrl = App.class.getResource("/images/pinkPen.png");
     Image pencilCursor = new Image(cursorUrl.toString());
     canvas.setCursor(new ImageCursor(pencilCursor, 0, pencilCursor.getHeight()));
 
-    canvas.setOnMouseDragged(
-        e -> {
-          // Brush size (you can change this, it should not be too small or too large).
-          final double size = 6;
-
-          final double x = e.getX() - size / 2;
-          final double y = e.getY() - size / 2;
-
-          // This is the colour of the brush.
-          graphic.setStroke(Color.web("#FF00C9"));
-          graphic.setLineWidth(size);
-
-          // Create a line that goes from the point (currentX, currentY) and (x,y)
-          graphic.strokeLine(currentX, currentY, x, y);
-
-          // update the coordinates
-          currentX = x;
-          currentY = y;
-        });
+    setColour(Color.web("#FF00C9"));
+    onPen();
   }
 
+  /**
+   * This method is called to switch to brown coloured pen to draw
+   *
+   * @param event the event of clicking the button
+   */
   @FXML
-  private void onBrown(ActionEvent actionEvent) {
+  private void onBrown(ActionEvent event) {
+    penDisable(
+        penButton,
+        eraserButton,
+        redButton,
+        blueButton,
+        greenButton,
+        orangeButton,
+        purpleButton,
+        pinkButton,
+        brownButton);
+    brownButton.setDisable(true);
+
+    // Change the cursor icon to eraser
+    URL cursorUrl = App.class.getResource("/images/brownPen.png");
+    Image pencilCursor = new Image(cursorUrl.toString());
+    canvas.setCursor(new ImageCursor(pencilCursor, 0, pencilCursor.getHeight()));
+
+    setColour(Color.web("#894800"));
+    onPen();
+  }
+
+  /**
+   * This method is called to switch to black coloured pen to draw
+   *
+   * @param event the event of clicking the button
+   */
+  @FXML
+  private void onBlack(ActionEvent event) {
+    penDisable(
+        penButton,
+        eraserButton,
+        redButton,
+        blueButton,
+        greenButton,
+        orangeButton,
+        purpleButton,
+        pinkButton,
+        brownButton);
+    penButton.setDisable(true);
+
+    // Change the cursor icon to eraser
+    URL cursorUrl = App.class.getResource("/images/Pencil-icon.png");
+    Image pencilCursor = new Image(cursorUrl.toString());
+    canvas.setCursor(new ImageCursor(pencilCursor, 0, pencilCursor.getHeight()));
+    setColour(Color.BLACK);
+    onPen();
+  }
+
+  /**
+   * This method is called to set the colour of the drawing pen
+   *
+   * @param colour which colour to set the drawing pen
+   */
+  private void setColour(Color colour) {
+    this.penColour = colour;
+  }
+
+  /**
+   * This method is called to get the colour of the drawing pen
+   *
+   * @return colour of drawing pen
+   */
+  private Color getColour() {
+    return this.penColour;
+  }
+
+  /**
+   * This method is called to enable all pens before disabling the current pen in their respective
+   * method
+   */
+  private void penDisable(
+      Button penButton,
+      Button eraserButton,
+      Button redButton,
+      Button blueButton,
+      Button greenButton,
+      Button orangeButton,
+      Button purpleButton,
+      Button pinkButton,
+      Button brownButton) {
     penButton.setDisable(false);
     eraserButton.setDisable(false);
     redButton.setDisable(false);
@@ -595,30 +686,6 @@ public class ZenModeController {
     orangeButton.setDisable(false);
     purpleButton.setDisable(false);
     pinkButton.setDisable(false);
-    brownButton.setDisable(true);
-    // Change the cursor icon to eraser
-    URL cursorUrl = App.class.getResource("/images/brownPen.png");
-    Image pencilCursor = new Image(cursorUrl.toString());
-    canvas.setCursor(new ImageCursor(pencilCursor, 0, pencilCursor.getHeight()));
-
-    canvas.setOnMouseDragged(
-        e -> {
-          // Brush size (you can change this, it should not be too small or too large).
-          final double size = 6;
-
-          final double x = e.getX() - size / 2;
-          final double y = e.getY() - size / 2;
-
-          // This is the colour of the brush.
-          graphic.setStroke(Color.web("#894800"));
-          graphic.setLineWidth(size);
-
-          // Create a line that goes from the point (currentX, currentY) and (x,y)
-          graphic.strokeLine(currentX, currentY, x, y);
-
-          // update the coordinates
-          currentX = x;
-          currentY = y;
-        });
+    brownButton.setDisable(false);
   }
 }

@@ -48,9 +48,6 @@ public class BadgeController {
   public void initialize() throws IOException {
     List<User> users = JsonReader.getUsers();
     List<String> userNames = JsonReader.getUserNames();
-    for (User user : users) {
-      userNames.add(user.getName());
-    }
 
     List<Integer> badgesIdx =
         users.get(userNames.indexOf(MenuController.currentActiveUser)).getBadgesEarned();

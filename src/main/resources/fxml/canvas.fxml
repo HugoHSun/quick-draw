@@ -23,11 +23,11 @@
       </ImageView>
       <HBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Button fx:id="menuButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onReturn" prefHeight="50.0" prefWidth="50.0" stylesheets="@../css/buttons.css">
+            <Button fx:id="menuButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onReturn" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true">
                      <image>
-                        <Image url="@../images/returnIcon.png" />
+                        <Image url="@../images/returnIcon2.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -60,27 +60,27 @@
       </HBox>
       <VBox alignment="CENTER" layoutX="69.0" layoutY="45.0" prefHeight="460.0" prefWidth="400.0" AnchorPane.bottomAnchor="15.0">
          <children>
-          <Label alignment="CENTER" contentDisplay="RIGHT" prefHeight="23.0" prefWidth="355.0" text="Category To Draw:" textAlignment="CENTER">
-            <font>
-              <Font name="Segoe UI Black" size="20.0" />
-            </font>
-          </Label>
+            <Label alignment="CENTER" contentDisplay="RIGHT" prefHeight="23.0" prefWidth="355.0" text="Category To Draw:" textAlignment="CENTER">
+               <font>
+                  <Font name="Segoe UI Black" size="20.0" />
+               </font>
+            </Label>
             <Label fx:id="categoryLabel" text="Loading">
                <font>
                   <Font name="Segoe UI Black" size="30.0" />
                </font>
             </Label>
-            <Label fx:id="timeLabel" alignment="CENTER" contentDisplay="RIGHT" prefHeight="27.0" prefWidth="263.0" text="Time Left: ">
+            <Label fx:id="timeLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="30.0" prefWidth="258.0" text="Time Left: ">
                <font>
                   <Font name="Segoe UI Black" size="20.0" />
                </font>
                <graphic>
-                  <Label fx:id="timerLabel" contentDisplay="RIGHT" prefHeight="27.0" prefWidth="101.0" text="60">
+                  <Label fx:id="timerLabel" contentDisplay="RIGHT" prefHeight="30.0" prefWidth="140.0" text="60">
                      <font>
                         <Font name="Segoe UI Black" size="20.0" />
                      </font>
                      <graphic>
-                        <Label prefHeight="27.0" prefWidth="71.0" text="seconds">
+                        <Label prefHeight="30.0" prefWidth="93.0" text="seconds">
                            <font>
                               <Font name="Segoe UI Black" size="20.0" />
                            </font>
@@ -96,11 +96,11 @@
             </Label>
             <AnchorPane maxHeight="260.0" maxWidth="400.0" style="-fx-background-color: white;">
                <children>
-                <Canvas fx:id="canvas" disable="true" height="260.0" width="400.0">
-                  <cursor>
-                    <Cursor fx:constant="HAND" />
-                  </cursor>
-                </Canvas>
+                  <Canvas fx:id="canvas" disable="true" height="260.0" width="400.0">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Canvas>
                </children>
             </AnchorPane>
             <StackPane prefHeight="55.0">
@@ -115,7 +115,7 @@
                   </Button>
                   <HBox fx:id="toolBox" alignment="CENTER" spacing="10.0" visible="false">
                      <children>
-                      <Button fx:id="penButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onPen" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;">
+                        <Button fx:id="penButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onPen" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;">
                            <graphic>
                               <ImageView fitHeight="35.0" fitWidth="40.0" pickOnBounds="true">
                                  <image>
@@ -124,7 +124,7 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                    <Button fx:id="eraserButton" alignment="CENTER" mnemonicParsing="false" onAction="#onErase" prefHeight="35.0" prefWidth="40.0" style="-fx-background-color: transparent;">
+                        <Button fx:id="eraserButton" alignment="CENTER" mnemonicParsing="false" onAction="#onErase" prefHeight="35.0" prefWidth="40.0" style="-fx-background-color: transparent;">
                            <graphic>
                               <ImageView fitHeight="35.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -133,7 +133,7 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                    <Button alignment="CENTER" mnemonicParsing="false" onAction="#onClear" prefHeight="23.0" prefWidth="80.0" style="-fx-background-color: FFE5B4;" text="Clear" />
+                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#onClear" prefHeight="23.0" prefWidth="80.0" style="-fx-background-color: FFE5B4;" text="Clear" />
                      </children>
                   </HBox>
                   <HBox fx:id="endGameBox" alignment="CENTER" spacing="10.0" visible="false">

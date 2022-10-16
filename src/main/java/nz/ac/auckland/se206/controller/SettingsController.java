@@ -80,11 +80,42 @@ public class SettingsController {
 
   private List<User> users;
 
+  private Boolean sound;
+  private Boolean music;
+
   public void initialize() throws IOException {
     users = JsonReader.getUsers();
     List<String> userNames = JsonReader.getUserNames();
+
+    // reads the difficulty, sound status, and music status from users json
     dif = users.get(userNames.indexOf(MenuController.currentActiveUser)).getCurrentDifficulty();
     set(dif);
+    sound = users.get(userNames.indexOf(MenuController.currentActiveUser)).getSoundStatus();
+    setSoundState(sound);
+    music = users.get(userNames.indexOf(MenuController.currentActiveUser)).getMusicStatus();
+    setMusicState(music);
+  }
+
+  /**
+   * This method is called to set the sound state and sound button
+   *
+   * @param sound true if you want sound
+   */
+  private void setSoundState(Boolean sound) {
+    if (!sound) {
+      soundButton.setSelected(true);
+    }
+  }
+
+  /**
+   * This method is called to set the music state and music button
+   *
+   * @param music true if you want sound
+   */
+  private void setMusicState(Boolean music) {
+    if (!music) {
+      musicButton.setSelected(true);
+    }
   }
 
   private void set(List<Difficulty> dif) {
@@ -299,11 +330,29 @@ public class SettingsController {
     }
   }
 
+  /**
+   * This method is called when sound button is pressed and will toggle sound boolean and sound
+   * state
+   *
+   * @param event when sound button is pressed
+   */
   @FXML
-  private void onSound(ActionEvent event) {}
+  private void onSound(ActionEvent event) {
+    sound = !soundButton.isSelected();
+    setSoundState(sound);
+  }
 
+  /**
+   * This method is called when music button is pressed and will toggle music boolean and music
+   * state
+   *
+   * @param event when music button is pressed
+   */
   @FXML
-  private void onMusic(ActionEvent event) {}
+  private void onMusic(ActionEvent event) {
+    music = !musicButton.isSelected();
+    setMusicState(music);
+  }
 
   @FXML
   private void onReturn(ActionEvent event) throws IOException {
@@ -313,6 +362,8 @@ public class SettingsController {
       userNames.add(user.getName());
     }
     users.get(userNames.indexOf(MenuController.currentActiveUser)).setCurrentDifficulty(dif);
+    users.get(userNames.indexOf(MenuController.currentActiveUser)).setSoundStatus(sound);
+    users.get(userNames.indexOf(MenuController.currentActiveUser)).setMusicStatus(music);
 
     FileWriter fw = new FileWriter(App.usersFileName, false);
     gson.toJson(users, fw);
