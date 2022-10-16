@@ -1,7 +1,5 @@
 package nz.ac.auckland.se206.controller;
 
-import static nz.ac.auckland.se206.controller.MenuController.currentActiveUser;
-
 import ai.djl.ModelException;
 import ai.djl.modality.Classifications;
 import ai.djl.translate.TranslateException;
@@ -46,6 +44,7 @@ import nz.ac.auckland.se206.util.CategorySelector.Difficulty;
 import nz.ac.auckland.se206.util.JsonReader;
 
 public class ZenModeController {
+  @FXML private Button blackButton;
   @FXML private Button blueButton;
   @FXML private Button greenButton;
   @FXML private Button orangeButton;
@@ -53,8 +52,9 @@ public class ZenModeController {
   @FXML private Button pinkButton;
   @FXML private Button brownButton;
   @FXML private Button redButton;
-  @FXML private Label colours;
-  @FXML private Label usernameLabel;
+
+  @FXML private Label userNameLabel;
+
   @FXML private Canvas canvas;
 
   @FXML private Label categoryLabel;
@@ -93,6 +93,8 @@ public class ZenModeController {
   private Color penColour;
   private String penCursor = null;
 
+  private Timer timer;
+
   /**
    * JavaFX calls this method once the GUI elements are loaded. In our case we create a listener for
    * the drawing, and we load the ML model.
@@ -113,7 +115,7 @@ public class ZenModeController {
     game = new Game(dif);
     category = game.getCategoryToDraw();
     categoryLabel.setText(category);
-    usernameLabel.setText(currentActiveUser);
+    userNameLabel.setText(MenuController.currentActiveUser);
 
     // start speech to speak out the word to draw
     Thread voiceOver =
@@ -129,8 +131,6 @@ public class ZenModeController {
     model = new DoodlePrediction();
     // By loading one prediction before the scene loads, it removes the GUI freezing
     model.getPredictions((BufferedImage) getCurrentSnapshot(), 10);
-
-    usernameLabel.setText(MenuController.currentActiveUser);
 
     // Initialise drawing, eraser, and background music sound effect
     try {
@@ -259,7 +259,7 @@ public class ZenModeController {
   private void startGame() {
     // Create a background timer thread that executes the task after 1 second delay for the first
     // time, then executes every second
-    Timer timer = new Timer();
+    timer = new Timer();
     timer.scheduleAtFixedRate(
         new TimerTask() {
           public void run() {
@@ -328,6 +328,7 @@ public class ZenModeController {
    */
   @FXML
   private void onChangeCategory(ActionEvent event) {
+    timer.cancel();
     Scene scene = ((Node) event.getSource()).getScene();
     try {
       // Load a new canvas FXML file which initializes everything
@@ -345,6 +346,7 @@ public class ZenModeController {
    */
   @FXML
   private void onReturn(ActionEvent event) {
+    timer.cancel();
     playerBackgroundMusic.stop();
     Scene scene = ((Node) event.getSource()).getScene();
     try {
@@ -435,20 +437,11 @@ public class ZenModeController {
    */
   @FXML
   private void onBlue(ActionEvent event) {
-    penDisable(
-        penButton,
-        eraserButton,
-        redButton,
-        blueButton,
-        greenButton,
-        orangeButton,
-        purpleButton,
-        pinkButton,
-        brownButton);
+    enableAllColours();
     blueButton.setDisable(true);
-    // Change the cursor icon to eraser
-    penCursor = "bluePen.png";
 
+    // Change to blue pen cursor icon and pen colour
+    penCursor = "bluePen.png";
     penColour = Color.web("#00B5FF");
     onPen();
   }
@@ -460,20 +453,11 @@ public class ZenModeController {
    */
   @FXML
   private void onRed(ActionEvent event) {
-    penDisable(
-        penButton,
-        eraserButton,
-        redButton,
-        blueButton,
-        greenButton,
-        orangeButton,
-        purpleButton,
-        pinkButton,
-        brownButton);
+    enableAllColours();
     redButton.setDisable(true);
-    // Change the cursor icon to eraser
-    penCursor = "redPen.png";
 
+    // Change to red pen cursor icon and pen colour
+    penCursor = "redPen.png";
     penColour = Color.RED;
     onPen();
   }
@@ -485,20 +469,11 @@ public class ZenModeController {
    */
   @FXML
   private void onGreen(ActionEvent event) {
-    penDisable(
-        penButton,
-        eraserButton,
-        redButton,
-        blueButton,
-        greenButton,
-        orangeButton,
-        purpleButton,
-        pinkButton,
-        brownButton);
+    enableAllColours();
     greenButton.setDisable(true);
-    // Change the cursor icon to eraser
-    penCursor = "greenPen.png";
 
+    // Change to green pen cursor icon and pen colour
+    penCursor = "greenPen.png";
     penColour = Color.web("#0FDD00");
     onPen();
   }
@@ -510,20 +485,11 @@ public class ZenModeController {
    */
   @FXML
   private void onOrange(ActionEvent event) {
-    penDisable(
-        penButton,
-        eraserButton,
-        redButton,
-        blueButton,
-        greenButton,
-        orangeButton,
-        purpleButton,
-        pinkButton,
-        brownButton);
+    enableAllColours();
     orangeButton.setDisable(true);
-    // Change the cursor icon to eraser
-    penCursor = "orangePen.png";
 
+    // Change to orange pen cursor icon and pen colour
+    penCursor = "orangePen.png";
     penColour = Color.web("#FF7A00");
     onPen();
   }
@@ -535,20 +501,11 @@ public class ZenModeController {
    */
   @FXML
   private void onPurple(ActionEvent event) {
-    penDisable(
-        penButton,
-        eraserButton,
-        redButton,
-        blueButton,
-        greenButton,
-        orangeButton,
-        purpleButton,
-        pinkButton,
-        brownButton);
+    enableAllColours();
     purpleButton.setDisable(true);
-    // Change the cursor icon to eraser
-    penCursor = "purplePen.png";
 
+    // Change to purple pen cursor icon and pen colour
+    penCursor = "purplePen.png";
     penColour = Color.web("#8E00FF");
     onPen();
   }
@@ -560,20 +517,11 @@ public class ZenModeController {
    */
   @FXML
   private void onPink(ActionEvent event) {
-    penDisable(
-        penButton,
-        eraserButton,
-        redButton,
-        blueButton,
-        greenButton,
-        orangeButton,
-        purpleButton,
-        pinkButton,
-        brownButton);
+    enableAllColours();
     pinkButton.setDisable(true);
-    // Change the cursor icon to eraser
-    penCursor = "pinkPen.png";
 
+    // Change to pink pen cursor icon and pen colour
+    penCursor = "pinkPen.png";
     penColour = Color.web("#FF00C9");
     onPen();
   }
@@ -585,21 +533,11 @@ public class ZenModeController {
    */
   @FXML
   private void onBrown(ActionEvent event) {
-    penDisable(
-        penButton,
-        eraserButton,
-        redButton,
-        blueButton,
-        greenButton,
-        orangeButton,
-        purpleButton,
-        pinkButton,
-        brownButton);
+    enableAllColours();
     brownButton.setDisable(true);
 
-    // Change the cursor icon to eraser
+    // Change to brown pen cursor icon and pen colour
     penCursor = "brownPen.png";
-
     penColour = Color.web("#894800");
     onPen();
   }
@@ -611,47 +549,26 @@ public class ZenModeController {
    */
   @FXML
   private void onBlack(ActionEvent event) {
-    penDisable(
-        penButton,
-        eraserButton,
-        redButton,
-        blueButton,
-        greenButton,
-        orangeButton,
-        purpleButton,
-        pinkButton,
-        brownButton);
-    penButton.setDisable(true);
+    enableAllColours();
+    blackButton.setDisable(true);
 
-    // Change the cursor icon to eraser
+    // Change to black pen cursor icon and pen colour
     penCursor = "Pencil-icon.png";
     penColour = Color.BLACK;
     onPen();
   }
 
-  /**
-   * This method is called to enable all pens before disabling the current pen in their respective
-   * method
-   */
-  private void penDisable(
-      Button penButton,
-      Button eraserButton,
-      Button redButton,
-      Button blueButton,
-      Button greenButton,
-      Button orangeButton,
-      Button purpleButton,
-      Button pinkButton,
-      Button brownButton) {
-    penButton.setDisable(false);
-    eraserButton.setDisable(false);
-    redButton.setDisable(false);
+  /** This method is called to enable all coloured pens before disabling the current coloured pen */
+  private void enableAllColours() {
+    // All the colours, 8 in total
+    blackButton.setDisable(false);
     blueButton.setDisable(false);
     greenButton.setDisable(false);
     orangeButton.setDisable(false);
     purpleButton.setDisable(false);
     pinkButton.setDisable(false);
     brownButton.setDisable(false);
+    redButton.setDisable(false);
   }
 
   /**
