@@ -14,9 +14,9 @@
 
 <Pane prefHeight="500.0" prefWidth="780.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controller.NewUserController">
    <children>
-      <ImageView fitHeight="500.0" fitWidth="780.0" opacity="0.4" pickOnBounds="true">
+      <ImageView fitHeight="500.0" fitWidth="780.0" opacity="0.8" pickOnBounds="true">
          <image>
-            <Image url="@../images/menu%20background.jpg" />
+            <Image url="@../images/canvasBackground.jpg" />
          </image>
       </ImageView>
       <VBox layoutY="167.0" prefHeight="147.0" prefWidth="750.0">

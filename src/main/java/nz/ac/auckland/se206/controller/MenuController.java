@@ -100,6 +100,19 @@ public class MenuController {
     }
   }
 
+  /** This method is called when the user clicks on "about us" button */
+  @FXML
+  private void onAboutUs(ActionEvent event) {
+    scene = ((Node) event.getSource()).getScene();
+    try {
+      // Load a new parent node
+      root = new FXMLLoader(App.class.getResource("/fxml/aboutUs.fxml")).load();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    scene.setRoot(root);
+  }
+
   /**
    * This method is called when the combo box of users changes value
    *
