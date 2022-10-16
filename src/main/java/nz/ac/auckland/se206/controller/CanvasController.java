@@ -119,7 +119,7 @@ public class CanvasController {
   private String category;
   private Difficulty difficulty;
   private Boolean sound;
-  private int correctIndex = 344;
+  private int prevIndex = 344;
 
   private Boolean music;
   private MediaPlayer playerDrawSFX;
@@ -346,6 +346,7 @@ public class CanvasController {
             Platform.runLater(
                 () -> {
                   if (CanvasUtils.checkEmptyCanvas(canvas)) {
+                    winLostLabel.setText("EMPTY CANVAS!!");
                     topPredictionsLabel.setText("EMPTY CANVAS!!");
                     remainingPredictionsLabel.setText("");
                     game.updatePredictions(null);
@@ -354,8 +355,10 @@ public class CanvasController {
                     try {
                       List<Classification> currentPredictions =
                           model.getPredictions(getCurrentSnapshot(), 345);
-                      game.updatePredictions(currentPredictions.subList(0, 10));
-                      checkGettingCloser(currentPredictions);
+                      game.updatePredictions(currentPredictions);
+
+                      // Check if the predictions has improved or not
+                      winLostLabel.setText(game.checkImprovement());
                       topPredictionsLabel.setText(game.getTopPredictionsDisplay());
                       remainingPredictionsLabel.setText(game.getRemainingPredictionsDisplay());
                     } catch (TranslateException e) {
@@ -367,23 +370,6 @@ public class CanvasController {
         },
         1000,
         1000);
-  }
-
-  private void checkGettingCloser(List<Classification> currentPredictions) {
-    for (int i = 0; i < 340; i++) {
-      String prediction = currentPredictions.get(i).getClassName().replaceAll("_", " ");
-      if (prediction.equals(category) && i < correctIndex) {
-        correctIndex = i;
-        winLostLabel.setText("Getting Closer..");
-        return;
-      } else if (prediction.equals(category) && i > correctIndex) {
-        correctIndex = i;
-        winLostLabel.setText("Getting Further..");
-        return;
-      } else if (prediction.equals(category)) {
-        return;
-      }
-    }
   }
 
   /** This is a helper method that is executed when a game has ended */
@@ -448,7 +434,7 @@ public class CanvasController {
     user.newWord(difficulty, category);
 
     user.setPlayHidden(isHiddenWord);
-    user.setTopTen(isWon, correctIndex);
+    user.setTopTen(isWon, prevIndex);
 
     // Update any new badges
     user.obtainBadges();

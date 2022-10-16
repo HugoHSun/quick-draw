@@ -67,6 +67,8 @@ public class ZenModeController {
 
   @FXML private Label remainingPredictionsLabel;
 
+  @FXML private Label hintLabel;
+
   private Parent root;
 
   private Game game;
@@ -104,6 +106,7 @@ public class ZenModeController {
    * @throws TranslateException
    */
   public void initialize() throws ModelException, IOException, TranslateException {
+    timer = new Timer();
     List<User> users = JsonReader.getUsers();
     List<String> userNames = JsonReader.getUserNames();
 
@@ -259,7 +262,6 @@ public class ZenModeController {
   private void startGame() {
     // Create a background timer thread that executes the task after 1 second delay for the first
     // time, then executes every second
-    timer = new Timer();
     timer.scheduleAtFixedRate(
         new TimerTask() {
           public void run() {
@@ -274,8 +276,9 @@ public class ZenModeController {
                   } else {
                     try {
                       List<Classifications.Classification> currentPredictions =
-                          model.getPredictions((BufferedImage) getCurrentSnapshot(), 10);
+                          model.getPredictions((BufferedImage) getCurrentSnapshot(), 345);
                       game.updatePredictions(currentPredictions);
+                      hintLabel.setText(game.checkImprovement());
                       topPredictionsLabel.setText(game.getTopPredictionsDisplay());
                       remainingPredictionsLabel.setText(game.getRemainingPredictionsDisplay());
                     } catch (TranslateException e) {

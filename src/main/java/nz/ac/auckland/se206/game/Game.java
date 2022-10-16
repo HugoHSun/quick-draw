@@ -22,7 +22,10 @@ public class Game {
 
   protected Integer visiblePrediction;
 
+  private int prevRank;
+
   public Game(List<Difficulty> difficulty) {
+    prevRank = 344;
     if (difficulty.get(0).equals(Difficulty.E)) {
       winningRank = 3;
     } else if (difficulty.get(0).equals(Difficulty.M)) {
@@ -178,6 +181,34 @@ public class Game {
    */
   public void updatePredictions(List<Classification> predictions) {
     currentPredictions = predictions;
+  }
+
+  public String checkImprovement() {
+    int currentRank = getCurrentPredictionRank();
+
+    // The prediction rank has improved
+    if (currentRank < prevRank) {
+      prevRank = currentRank;
+      return "Getting Closer...";
+      // The rank got worse
+    } else if (currentRank > prevRank) {
+      prevRank = currentRank;
+      return "Uh Oh, Getting Further";
+      // No change
+    } else {
+      return "No Change...";
+    }
+  }
+
+  private Integer getCurrentPredictionRank() {
+    for (int i = 0; i < currentPredictions.size(); i++) {
+      String currentPrediction = currentPredictions.get(i).getClassName().replaceAll("_", " ");
+      if (currentPrediction.equals(categoryToDraw.getCategoryToDraw())) {
+        return i;
+      }
+    }
+
+    return null;
   }
 
   /**
