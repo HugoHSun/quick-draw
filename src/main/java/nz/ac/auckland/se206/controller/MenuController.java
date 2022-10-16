@@ -60,6 +60,8 @@ public class MenuController {
 
   @FXML private ComboBox<String> userComboBox;
 
+  private Boolean music;
+
   /**
    * This method runs after the FXML file is loaded
    *
@@ -321,6 +323,12 @@ public class MenuController {
 
   @FXML
   private void onSettings(ActionEvent event) {
+    if (userComboBox.getValue() == null) {
+      Alert noChosenUser = new Alert(AlertType.INFORMATION);
+      noChosenUser.setHeaderText("You must choose a profile!");
+      noChosenUser.show();
+      return;
+    }
     scene = ((Node) event.getSource()).getScene();
     try {
       // Load a new parent node

@@ -16,6 +16,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,9 +43,10 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import javafx.stage.Window;
 import javax.imageio.ImageIO;
 import nz.ac.auckland.se206.App;
@@ -109,6 +111,13 @@ public class CanvasController {
   private double currentY;
   private String category;
   private Difficulty difficulty;
+  private Boolean sound;
+
+  private Boolean music;
+  MediaPlayer playerDrawSFX;
+  MediaPlayer playerEraseSFX;
+
+  MediaPlayer playerBackgroundMusic;
 
   /**
    * JavaFX calls this method once the GUI elements are loaded. In our case we create a listener for
@@ -131,10 +140,12 @@ public class CanvasController {
 	  userNames.add(user.getName());
 	}
 	dif = users.get(userNames.indexOf(MenuController.currentActiveUser)).getCurrentDifficulty();
+    // reads difficulty, sound status, and music status from user's json
+    sound = users.get(userNames.indexOf(MenuController.currentActiveUser)).getSoundStatus();
+    music = users.get(userNames.indexOf(MenuController.currentActiveUser)).getMusicStatus();
 	
 	  
     game = new Game(dif);
-
     category = game.getCategoryToDraw();
     difficulty = game.getCategoryDifficulty();
     categoryLabel.setText(category);
@@ -146,38 +157,24 @@ public class CanvasController {
             });
     voiceOver.start();
     graphic = canvas.getGraphicsContext2D();
-    // Change the cursor icon to eraser in canvas
-    URL cursorUrl = App.class.getResource("/images/Pencil-icon.png");
-    Image pencilCursor = new Image(cursorUrl.toString());
-    canvas.setCursor(new ImageCursor(pencilCursor, 0, pencilCursor.getHeight()));
 
-    // save coordinates when mouse is pressed on the canvas
-    canvas.setOnMousePressed(
-        e -> {
-          currentX = e.getX();
-          currentY = e.getY();
-        });
-
-    canvas.setOnMouseDragged(
-        e -> {
-          // Brush size (you can change this, it should not be too small or too large).
-          final double size = 6;
-
-          final double x = e.getX() - size / 2;
-          final double y = e.getY() - size / 2;
-
-          // This is the colour of the brush.
-          graphic.setStroke(Color.BLACK);
-          graphic.setLineWidth(size);
-
-          // Create a line that goes from the point (currentX, currentY) and (x,y)
-          graphic.strokeLine(currentX, currentY, x, y);
-
-          // update the coordinates
-          currentX = x;
-          currentY = y;
-        });
-
+    // Initialise drawing sound effect
+    try {
+      Media drawSFX = new Media(App.class.getResource("/sounds/drawSFX.mp3").toURI().toString());
+      playerDrawSFX = new MediaPlayer(drawSFX);
+      Media eraseSFX = new Media(App.class.getResource("/sounds/eraserSFX.mp3").toURI().toString());
+      playerEraseSFX = new MediaPlayer(eraseSFX);
+      Media backgroundMusic =
+          new Media(App.class.getResource("/sounds/normalMusic.mp3").toURI().toString());
+      playerBackgroundMusic = new MediaPlayer(backgroundMusic);
+    } catch (URISyntaxException e) {
+      e.printStackTrace();
+    }
+    // if user's music status is true, not mute, play background music
+    if (music) {
+      playerBackgroundMusic.play();
+    }
+    onPen();
     model = new DoodlePrediction();
     // By loading one prediction before the scene loads, it removes the GUI freezing
     model.getPredictions(getCurrentSnapshot(), 10);
@@ -196,6 +193,12 @@ public class CanvasController {
     Image pencilCursor = new Image(cursorUrl.toString());
     canvas.setCursor(new ImageCursor(pencilCursor, 0, pencilCursor.getHeight()));
 
+    // save coordinates when mouse is pressed on the canvas
+    canvas.setOnMousePressed(
+        e -> {
+          currentX = e.getX();
+          currentY = e.getY();
+        });
     canvas.setOnMouseDragged(
         e -> {
           // Brush size (you can change this, it should not be too small or too large).
@@ -214,6 +217,16 @@ public class CanvasController {
           // update the coordinates
           currentX = x;
           currentY = y;
+
+          // play drawing sound effect
+          if (sound) {
+            playerDrawSFX.play();
+          }
+        });
+    canvas.setOnMouseReleased(
+        e -> {
+          // stop drawing sound effect
+          playerDrawSFX.stop();
         });
   }
 
@@ -228,6 +241,12 @@ public class CanvasController {
     canvas.setCursor(
         new ImageCursor(eraserCursor, eraserCursor.getWidth() / 3.5, eraserCursor.getHeight()));
 
+    // save coordinates when mouse is pressed on the canvas
+    canvas.setOnMousePressed(
+        e -> {
+          currentX = e.getX();
+          currentY = e.getY();
+        });
     canvas.setOnMouseDragged(
         e -> {
           // Brush size (you can change this, it should not be too small or too large).
@@ -246,6 +265,16 @@ public class CanvasController {
           // update the coordinates
           currentX = x;
           currentY = y;
+
+          // play drawing sound effect
+          if (sound) {
+            playerEraseSFX.play();
+          }
+        });
+    canvas.setOnMouseReleased(
+        e -> {
+          // stop drawing sound effect
+          playerEraseSFX.stop();
         });
   }
 
@@ -356,7 +385,6 @@ public class CanvasController {
     try {
       recordResult(currentActiveUser, isWon, 60 - game.getRemainingTime());
     } catch (IOException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
     endGameBox.setVisible(true);
@@ -425,6 +453,7 @@ public class CanvasController {
    */
   @FXML
   private void onPlayNewRound(ActionEvent event) {
+    playerBackgroundMusic.stop();
     Scene scene = ((Node) event.getSource()).getScene();
     try {
       // Load a new canvas FXML file which initializes everything
@@ -433,24 +462,6 @@ public class CanvasController {
     } catch (IOException e) {
       e.printStackTrace();
     }
-  }
-
-  /**
-   * This method is called when the "Statistics" button is pressed, it shows the statistics of the
-   * current player in a new window
-   *
-   * @param event the event of clicking this button
-   * @throws IOException
-   */
-  @FXML
-  private void onSeeStatistics(ActionEvent event) throws IOException {
-    Parent root = FXMLLoader.load(getClass().getResource("/fxml/stats.fxml"));
-    // Display the statistics of the current user in a new window
-    Stage stage = new Stage();
-    stage.setTitle("Statistics");
-    stage.setResizable(false);
-    stage.setScene(new Scene(root));
-    stage.show();
   }
 
   /**
@@ -527,6 +538,7 @@ public class CanvasController {
 
   @FXML
   private void onReturn(ActionEvent event) {
+    playerBackgroundMusic.stop();
     Scene scene = ((Node) event.getSource()).getScene();
     try {
       // Load a new parent node
