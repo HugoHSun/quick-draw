@@ -42,11 +42,10 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="520.0" maxWidth="820.0" minHeight="520.0" minWidth="820.0" prefHeight="520.0" prefWidth="820.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controller.zenModeController">
+<AnchorPane maxHeight="520.0" maxWidth="820.0" minHeight="520.0" minWidth="820.0" prefHeight="520.0" prefWidth="820.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controller.ZenModeController">
    <children>
       <ImageView fitHeight="520.0" fitWidth="820.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <image>
@@ -71,7 +70,7 @@
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true">
                      <image>
-                        <Image url="@../images/returnIcon2.png" />
+                        <Image url="@../images/returnIcon.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -107,61 +106,49 @@
             </Label>
             <AnchorPane maxHeight="260.0" maxWidth="400.0" style="-fx-background-color: white;">
                <children>
-                  <Canvas fx:id="canvas" disable="true" height="260.0" width="400.0">
+                  <Canvas fx:id="canvas" height="260.0" width="400.0">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Canvas>
                </children>
             </AnchorPane>
-            <StackPane prefHeight="59.0" prefWidth="400.0">
+            <HBox alignment="CENTER" spacing="10.0">
                <children>
-                  <Button fx:id="startDrawingButton" alignment="CENTER" contentDisplay="CENTER" maxWidth="210.0" mnemonicParsing="false" onAction="#onStartDrawing" prefHeight="49.0" prefWidth="210.0" style="-fx-background-color: FFE5B4;" stylesheets="@../css/buttons.css" text="START DRAWING">
-                     <font>
-                        <Font name="System Bold" size="20.0" />
-                     </font>
-                     <StackPane.margin>
-                        <Insets bottom="15.0" />
-                     </StackPane.margin>
+                  <Button fx:id="penButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onPen" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <ImageView fitHeight="35.0" fitWidth="40.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@../images/Pencil-icon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
-                  <HBox fx:id="toolBox" alignment="CENTER" spacing="10.0" visible="false">
-                     <children>
-                        <Button fx:id="penButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onBlack" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;">
-                           <graphic>
-                              <ImageView fitHeight="35.0" fitWidth="40.0" pickOnBounds="true">
-                                 <image>
-                                    <Image url="@../images/Pencil-icon.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Button>
-                        <Button fx:id="eraserButton" alignment="CENTER" mnemonicParsing="false" onAction="#onErase" prefHeight="35.0" prefWidth="40.0" style="-fx-background-color: transparent;">
-                           <graphic>
-                              <ImageView fitHeight="35.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../images/Eraser-icon.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Button>
-                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#onClear" prefHeight="23.0" prefWidth="80.0" style="-fx-background-color: FFE5B4;" text="Clear">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Button>
-                     </children>
-                  </HBox>
+                  <Button fx:id="eraserButton" alignment="CENTER" mnemonicParsing="false" onAction="#onErase" prefHeight="35.0" prefWidth="40.0" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <ImageView fitHeight="35.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/Eraser-icon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#onClear" prefHeight="23.0" prefWidth="80.0" style="-fx-background-color: FFE5B4;" text="Clear">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
                </children>
-               <VBox.margin>
-                  <Insets top="10.0" />
-               </VBox.margin>
-            </StackPane>
+               <padding>
+                  <Insets bottom="10.0" top="10.0" />
+               </padding>
+            </HBox>
             <Label fx:id="colours" style="-fx-background-color: white; -fx-background-radius: 20;">
                <graphic>
                   <HBox alignment="CENTER" prefHeight="53.0" prefWidth="400.0" spacing="30.0">
@@ -256,7 +243,7 @@
             </Label>
          </children>
       </VBox>
-      <VBox alignment="BOTTOM_LEFT" layoutX="514.6666666666667" layoutY="64.0" prefHeight="434.0" prefWidth="293.0" AnchorPane.bottomAnchor="22.0" AnchorPane.rightAnchor="12.0">
+      <VBox alignment="CENTER" layoutX="514.6666666666667" layoutY="64.0" prefHeight="434.0" prefWidth="293.0" AnchorPane.bottomAnchor="22.0" AnchorPane.rightAnchor="12.0">
          <children>
             <Label fx:id="topPredictionsLabel" alignment="CENTER" prefHeight="101.0" prefWidth="470.0" text="  EMPTY CANVAS!!">
                <font>
@@ -268,26 +255,11 @@
                   <Font name="Segoe UI Semibold" size="20.0" />
                </font>
             </Label>
-            <HBox fx:id="endGameBox" alignment="CENTER" prefHeight="87.0" prefWidth="299.0" spacing="10.0" visible="false">
-               <children>
-                  <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#onSaveDrawing" prefHeight="60.0" prefWidth="150.0" style="-fx-background-color: FFE5B4;" text="Save Your Drawing">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-                  <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#onPlayNewRound" prefHeight="60.0" prefWidth="150.0" style="-fx-background-color: FFE5B4;" text="Play Another Round">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-               </children>
-            </HBox>
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#onChangeCategory" prefHeight="60.0" prefWidth="160.0" style="-fx-background-color: ffe5b4;" stylesheets="@../css/buttons.css" text="Change Category">
+               <font>
+                  <Font name="Segoe UI Black" size="16.0" />
+               </font>
+            </Button>
          </children>
          <padding>
             <Insets right="10.0" />

@@ -1,12 +1,8 @@
 package nz.ac.auckland.se206.controller;
 
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.event.ActionEvent;
@@ -15,27 +11,18 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.user.User;
+import nz.ac.auckland.se206.util.JsonReader;
 
 public class NewUserController {
 
-  @FXML private Button menuButton;
   @FXML private TextField newUsername;
 
   private Scene scene;
 
   private Parent root;
-
-  public void initialize() {
-    Image returnImg = new Image("/images/returnIcon.png");
-    ImageView returnImgView = new ImageView(returnImg);
-    menuButton.setGraphic(returnImgView);
-  }
 
   /**
    * This method adds a new user if the user name does not exist
@@ -45,28 +32,20 @@ public class NewUserController {
    */
   @FXML
   private void onNameEntered(ActionEvent event) throws IOException {
-    Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    // construct Type that tells Gson about the generic type
-    Type userListType = new TypeToken<List<User>>() {}.getType();
-    FileReader fr = new FileReader(App.usersFileName);
-    List<User> users = gson.fromJson(fr, userListType);
-    fr.close();
+    List<User> users = JsonReader.getUsers();
     // If it was an empty one create initial list
-    if (null == users) {
+    if (users == null) {
       users = new ArrayList<>();
     }
     // Add new item to the list
 
     List<String> userNames = new ArrayList<String>();
-    for (User user : users) {
-      userNames.add(user.getName());
-    }
 
     if (!userNames.contains(newUsername.getText())) {
       users.add(new User(newUsername.getText()));
       // No append replace the whole file
       FileWriter fw = new FileWriter(App.usersFileName, false);
-      gson.toJson(users, fw);
+      new GsonBuilder().setPrettyPrinting().create().toJson(users, fw);
       fw.close();
     }
 

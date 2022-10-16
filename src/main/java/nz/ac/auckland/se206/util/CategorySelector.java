@@ -1,14 +1,10 @@
-package nz.ac.auckland.se206;
+package nz.ac.auckland.se206.util;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -16,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import nz.ac.auckland.se206.controller.MenuController;
-import nz.ac.auckland.se206.game.category;
+import nz.ac.auckland.se206.game.Category;
 import nz.ac.auckland.se206.user.User;
 
 /**
@@ -44,7 +40,7 @@ public class CategorySelector {
    * @throws CsvException
    * @throws URISyntaxException
    */
-  protected static void loadCategories() throws IOException, CsvException, URISyntaxException {
+  public static void loadCategories() throws IOException, CsvException, URISyntaxException {
     categoryMap.put(Difficulty.E, new ArrayList<String>());
     categoryMap.put(Difficulty.M, new ArrayList<String>());
     categoryMap.put(Difficulty.H, new ArrayList<String>());
@@ -86,7 +82,7 @@ public class CategorySelector {
    * @param dif the difficulty of categories
    * @return a random category with the chosen difficulty
    */
-  public static category getRandomCategory(List<Difficulty> difficulty) {
+  public static Category getRandomCategory(List<Difficulty> difficulty) {
     String output = null;
     Difficulty currentDifficulty = null;
 
@@ -110,7 +106,7 @@ public class CategorySelector {
       e.printStackTrace();
     }
 
-    return new category(output, currentDifficulty);
+    return new Category(output, currentDifficulty);
   }
 
   /**
@@ -123,16 +119,8 @@ public class CategorySelector {
   private static List<String> getUnplayedCategories(Difficulty dif) throws IOException {
     List<String> categories = categoryMap.get(dif);
 
-    Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    // construct Type that tells Gson about the generic type
-    Type userListType = new TypeToken<List<User>>() {}.getType();
-    FileReader fr = new FileReader(App.usersFileName);
-    List<User> users = gson.fromJson(fr, userListType);
-    fr.close();
-    List<String> userNames = new ArrayList<String>();
-    for (User user : users) {
-      userNames.add(user.getName());
-    }
+    List<User> users = JsonReader.getUsers();
+    List<String> userNames = JsonReader.getUserNames();
 
     // Remove all the categories that have been played by the current user (except
     // when the user has played all the categories)

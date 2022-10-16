@@ -1,12 +1,12 @@
 package nz.ac.auckland.se206.game;
 
-import nz.ac.auckland.se206.CategorySelector.Difficulty;
+import nz.ac.auckland.se206.util.CategorySelector.Difficulty;
 
-public class category {
+public class Category {
   private String categoryToDraw;
   private Difficulty difficulty;
 
-  public category(String categoryToDraw, Difficulty difficulty) {
+  public Category(String categoryToDraw, Difficulty difficulty) {
     this.setCategoryToDraw(categoryToDraw);
     this.setDifficulty(difficulty);
   }

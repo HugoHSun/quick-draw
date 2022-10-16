@@ -5,20 +5,14 @@ import static nz.ac.auckland.se206.controller.MenuController.currentActiveUser;
 import ai.djl.ModelException;
 import ai.djl.modality.Classifications;
 import ai.djl.translate.TranslateException;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-import java.awt.*;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.PixelGrabber;
 import java.awt.image.RenderedImage;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -37,7 +31,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.layout.HBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
@@ -45,13 +38,14 @@ import javafx.stage.FileChooser;
 import javafx.stage.Window;
 import javax.imageio.ImageIO;
 import nz.ac.auckland.se206.App;
-import nz.ac.auckland.se206.CategorySelector.Difficulty;
 import nz.ac.auckland.se206.game.Game;
 import nz.ac.auckland.se206.ml.DoodlePrediction;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 import nz.ac.auckland.se206.user.User;
+import nz.ac.auckland.se206.util.CategorySelector.Difficulty;
+import nz.ac.auckland.se206.util.JsonReader;
 
-public class zenModeController {
+public class ZenModeController {
   @FXML private Button blueButton;
   @FXML private Button greenButton;
   @FXML private Button orangeButton;
@@ -65,10 +59,6 @@ public class zenModeController {
 
   @FXML private Label categoryLabel;
 
-  @FXML private Button startDrawingButton;
-
-  @FXML private HBox toolBox;
-
   @FXML private Button penButton;
 
   @FXML private Button eraserButton;
@@ -76,8 +66,6 @@ public class zenModeController {
   @FXML private Label topPredictionsLabel;
 
   @FXML private Label remainingPredictionsLabel;
-
-  @FXML private HBox endGameBox;
 
   private Parent root;
 
@@ -97,12 +85,13 @@ public class zenModeController {
   private double currentY;
   private String category;
 
-  MediaPlayer playerDrawSFX;
-  MediaPlayer playerEraseSFX;
+  private MediaPlayer playerDrawSFX;
+  private MediaPlayer playerEraseSFX;
 
-  MediaPlayer playerBackgroundMusic;
+  private MediaPlayer playerBackgroundMusic;
 
-  Color penColour;
+  private Color penColour;
+  private String penCursor = null;
 
   /**
    * JavaFX calls this method once the GUI elements are loaded. In our case we create a listener for
@@ -113,16 +102,9 @@ public class zenModeController {
    * @throws TranslateException
    */
   public void initialize() throws ModelException, IOException, TranslateException {
-    Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    // construct Type that tells Gson about the generic type
-    Type userListType = new TypeToken<List<User>>() {}.getType();
-    FileReader fr = new FileReader(App.usersFileName);
-    List<User> users = gson.fromJson(fr, userListType);
-    fr.close();
-    List<String> userNames = new ArrayList<String>();
-    for (User user : users) {
-      userNames.add(user.getName());
-    }
+    List<User> users = JsonReader.getUsers();
+    List<String> userNames = JsonReader.getUserNames();
+
     // reads difficulty, sound status, and music status from user's json
     dif = users.get(userNames.indexOf(MenuController.currentActiveUser)).getCurrentDifficulty();
     sound = users.get(userNames.indexOf(MenuController.currentActiveUser)).getSoundStatus();
@@ -141,8 +123,9 @@ public class zenModeController {
             });
     voiceOver.start();
     graphic = canvas.getGraphicsContext2D();
-    colours.setVisible(false);
-    endGameBox.setVisible(true);
+
+    onPen();
+
     model = new DoodlePrediction();
     // By loading one prediction before the scene loads, it removes the GUI freezing
     model.getPredictions((BufferedImage) getCurrentSnapshot(), 10);
@@ -165,10 +148,21 @@ public class zenModeController {
     if (music) {
       playerBackgroundMusic.play();
     }
+    startGame();
   }
 
   /** This method is called when the "Pen" button is presses */
+  @FXML
   private void onPen() {
+    penButton.setDisable(true);
+    eraserButton.setDisable(false);
+
+    if (penCursor == null) {
+      penCursor = "Pencil-icon.png";
+    }
+    // Change the cursor icon to pen
+    changeCursor(penCursor);
+
     // save coordinates when mouse is pressed on the canvas
     canvas.setOnMousePressed(
         e -> {
@@ -185,8 +179,7 @@ public class zenModeController {
           final double y = e.getY() - size / 2;
 
           // This is the colour of the brush.
-          Color colour = getColour();
-          graphic.setStroke(colour);
+          graphic.setStroke(penColour);
           graphic.setLineWidth(size);
 
           // Create a line that goes from the point (currentX, currentY) and (x,y)
@@ -215,10 +208,7 @@ public class zenModeController {
     penButton.setDisable(false);
     eraserButton.setDisable(true);
     // Change the cursor to eraser
-    URL cursorUrl = App.class.getResource("/images/Eraser-icon.png");
-    Image eraserCursor = new Image(cursorUrl.toString());
-    canvas.setCursor(
-        new ImageCursor(eraserCursor, eraserCursor.getWidth() / 3.5, eraserCursor.getHeight()));
+    changeCursor("Eraser-icon.png");
 
     canvas.setOnMousePressed(
         e -> {
@@ -265,19 +255,8 @@ public class zenModeController {
     onPen();
   }
 
-  /**
-   * This method is called when the user click on "Start drawing" button
-   *
-   * @throws TranslateException
-   */
-  @FXML
-  private void onStartDrawing() throws TranslateException {
-    // Turn on the canvas and change the start button to pen, eraser and clear
-    canvas.setDisable(false);
-    startDrawingButton.setVisible(false);
-    toolBox.setVisible(true);
-    colours.setVisible(true);
-
+  /** This method is called when the user go into Zen mode */
+  private void startGame() {
     // Create a background timer thread that executes the task after 1 second delay for the first
     // time, then executes every second
     Timer timer = new Timer();
@@ -343,12 +322,12 @@ public class zenModeController {
   }
 
   /**
-   * This method is called when "Play another round" button is pressed
+   * This method is called when "Change category" button is pressed
    *
    * @param event the event of clicking the button
    */
   @FXML
-  private void onPlayNewRound(ActionEvent event) {
+  private void onChangeCategory(ActionEvent event) {
     Scene scene = ((Node) event.getSource()).getScene();
     try {
       // Load a new canvas FXML file which initializes everything
@@ -468,11 +447,9 @@ public class zenModeController {
         brownButton);
     blueButton.setDisable(true);
     // Change the cursor icon to eraser
-    URL cursorUrl = App.class.getResource("/images/bluePen.png");
-    Image pencilCursor = new Image(cursorUrl.toString());
-    canvas.setCursor(new ImageCursor(pencilCursor, 0, pencilCursor.getHeight()));
+    penCursor = "bluePen.png";
 
-    setColour(Color.web("#00B5FF"));
+    penColour = Color.web("#00B5FF");
     onPen();
   }
 
@@ -495,13 +472,12 @@ public class zenModeController {
         brownButton);
     redButton.setDisable(true);
     // Change the cursor icon to eraser
-    URL cursorUrl = App.class.getResource("/images/redPen.png");
-    Image pencilCursor = new Image(cursorUrl.toString());
-    canvas.setCursor(new ImageCursor(pencilCursor, 0, pencilCursor.getHeight()));
+    penCursor = "redPen.png";
 
-    setColour(Color.RED);
+    penColour = Color.RED;
     onPen();
   }
+
   /**
    * This method is called to switch to green coloured pen to draw
    *
@@ -521,13 +497,12 @@ public class zenModeController {
         brownButton);
     greenButton.setDisable(true);
     // Change the cursor icon to eraser
-    URL cursorUrl = App.class.getResource("/images/greenPen.png");
-    Image pencilCursor = new Image(cursorUrl.toString());
-    canvas.setCursor(new ImageCursor(pencilCursor, 0, pencilCursor.getHeight()));
+    penCursor = "greenPen.png";
 
-    setColour(Color.web("#0FDD00"));
+    penColour = Color.web("#0FDD00");
     onPen();
   }
+
   /**
    * This method is called to switch to orange coloured pen to draw
    *
@@ -547,13 +522,12 @@ public class zenModeController {
         brownButton);
     orangeButton.setDisable(true);
     // Change the cursor icon to eraser
-    URL cursorUrl = App.class.getResource("/images/orangePen.png");
-    Image pencilCursor = new Image(cursorUrl.toString());
-    canvas.setCursor(new ImageCursor(pencilCursor, 0, pencilCursor.getHeight()));
+    penCursor = "orangePen.png";
 
-    setColour(Color.web("#FF7A00"));
+    penColour = Color.web("#FF7A00");
     onPen();
   }
+
   /**
    * This method is called to switch to purple coloured pen to draw
    *
@@ -573,13 +547,12 @@ public class zenModeController {
         brownButton);
     purpleButton.setDisable(true);
     // Change the cursor icon to eraser
-    URL cursorUrl = App.class.getResource("/images/purplePen.png");
-    Image pencilCursor = new Image(cursorUrl.toString());
-    canvas.setCursor(new ImageCursor(pencilCursor, 0, pencilCursor.getHeight()));
+    penCursor = "purplePen.png";
 
-    setColour(Color.web("#8E00FF"));
+    penColour = Color.web("#8E00FF");
     onPen();
   }
+
   /**
    * This method is called to switch to pink coloured pen to draw
    *
@@ -599,13 +572,12 @@ public class zenModeController {
         brownButton);
     pinkButton.setDisable(true);
     // Change the cursor icon to eraser
-    URL cursorUrl = App.class.getResource("/images/pinkPen.png");
-    Image pencilCursor = new Image(cursorUrl.toString());
-    canvas.setCursor(new ImageCursor(pencilCursor, 0, pencilCursor.getHeight()));
+    penCursor = "pinkPen.png";
 
-    setColour(Color.web("#FF00C9"));
+    penColour = Color.web("#FF00C9");
     onPen();
   }
+
   /**
    * This method is called to switch to brown coloured pen to draw
    *
@@ -626,13 +598,12 @@ public class zenModeController {
     brownButton.setDisable(true);
 
     // Change the cursor icon to eraser
-    URL cursorUrl = App.class.getResource("/images/brownPen.png");
-    Image pencilCursor = new Image(cursorUrl.toString());
-    canvas.setCursor(new ImageCursor(pencilCursor, 0, pencilCursor.getHeight()));
+    penCursor = "brownPen.png";
 
-    setColour(Color.web("#894800"));
+    penColour = Color.web("#894800");
     onPen();
   }
+
   /**
    * This method is called to switch to black coloured pen to draw
    *
@@ -653,28 +624,11 @@ public class zenModeController {
     penButton.setDisable(true);
 
     // Change the cursor icon to eraser
-    URL cursorUrl = App.class.getResource("/images/Pencil-icon.png");
-    Image pencilCursor = new Image(cursorUrl.toString());
-    canvas.setCursor(new ImageCursor(pencilCursor, 0, pencilCursor.getHeight()));
-    setColour(Color.BLACK);
+    penCursor = "Pencil-icon.png";
+    penColour = Color.BLACK;
     onPen();
   }
-  /**
-   * This method is called to set the colour of the drawing pen
-   *
-   * @param colour which colour to set the drawing pen
-   */
-  private void setColour(Color colour) {
-    this.penColour = colour;
-  }
-  /**
-   * This method is called to get the colour of the drawing pen
-   *
-   * @return colour of drawing pen
-   */
-  private Color getColour() {
-    return this.penColour;
-  }
+
   /**
    * This method is called to enable all pens before disabling the current pen in their respective
    * method
@@ -698,5 +652,17 @@ public class zenModeController {
     purpleButton.setDisable(false);
     pinkButton.setDisable(false);
     brownButton.setDisable(false);
+  }
+
+  /**
+   * This is a helper method to change the cursor appearance on canvas
+   *
+   * @param cursorName the name of the cursor image
+   */
+  private void changeCursor(String cursorName) {
+    URL cursorUrl = App.class.getResource("/images/" + cursorName);
+    Image cursorImage = new Image(cursorUrl.toString());
+    canvas.setCursor(
+        new ImageCursor(cursorImage, cursorImage.getWidth() / 3.5, cursorImage.getHeight()));
   }
 }
