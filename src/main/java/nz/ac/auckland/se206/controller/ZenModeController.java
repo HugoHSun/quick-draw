@@ -83,10 +83,10 @@ public class ZenModeController {
   private MediaPlayer playerEraseSFX;
 
   private MediaPlayer playerBackgroundMusic;
-  
+
   private Timer timer = new Timer();
 
-  private Color penColour;
+  private Color penColour = Color.BLACK;
   private String penCursor = null;
 
   /**

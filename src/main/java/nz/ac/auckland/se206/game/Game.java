@@ -25,9 +25,9 @@ public class Game {
   private int prevRank;
 
   /**
-   * Constructor for the game. It gets input list of difficulties, consisting of
-   * accuracy, word difficulty, time, confidence and visibility. Assign variable with specific rules from client
-   * 
+   * Constructor for the game. It gets input list of difficulties, consisting of accuracy, word
+   * difficulty, time, confidence and visibility. Assign variable with specific rules from client
+   *
    * @param difficulty
    */
   public Game(List<Difficulty> difficulty) {
@@ -206,7 +206,7 @@ public class Game {
     }
   }
 
-  private Integer getCurrentPredictionRank() {
+  public Integer getCurrentPredictionRank() {
     for (int i = 0; i < currentPredictions.size(); i++) {
       String currentPrediction = currentPredictions.get(i).getClassName().replaceAll("_", " ");
       if (currentPrediction.equals(categoryToDraw.getCategoryToDraw())) {
