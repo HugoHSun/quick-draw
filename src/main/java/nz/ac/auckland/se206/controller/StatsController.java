@@ -17,8 +17,15 @@ import nz.ac.auckland.se206.user.User;
 import nz.ac.auckland.se206.util.JsonReader;
 
 public class StatsController {
+  @FXML private Label nameLabel;
+  @FXML private Label easyWordsLabel;
+  @FXML private Label mediumWordsLabel;
+  @FXML private Label hardWordsLabel;
+  @FXML private Label fastTimeLabel;
+  @FXML private Label winsLabel;
+  @FXML private Label lossesLabel;
+  @FXML private Label winRateLabel;
   @FXML private PieChart winPieChart;
-  @FXML private Label statLabel;
   private Parent root;
 
   private int wins;
@@ -32,7 +39,22 @@ public class StatsController {
     List<User> users = JsonReader.getUsers();
     List<String> userNames = JsonReader.getUserNames();
 
-    statLabel.setText(users.get(userNames.indexOf(MenuController.currentActiveUser)).toString());
+    nameLabel.setText(users.get(userNames.indexOf(MenuController.currentActiveUser)).getName());
+    easyWordsLabel.setText(
+        users.get(userNames.indexOf(MenuController.currentActiveUser)).getEasyWords());
+    mediumWordsLabel.setText(
+        users.get(userNames.indexOf(MenuController.currentActiveUser)).getMediumWords());
+    hardWordsLabel.setText(
+        users.get(userNames.indexOf(MenuController.currentActiveUser)).getHardWords());
+    fastTimeLabel.setText(
+        users.get(userNames.indexOf(MenuController.currentActiveUser)).getFastestTimeStats());
+    winsLabel.setText(
+        users.get(userNames.indexOf(MenuController.currentActiveUser)).getWinsStats());
+    lossesLabel.setText(
+        users.get(userNames.indexOf(MenuController.currentActiveUser)).getLossesStats());
+    winRateLabel.setText(
+        users.get(userNames.indexOf(MenuController.currentActiveUser)).getWinRateStats());
+
     wins = users.get(userNames.indexOf(MenuController.currentActiveUser)).getGamesWon();
     losses = users.get(userNames.indexOf(MenuController.currentActiveUser)).getGamesLost();
 
