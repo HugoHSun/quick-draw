@@ -14,14 +14,14 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="820.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controller.BadgeController">
    <children>
-      <ImageView fitHeight="536.0" fitWidth="835.0" layoutX="-8.0" layoutY="-8.0" opacity="0.45" pickOnBounds="true">
+      <ImageView fitHeight="520.0" fitWidth="820.0" layoutX="14.0" layoutY="-14.0" opacity="0.18" pickOnBounds="true">
          <image>
-            <Image url="@../images/badgesbg.png" />
+            <Image url="@../images/generalBackground.png" />
          </image>
       </ImageView>
       <VBox alignment="CENTER" layoutX="75.0" layoutY="47.0" prefHeight="404.0" prefWidth="671.0">
          <children>
-            <Label alignment="CENTER" prefHeight="84.0" prefWidth="671.0" text="Badges">
+            <Label alignment="CENTER" prefHeight="80.0" prefWidth="673.0" text="Badges">
                <font>
                   <Font name="Segoe UI Black" size="50.0" />
                </font>
@@ -40,7 +40,7 @@
                         <Tooltip text="&lt;Bronze&gt; Let it begin - Win one game at any mode" />
                      </tooltip>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#onBadge" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: transparent;">
+                  <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: transparent;">
                      <graphic>
                         <ImageView fx:id="bronzeTwo" fitHeight="80.0" fitWidth="80.0" opacity="0.3" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -52,7 +52,7 @@
                         <Tooltip text="&lt;Bronze&gt; - It's okay, mate - Lose a game at any mode" />
                      </tooltip>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#onBadge" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: transparent;">
+                  <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: transparent;">
                      <graphic>
                         <ImageView fx:id="bronzeThree" fitHeight="80.0" fitWidth="80.0" opacity="0.3" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -64,7 +64,7 @@
                         <Tooltip text="&lt;Bronze&gt; Supersonic - Win a game within 30 seconds" />
                      </tooltip>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#onBadge" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: transparent;">
+                  <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: transparent;">
                      <graphic>
                         <ImageView fx:id="bronzeFour" fitHeight="80.0" fitWidth="80.0" opacity="0.3" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -76,7 +76,7 @@
                         <Tooltip text="&lt;Bronze&gt; How bad can you be? - Lose 3 games in a row" />
                      </tooltip>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#onBadge" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: transparent;">
+                  <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: transparent;">
                      <graphic>
                         <ImageView fx:id="bronzeFive" fitHeight="80.0" fitWidth="80.0" opacity="0.3" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -92,7 +92,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="bronzeOne1" mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
+                  <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
                      <graphic>
                         <ImageView fx:id="silverOne" fitHeight="80.0" fitWidth="80.0" opacity="0.3" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -156,7 +156,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="bronzeOne2" mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
+                  <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
                      <graphic>
                         <ImageView fx:id="goldOne" fitHeight="80.0" fitWidth="80.0" opacity="0.3" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -220,7 +220,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="bronzeOne3" mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
+                  <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
                      <graphic>
                         <ImageView fx:id="diamondOne" fitHeight="80.0" fitWidth="80.0" opacity="0.3" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -284,7 +284,7 @@
             </HBox>
          </children>
       </VBox>
-      <Button fx:id="menuButton" layoutX="10.0" layoutY="20.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onReturn" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
+      <Button fx:id="menuButton" layoutX="10.0" layoutY="20.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onReturn" prefHeight="30.0" prefWidth="40.0" style="-fx-background-color: transparent;">
          <padding>
             <Insets left="20.0" />
          </padding>
