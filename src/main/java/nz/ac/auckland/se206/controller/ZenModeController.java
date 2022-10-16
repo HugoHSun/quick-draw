@@ -53,7 +53,6 @@ public class ZenModeController {
   @FXML private Button pinkButton;
   @FXML private Button brownButton;
   @FXML private Button redButton;
-  @FXML private Label colours;
   @FXML private Label usernameLabel;
   @FXML private Canvas canvas;
 
@@ -147,6 +146,7 @@ public class ZenModeController {
     // if user's music status is true, not mute, play background music
     if (music) {
       playerBackgroundMusic.play();
+      playerBackgroundMusic.setVolume(0.1);
     }
     startGame();
   }
