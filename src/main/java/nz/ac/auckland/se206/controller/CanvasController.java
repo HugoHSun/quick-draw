@@ -133,7 +133,7 @@ public class CanvasController {
    *
    * @throws ModelException If there is an error in reading the input/output of the DL model.
    * @throws IOException If the model cannot be found on the file system.
-   * @throws TranslateException
+   * @throws TranslateException {@inheritDoc}
    */
   public void initialize() throws ModelException, IOException, TranslateException {
 
@@ -404,7 +404,7 @@ public class CanvasController {
    * @param userName the name of the user
    * @param isWon whether the user won
    * @param timeTaken the time taken for the game to end
-   * @throws IOException
+   * @throws IOException {@inheritDoc}
    */
   private void recordResult(String userName, boolean isWon, int timeTaken) throws IOException {
     List<User> users = JsonReader.getUsers();
@@ -459,7 +459,7 @@ public class CanvasController {
    * Save the drawing on a file when a game has ended
    *
    * @param event the event of clicking "Save Your Drawing" button
-   * @throws IOException
+   * @throws IOException {@inheritDoc}
    */
   @FXML
   private void onSaveDrawing(ActionEvent event) throws IOException {

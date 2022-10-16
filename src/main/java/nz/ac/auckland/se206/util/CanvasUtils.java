@@ -48,6 +48,13 @@ public class CanvasUtils {
     return true;
   }
 
+  /**
+   * This method saves the current drawing as an image file on the user's computer
+   *
+   * @param stage the stage of the current game
+   * @param canvas the canvas of the current game
+   * @throws IOException {@inheritDoc}
+   */
   public static void saveDrawing(Window stage, Canvas canvas) throws IOException {
     // Open a file dialog box
     FileChooser fileChooser = new FileChooser();
