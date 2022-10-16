@@ -25,14 +25,14 @@ public class Game {
   private int prevRank;
 
   /**
-   * Constructor for the game. It gets input list of difficulties, consisting of
-   * accuracy, word difficulty, time, confidence and visibility. Assign variable with specific rules from client
-   * 
+   * Constructor for the game. It gets input list of difficulties, consisting of accuracy, word
+   * difficulty, time, confidence and visibility. Assign variable with specific rules from client
+   *
    * @param difficulty
    */
   public Game(List<Difficulty> difficulty) {
-	  // Chaange the winning rank setting by the accuracy setting
-	  // Initially it is at 344, the last
+    // Chaange the winning rank setting by the accuracy setting
+    // Initially it is at 344, the last
     prevRank = 344;
     if (difficulty.get(0).equals(Difficulty.E)) {
       winningRank = 3;
@@ -115,7 +115,7 @@ public class Game {
    * @param reminderTime the time to remind the user
    */
   public void remindTimeLeft(int reminderTime) {
-	  // When there is 10 seconds left (default) remind the user
+    // When there is 10 seconds left (default) remind the user
     if (remainingTime == (reminderTime + 1)) {
       Thread timeReminder =
           new Thread(
@@ -215,8 +215,13 @@ public class Game {
     }
   }
 
-  private Integer getCurrentPredictionRank() {
-	  // Return the rank of the current prediction
+  /**
+   * This method returns the current position of drawing of all predictions
+   *
+   * @return the current prediction rank
+   */
+  public Integer getCurrentPredictionRank() {
+    // Return the rank of the current prediction
     for (int i = 0; i < currentPredictions.size(); i++) {
       String currentPrediction = currentPredictions.get(i).getClassName().replaceAll("_", " ");
       if (currentPrediction.equals(categoryToDraw.getCategoryToDraw())) {

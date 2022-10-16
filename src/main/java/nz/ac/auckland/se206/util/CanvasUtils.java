@@ -97,9 +97,10 @@ public class CanvasUtils {
   }
 
   /**
-   * Get the current snapshot of the canvas.
+   * Get the current snapshot of the canvas that is passed in
    *
-   * @return The BufferedImage corresponding to the current canvas content.
+   * @param canvas the canvas to get snapshot from
+   * @return the BufferedImage corresponding to the current canvas content.
    */
   public static BufferedImage getCurrentSnapshot(Canvas canvas) {
     final Image snapshot = canvas.snapshot(null, null);

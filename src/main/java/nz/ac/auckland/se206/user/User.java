@@ -34,9 +34,9 @@ public class User {
   private Boolean visitAboutUs;
 
   /**
-   * Constructor for the User class, when made a new user.
-   * Default values are shown below, only the name is initialized correspondingly.
-   * 
+   * Constructor for the User class, when made a new user. Default values are shown below, only the
+   * name is initialized correspondingly.
+   *
    * @param name Name of the user
    */
   public User(String name) {
@@ -70,25 +70,25 @@ public class User {
 
   /**
    * Getter for name
-   * 
+   *
    * @return Name
    */
   public String getName() {
     return name;
   }
-  
+
   /**
    * Getter for games won
-   * 
+   *
    * @return Games won
    */
   public int getGamesWon() {
     return gamesWon;
   }
-  
+
   /**
    * Getter for games lost
-   * 
+   *
    * @return Games lost
    */
   public int getGamesLost() {
@@ -97,7 +97,7 @@ public class User {
 
   /**
    * Getter for fastest won
-   * 
+   *
    * @return Fastest won
    */
   public int getFastestWon() {
@@ -106,7 +106,7 @@ public class User {
 
   /**
    * Getter for the list of words encountered at specific difficulty
-   * 
+   *
    * @param diff Difficulty of words
    * @return List of string of words
    */
@@ -116,16 +116,16 @@ public class User {
 
   /**
    * Getter for badges earned
-   * 
+   *
    * @return List of badges earned
    */
   public List<Integer> getBadgesEarned() {
     return badgesEarned;
   }
-  
+
   /**
    * Getter for current difficulty settings
-   * 
+   *
    * @return Current difficulty settings
    */
   public List<Difficulty> getCurrentDifficulty() {
@@ -134,7 +134,7 @@ public class User {
 
   /**
    * Getter for the sound status
-   * 
+   *
    * @return Boolean sound status
    */
   public Boolean getSoundStatus() {
@@ -143,7 +143,7 @@ public class User {
 
   /**
    * Setter for sound status
-   * 
+   *
    * @param sound
    */
   public void setSoundStatus(Boolean sound) {
@@ -152,7 +152,7 @@ public class User {
 
   /**
    * Getter for music status
-   * 
+   *
    * @return Boolean music status
    */
   public Boolean getMusicStatus() {
@@ -161,7 +161,7 @@ public class User {
 
   /**
    * Getter for visit about us
-   * 
+   *
    * @return Boolean visit about us
    */
   public Boolean getVisitAboutUs() {
@@ -170,7 +170,7 @@ public class User {
 
   /**
    * Setter for music status
-   * 
+   *
    * @param music
    */
   public void setMusicStatus(Boolean music) {
@@ -179,16 +179,16 @@ public class User {
 
   /**
    * Setter for current difficulty for specific difficulty
-   * 
+   *
    * @param dif
    */
   public void setCurrentDifficulty(List<Difficulty> dif) {
     currentDifficulty = dif;
   }
-  
+
   /**
    * Setter for boolean if they reached top ten
-   * 
+   *
    * @param isWon They won
    * @param finalIndex Final index of correct prediction
    */
@@ -200,16 +200,16 @@ public class User {
 
   /**
    * Setter for boolean if they played hidden
-   * 
+   *
    * @param isWordHidden
    */
   public void setPlayHidden(Boolean isWordHidden) {
     playHidden = isWordHidden;
   }
-  
+
   /**
    * Setter for boolean if they visit about us
-   * 
+   *
    * @param visit
    */
   public void setVisitAboutUs(Boolean visit) {
@@ -218,7 +218,7 @@ public class User {
 
   /**
    * Add new word at specific difficulty
-   * 
+   *
    * @param diff
    * @param word
    */
@@ -228,7 +228,7 @@ public class User {
 
   /**
    * Add new badge it they never got the badge
-   * 
+   *
    * @param newBadges
    */
   public void newBadge(List<Integer> newBadges) {
@@ -239,23 +239,19 @@ public class User {
     }
   }
 
-  /**
-   * Add number of wins
-   */
+  /** Add number of wins */
   public void won() {
     gamesWon++;
   }
 
-  /**
-   * Add number of losses
-   */
+  /** Add number of losses */
   public void lost() {
     gamesLost++;
   }
 
   /**
    * Record the result if they won or not
-   * 
+   *
    * @param isWon
    */
   public void record(boolean isWon) {
@@ -269,7 +265,7 @@ public class User {
 
   /**
    * Update the fastest won
-   * 
+   *
    * @param fasterWon
    */
   public void updateFastestWon(int fasterWon) {
@@ -278,9 +274,7 @@ public class User {
     }
   }
 
-  /**
-   * Obtain badges with corresponding rules
-   */
+  /** Obtain badges with corresponding rules */
   public void obtainBadges() {
     List<Integer> newBadges = new ArrayList<Integer>();
 

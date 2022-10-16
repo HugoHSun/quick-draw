@@ -196,7 +196,7 @@
                <children>
                   <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onPressBadges" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
                      <graphic>
-                        <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="70.0" fitWidth="70.0" pickOnBounds="true">
                            <image>
                               <Image url="@../images/badgesIcon.png" />
                            </image>
@@ -208,6 +208,13 @@
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
+                     <tooltip>
+                        <Tooltip style="-fx-background-color: ffb347;" text="Earned Badges">
+                           <font>
+                              <Font name="Roboto Black" size="12.0" />
+                           </font>
+                        </Tooltip>
+                     </tooltip>
                   </Button>
                   <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onPressStatistics" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
                      <tooltip>

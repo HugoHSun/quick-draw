@@ -26,6 +26,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -34,6 +35,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.stage.Popup;
 import javafx.stage.Window;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.dict.DictionaryLookup;
@@ -91,8 +93,6 @@ public class CanvasController {
 
   @FXML private Label categoryContext;
 
-  @FXML private Tooltip definitionToolTip;
-
   private Parent root;
 
   private Game game;
@@ -109,7 +109,6 @@ public class CanvasController {
   private String category;
   private Difficulty difficulty;
   private Boolean sound;
-  private int prevIndex = 344;
 
   private Boolean music;
   private MediaPlayer playerDrawSFX;
@@ -121,10 +120,14 @@ public class CanvasController {
 
   private Timer timer = new Timer();
 
+  private String definition;
+
+  private Popup popup = new Popup();
+
   /**
-   * Set the static variable, isHiddenWord, depending on if
-   * the user selects hidden word or normal mode
-   * 
+   * Set the static variable, isHiddenWord, depending on if the user selects hidden word or normal
+   * mode
+   *
    * @param isWordHidden
    */
   public static void setHiddenWord(boolean isWordHidden) {
@@ -152,24 +155,13 @@ public class CanvasController {
     game = new Game(dif);
 
     category = game.getCategoryToDraw();
-    
+
     // If the user shoe hidden word mode, play the hidden word mode.
     if (isHiddenWord) {
-      try {
-    	  // Hidden word is identical to normal mode except the category label
-        WordInfo wordinfo = DictionaryLookup.searchWordInfo(category);
-        // Get definition from wordinfo api
-        String definition = wordinfo.getWordEntries().get(0).getDefinitions().get(0);
-        categoryContext.setVisible(false);
-        categoryLabel.setVisible(false);
-        definitionButton.setVisible(true);
-        definitionToolTip.setText(definition);
-      } catch (IOException | WordNotFoundException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
+      System.out.println(category);
+      initializeHiddenWord();
     } else {
-    	// Set category as to itself, not the definition
+      // Set category as to itself, not the definition
       categoryLabel.setText(category);
       Thread voiceOver =
           new Thread(
@@ -178,7 +170,7 @@ public class CanvasController {
               });
       voiceOver.start();
     }
-    
+
     // Collect difficulty to record in the database
     difficulty = game.getCategoryDifficulty();
     graphic = canvas.getGraphicsContext2D();
@@ -209,6 +201,59 @@ public class CanvasController {
     // Set the name of the user as the current user
     usernameLabel.setText(MenuController.currentActiveUser);
     timerLabel.setText(game.getRemainingTime().toString());
+  }
+
+  /** This method initializes the hidden word mode if applicable, get definition from web */
+  private void initializeHiddenWord() {
+    categoryContext.setVisible(false);
+    // Get the definition in the background
+    Thread getdef =
+        new Thread(
+            () -> {
+              // Get the first definition of the word
+              WordInfo wordinfo;
+              try {
+                wordinfo = DictionaryLookup.searchWordInfo(category);
+                definition = wordinfo.getWordEntries().get(0).getDefinitions().get(0);
+                Platform.runLater(
+                    () -> {
+                      categoryLabel.setVisible(false);
+                      definitionButton.setVisible(true);
+                      definitionButton.setTooltip(new Tooltip(definition));
+                    });
+              } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+              } catch (WordNotFoundException e) {
+                definition = "Lucky! Definition Not Found\r\n" + "Draw " + category;
+                e.printStackTrace();
+              }
+            });
+
+    getdef.start();
+  }
+
+  /** This method is called when the user clicks on see definition */
+  @FXML
+  private void onSeeDefinition() {
+    Window stage = canvas.getScene().getWindow();
+
+    // Setting up the scene
+    AnchorPane pane = new AnchorPane();
+    Label defLabel = new Label(definition);
+    defLabel.setFont(new Font("Segoe UI Black", 20));
+    pane.setLayoutX(30);
+    pane.setLayoutY(80);
+    BackgroundFill myBF =
+        new BackgroundFill(Color.ORANGE, new CornerRadii(2), new Insets(0.0, 0.0, 0.0, 0.0));
+    // then you set to your node
+    pane.setBackground(new Background(myBF));
+    pane.getChildren().add(defLabel);
+
+    popup.setX(30);
+    popup.setY(80);
+    popup.getContent().addAll(pane);
+    popup.show(stage);
   }
 
   /** This method is called when the "Pen" button is presses */
@@ -356,7 +401,7 @@ public class CanvasController {
                     // Update the predictions value and display
                   } else {
                     try {
-                    	// Collect all 345 predictions to track the correct answers confidence
+                      // Collect all 345 predictions to track the correct answers confidence
                       List<Classification> currentPredictions =
                           model.getPredictions(CanvasUtils.getCurrentSnapshot(canvas), 345);
                       game.updatePredictions(currentPredictions);
@@ -383,7 +428,7 @@ public class CanvasController {
     canvas.setDisable(true);
     canvas.setOnMouseDragged(null);
     try {
-    	// Record result with corresponding inputs
+      // Record result with corresponding inputs
       recordResult(MenuController.currentActiveUser, isWon, 60 - game.getRemainingTime());
     } catch (IOException e) {
       e.printStackTrace();
@@ -441,7 +486,7 @@ public class CanvasController {
     user.newWord(difficulty, category);
 
     user.setPlayHidden(isHiddenWord);
-    user.setTopTen(isWon, prevIndex);
+    user.setTopTen(isWon, game.getCurrentPredictionRank());
 
     // Update any new badges
     user.obtainBadges();
@@ -458,6 +503,7 @@ public class CanvasController {
    */
   @FXML
   private void onPlayNewRound(ActionEvent event) {
+    popup.hide();
     timer.cancel();
     playerBackgroundMusic.stop();
     Scene scene = ((Node) event.getSource()).getScene();
@@ -478,18 +524,20 @@ public class CanvasController {
    */
   @FXML
   private void onSaveDrawing(ActionEvent event) throws IOException {
+    popup.hide();
     Window stage = canvas.getScene().getWindow();
     CanvasUtils.saveDrawing(stage, canvas);
   }
 
   /**
-   * When the user presses the return button. Stop the timer (thread)
-   * Stop the music and set the scene to main menu.
-   * 
+   * When the user presses the return button. Stop the timer (thread) Stop the music and set the
+   * scene to main menu.
+   *
    * @param event
    */
   @FXML
   private void onReturn(ActionEvent event) {
+    popup.hide();
     timer.cancel();
     playerBackgroundMusic.stop();
     Scene scene = ((Node) event.getSource()).getScene();

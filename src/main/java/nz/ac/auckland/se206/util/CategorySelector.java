@@ -22,6 +22,11 @@ import nz.ac.auckland.se206.user.User;
  */
 public class CategorySelector {
 
+  /**
+   * This it the enum for different difficulty
+   *
+   * @author H
+   */
   public enum Difficulty {
     E,
     M,
@@ -89,17 +94,17 @@ public class CategorySelector {
     try {
       List<String> unplayedCategories = new ArrayList<String>();
       for (Difficulty dif : difficulty) {
-    	  // In the selected difficulties, concatenante the unplayed categories
+        // In the selected difficulties, concatenante the unplayed categories
         unplayedCategories.addAll(getUnplayedCategories(dif));
       }
       // Generating a random index for retrieving element
       int randomIndex = new Random().nextInt(unplayedCategories.size());
-      //randomly selecting an element from the concatenated list
+      // randomly selecting an element from the concatenated list
       output = unplayedCategories.get(randomIndex);
 
       for (Difficulty dif : difficulty) {
         if (getUnplayedCategories(dif).contains(output)) {
-        	// Find the difficulty of the word played for tracking / recording
+          // Find the difficulty of the word played for tracking / recording
           currentDifficulty = dif;
           break;
         }
@@ -116,7 +121,7 @@ public class CategorySelector {
    * This method returns all the unplayed, specific difficulty categories by the player
    *
    * @param dif the difficulty of categories
-   * @return unplayed, specific difficulty categories by the player
+   * @return unplayed specific difficulty categories by the player
    * @throws IOException
    */
   private static List<String> getUnplayedCategories(Difficulty dif) throws IOException {

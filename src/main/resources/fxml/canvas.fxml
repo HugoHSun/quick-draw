@@ -21,7 +21,7 @@
             <Image url="@../images/canvasBackground.jpg" />
          </image>
       </ImageView>
-      <HBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <HBox alignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Button fx:id="menuButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onReturn" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
                <graphic>
@@ -41,20 +41,21 @@
                   <Tooltip text="Back to menu" />
                </tooltip>
             </Button>
-            <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="55.0" prefWidth="683.0" text="Current user:">
+            <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="55.0" prefWidth="665.0" text="Current Sketcher:">
                <HBox.margin>
                   <Insets left="100.0" />
                </HBox.margin>
                <font>
                   <Font name="Segoe UI Black" size="18.0" />
                </font>
-               <graphic>
-                  <Label fx:id="usernameLabel" prefHeight="30.0" prefWidth="218.0">
-                     <font>
-                        <Font name="Segoe UI Black" size="18.0" />
-                     </font>
-                  </Label>
-               </graphic>
+            </Label>
+            <Label fx:id="usernameLabel" prefHeight="30.0" prefWidth="180.0">
+               <font>
+                  <Font name="Segoe UI Black" size="18.0" />
+               </font>
+               <HBox.margin>
+                  <Insets right="10.0" />
+               </HBox.margin>
             </Label>
          </children>
       </HBox>
@@ -62,20 +63,17 @@
          <children>
             <Label fx:id="categoryContext" alignment="CENTER" contentDisplay="RIGHT" prefHeight="23.0" prefWidth="355.0" text="Category To Draw:" textAlignment="CENTER">
                <font>
-                  <Font name="Segoe UI Black" size="20.0" />
+                  <Font name="Segoe UI Semibold" size="20.0" />
                </font>
             </Label>
             <StackPane prefHeight="150.0" prefWidth="200.0">
                <children>
-                  <Label fx:id="categoryLabel" alignment="CENTER" prefHeight="50.0" prefWidth="400.0" text="Loading">
+                  <Label fx:id="categoryLabel" alignment="CENTER" prefHeight="79.0" prefWidth="400.0" text="Loading">
                      <font>
                         <Font name="Segoe UI Black" size="30.0" />
                      </font>
                   </Label>
-                  <Button fx:id="definitionButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="210.0" style="-fx-background-color: FFE5B4;" stylesheets="@../css/buttons.css" text="SEE DEFINITION" visible="false">
-                     <tooltip>
-                        <Tooltip fx:id="definitionToolTip" />
-                     </tooltip>
+                  <Button fx:id="definitionButton" alignment="TOP_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#onSeeDefinition" prefHeight="40.0" prefWidth="210.0" style="-fx-background-color: FFE5B4;" stylesheets="@../css/buttons.css" text="SEE DEFINITION" visible="false">
                      <font>
                         <Font name="Segoe UI Black" size="20.0" />
                      </font>
@@ -117,16 +115,24 @@
             </AnchorPane>
             <StackPane prefHeight="55.0">
                <children>
-                  <Button fx:id="startDrawingButton" alignment="CENTER" contentDisplay="CENTER" maxWidth="210.0" mnemonicParsing="false" onAction="#onStartDrawing" prefHeight="40.0" prefWidth="210.0" style="-fx-background-color: FFE5B4;" stylesheets="@../css/buttons.css" text="START DRAWING">
+                  <Button fx:id="startDrawingButton" alignment="CENTER" contentDisplay="RIGHT" graphicTextGap="6.0" maxWidth="265.0" mnemonicParsing="false" onAction="#onStartDrawing" prefHeight="63.0" prefWidth="265.0" style="-fx-background-color: FFE5B4;" stylesheets="@../css/buttons.css" text="START DRAWING">
                      <font>
                         <Font name="Segoe UI Black" size="20.0" />
                      </font>
                      <StackPane.margin>
-                        <Insets bottom="15.0" />
+                        <Insets bottom="10.0" top="5.0" />
                      </StackPane.margin>
+                     <graphic>
+                        <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/startDrawing.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
                   </Button>
-                  <HBox fx:id="toolBox" alignment="CENTER" spacing="10.0" visible="false">
+                  <HBox fx:id="toolBox" alignment="CENTER" spacing="25.0" visible="false">
                      <children>
+
                         <Button fx:id="penButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onPressPen" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
                            <graphic>
                               <ImageView fitHeight="35.0" fitWidth="40.0" pickOnBounds="true">
@@ -135,7 +141,11 @@
                                  </image>
                               </ImageView>
                            </graphic>
+                           <tooltip>
+                              <Tooltip text="Change To Pen" />
+                           </tooltip>
                         </Button>
+
                         <Button fx:id="eraserButton" alignment="CENTER" mnemonicParsing="false" onAction="#onErase" prefHeight="35.0" prefWidth="40.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
                            <graphic>
                               <ImageView fitHeight="35.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
@@ -144,21 +154,53 @@
                                  </image>
                               </ImageView>
                            </graphic>
+                           <tooltip>
+                              <Tooltip text="Change To Eraser" />
+                           </tooltip>
                         </Button>
-                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#onClear" prefHeight="23.0" prefWidth="80.0" style="-fx-background-color: FFE5B4;" stylesheets="@../css/buttons.css" text="Clear" />
+
+                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#onClear" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: transparent;">
+                           <graphic>
+                              <ImageView fitHeight="35.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/clearCanvas.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="Clear Canvas" />
+                           </tooltip></Button>
+
                      </children>
                   </HBox>
                   <HBox fx:id="endGameBox" alignment="CENTER" spacing="10.0" visible="false">
                      <children>
-                        <Button fx:id="saveDrawingButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onSaveDrawing" prefHeight="60.0" prefWidth="150.0" style="-fx-background-color: FFE5B4;" text="Save Your Drawing">
+
+                        <Button fx:id="newRoundButton" contentDisplay="TOP" mnemonicParsing="false" onAction="#onPlayNewRound" prefHeight="60.0" prefWidth="150.0" style="-fx-background-color: FFE5B4;" stylesheets="@../css/buttons.css" text="Play Again">
+
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
+                           <graphic>
+                              <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/changeCategory.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
                         </Button>
-                        <Button fx:id="newRoundButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onPlayNewRound" prefHeight="60.0" prefWidth="150.0" style="-fx-background-color: FFE5B4;" text="Play Another Round">
+                        <Button fx:id="saveDrawingButton" contentDisplay="TOP" mnemonicParsing="false" onAction="#onSaveDrawing" prefHeight="60.0" prefWidth="150.0" style="-fx-background-color: FFE5B4;" stylesheets="@../css/buttons.css" text="Save Drawing">
+
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
+                           <graphic>
+                              <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/saveDrawing.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
                         </Button>
                      </children>
                   </HBox>

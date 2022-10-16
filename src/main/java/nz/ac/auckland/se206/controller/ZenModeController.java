@@ -83,10 +83,10 @@ public class ZenModeController {
   private MediaPlayer playerEraseSFX;
 
   private MediaPlayer playerBackgroundMusic;
-  
+
   private Timer timer = new Timer();
 
-  private Color penColour;
+  private Color penColour = Color.BLACK;
   private String penCursor = null;
 
   /**
@@ -268,7 +268,7 @@ public class ZenModeController {
                     // Update the predictions value and display
                   } else {
                     try {
-                    	// Get all 345 to track the confidence of the correct predictions
+                      // Get all 345 to track the confidence of the correct predictions
                       List<Classifications.Classification> currentPredictions =
                           model.getPredictions(CanvasUtils.getCurrentSnapshot(canvas), 345);
                       game.updatePredictions(currentPredictions);

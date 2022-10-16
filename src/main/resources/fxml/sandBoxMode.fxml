@@ -75,7 +75,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="55.0" prefWidth="683.0" text="Current user:">
+            <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="55.0" prefWidth="683.0" text="Current Sketcher:">
                <font>
                   <Font name="Segoe UI Black" size="18.0" />
                </font>

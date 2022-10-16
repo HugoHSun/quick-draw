@@ -27,21 +27,21 @@ public class StatsController {
   @FXML private Label winRateLabel;
   @FXML private PieChart winPieChart;
   private Parent root;
-  
+
   private int wins;
   private int losses;
 
   private Scene scene;
 
   public StatsController() {}
-  
+
   /**
    * When user enters stats page, initialize by going through the user data
-   * 
+   *
    * @throws IOException
    */
   public void initialize() throws IOException {
-	  // Get user data from the json file
+    // Get user data from the json file
     List<User> users = JsonReader.getUsers();
     List<String> userNames = JsonReader.getUserNames();
     // Set the statistics with the corresponding user data
@@ -73,7 +73,7 @@ public class StatsController {
 
   /**
    * When user presses the return button, return to the main menu
-   * 
+   *
    * @param event
    */
   @FXML

@@ -269,7 +269,7 @@ public class SandBoxModeController {
     fileChooser
         .getExtensionFilters()
         .addAll(
-        	new FileChooser.ExtensionFilter("BMP File", "*.bmp"),
+            new FileChooser.ExtensionFilter("BMP File", "*.bmp"),
             new FileChooser.ExtensionFilter("PNG File", "*.png"),
             new FileChooser.ExtensionFilter("JPG File", "*.jpeg"));
 
@@ -320,7 +320,7 @@ public class SandBoxModeController {
    */
   @FXML
   private void onPressBlue(ActionEvent event) {
-	  disablePen(
+    disablePen(
         penButton,
         eraserButton,
         redButton,
@@ -345,7 +345,7 @@ public class SandBoxModeController {
    */
   @FXML
   private void onPressRed(ActionEvent event) {
-	  disablePen(
+    disablePen(
         penButton,
         eraserButton,
         redButton,
@@ -370,7 +370,7 @@ public class SandBoxModeController {
    */
   @FXML
   private void onPressGreen(ActionEvent event) {
-	  disablePen(
+    disablePen(
         penButton,
         eraserButton,
         redButton,
@@ -395,7 +395,7 @@ public class SandBoxModeController {
    */
   @FXML
   private void onPressOrange(ActionEvent event) {
-	  disablePen(
+    disablePen(
         penButton,
         eraserButton,
         redButton,
@@ -420,7 +420,7 @@ public class SandBoxModeController {
    */
   @FXML
   private void onPressPurple(ActionEvent event) {
-	  disablePen(
+    disablePen(
         penButton,
         eraserButton,
         redButton,
@@ -445,7 +445,7 @@ public class SandBoxModeController {
    */
   @FXML
   private void onPressPink(ActionEvent event) {
-	  disablePen(
+    disablePen(
         penButton,
         eraserButton,
         redButton,
@@ -470,7 +470,7 @@ public class SandBoxModeController {
    */
   @FXML
   private void onPressBrown(ActionEvent event) {
-	  disablePen(
+    disablePen(
         penButton,
         eraserButton,
         redButton,
@@ -496,7 +496,7 @@ public class SandBoxModeController {
    */
   @FXML
   private void onPressBlack(ActionEvent event) {
-	  disablePen(
+    disablePen(
         penButton,
         eraserButton,
         redButton,
@@ -529,7 +529,7 @@ public class SandBoxModeController {
       Button purpleButton,
       Button pinkButton,
       Button brownButton) {
-	  // Disable all buttons
+    // Disable all buttons
     penButton.setDisable(false);
     eraserButton.setDisable(false);
     redButton.setDisable(false);
