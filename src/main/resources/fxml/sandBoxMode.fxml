@@ -129,10 +129,20 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#onClear" prefHeight="23.0" prefWidth="80.0" style="-fx-background-color: FFE5B4;" stylesheets="@../css/buttons.css" text="Clear">
+                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#onClear" prefHeight="35.0" prefWidth="45.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
+                     <graphic>
+                        <ImageView fitHeight="35.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/clearCanvas.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <tooltip>
+                        <Tooltip text="Clear Canvas" />
+                     </tooltip>
                   </Button>
                   <Button alignment="CENTER" mnemonicParsing="false" onAction="#onSaveDrawing" prefHeight="23.0" prefWidth="120.0" style="-fx-background-color: FFE5B4;" stylesheets="@../css/buttons.css" text="Save Drawing">
                      <cursor>
