@@ -28,7 +28,7 @@ public class User {
   private Boolean soundStatus;
 
   private Boolean musicStatus;
-  
+
   private Boolean topTen;
   private Boolean playHidden;
   private Boolean visitAboutUs;
@@ -54,7 +54,7 @@ public class User {
     for (int i = 0; i < 5; i++) {
       currentDifficulty.add(Difficulty.E);
     }
-    
+
     this.topTen = false;
     this.playHidden = false;
     this.visitAboutUs = false;
@@ -99,9 +99,9 @@ public class User {
   public Boolean getMusicStatus() {
     return musicStatus;
   }
-  
+
   public Boolean getVisitAboutUs() {
-	  return visitAboutUs;
+    return visitAboutUs;
   }
 
   public void setMusicStatus(Boolean music) {
@@ -111,19 +111,19 @@ public class User {
   public void setCurrentDifficulty(List<Difficulty> dif) {
     currentDifficulty = dif;
   }
-  
+
   public void setTopTen(Boolean isWon, int finalIndex) {
-	  if (!isWon && finalIndex < 10) {
-		  topTen = true;
-	  }
+    if (!isWon && finalIndex < 10) {
+      topTen = true;
+    }
   }
-  
+
   public void setPlayHidden(Boolean isWordHidden) {
-	 playHidden = isWordHidden;
+    playHidden = isWordHidden;
   }
-  
+
   public void setVisitAboutUs(Boolean visit) {
-	  visitAboutUs = visit;
+    visitAboutUs = visit;
   }
 
   public void newWord(Difficulty diff, String word) {
@@ -181,7 +181,7 @@ public class User {
       newBadges.add(3);
     }
     if (this.topTen) {
-    	newBadges.add(4);
+      newBadges.add(4);
     }
 
     // Silver badges
@@ -196,9 +196,9 @@ public class User {
       newBadges.add(7);
     }
     if (this.currentDifficulty.get(1).equals(Difficulty.H)
-            && previousResults.get(previousResults.size() - 1).equals(true)) {
-          newBadges.add(8);
-        }
+        && previousResults.get(previousResults.size() - 1).equals(true)) {
+      newBadges.add(8);
+    }
     if (previousResults.size() >= 3
         && !(previousResults
             .subList(previousResults.size() - 3, previousResults.size())
@@ -218,7 +218,7 @@ public class User {
       newBadges.add(12);
     }
     if (this.playHidden) {
-    	newBadges.add(13);
+      newBadges.add(13);
     }
     if (previousResults.size() == 10 && !(previousResults.contains(false))) {
       newBadges.add(14);
@@ -232,12 +232,15 @@ public class User {
     if (this.gamesWon + this.gamesLost >= 100) {
       newBadges.add(16);
     }
-    List<Difficulty> masterList = new ArrayList<Difficulty>(Arrays.asList(Difficulty.X, Difficulty.X, Difficulty.X, Difficulty.X, Difficulty.X));
-    if (currentDifficulty.equals(masterList) && previousResults.get(previousResults.size() - 1).equals(true)){
-    	newBadges.add(17);
+    List<Difficulty> masterList =
+        new ArrayList<Difficulty>(
+            Arrays.asList(Difficulty.X, Difficulty.X, Difficulty.X, Difficulty.X, Difficulty.X));
+    if (currentDifficulty.equals(masterList)
+        && previousResults.get(previousResults.size() - 1).equals(true)) {
+      newBadges.add(17);
     }
     if (visitAboutUs) {
-    	newBadges.add(18);
+      newBadges.add(18);
     }
     if (badgesEarned.size() >= 19) {
       newBadges.add(19);
@@ -246,37 +249,40 @@ public class User {
     newBadge(newBadges);
   }
 
-  public String toString() {
-    double winRate = 100.0 * (double) gamesWon / (gamesWon + gamesLost);
-    String fastestTime = String.valueOf(fastestWon);
-    // Default
-    if (fastestWon > 60) {
-      fastestTime = "You have never won! :(";
-    }
+  public String getWinsStats() {
+    return String.valueOf(gamesWon);
+  }
 
+  public String getLossesStats() {
+    return String.valueOf(gamesLost);
+  }
+
+  public String getWinRateStats() {
+    double winRate = 100.0 * (double) gamesWon / (gamesWon + gamesLost);
     if (gamesWon == 0 && gamesLost == 0) {
       winRate = 0.0;
     }
+    return String.format("%.2f", winRate) + "%";
+  }
 
-    // Return all the stats of the user as string
-    return "Name : "
-        + name
-        + "\nGames Won : "
-        + gamesWon
-        + "\nGames Lost : "
-        + gamesLost
-        + "\nWin Rate : "
-        + (int)winRate
-        + "%\nFastest time to victory (secs): "
-        + fastestTime
-        + "\nDifficulty Setting : "
-        + currentDifficulty
-        + "\nWords Encountered : \n"
-        + "Level Easy: "
-        + wordsEncountered.get(Difficulty.E)
-        + "\nLevel Medium: "
-        + wordsEncountered.get(Difficulty.M)
-        + "\nLevel Hard: "
-        + wordsEncountered.get(Difficulty.H);
+  public String getFastestTimeStats() {
+    String fastestTime = String.valueOf(fastestWon);
+    // Default
+    if (fastestWon > 60) {
+      return "You have never won! :(";
+    }
+    return fastestTime + " seconds";
+  }
+
+  public String getEasyWords() {
+    return String.valueOf(wordsEncountered.get(Difficulty.E));
+  }
+
+  public String getMediumWords() {
+    return String.valueOf(wordsEncountered.get(Difficulty.M));
+  }
+
+  public String getHardWords() {
+    return String.valueOf(wordsEncountered.get(Difficulty.H));
   }
 }

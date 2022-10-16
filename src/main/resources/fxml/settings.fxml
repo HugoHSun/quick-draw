@@ -20,7 +20,7 @@
             <Image url="@../images/settingsBg.png" />
          </image>
       </ImageView>
-      <Button layoutX="727.0" layoutY="110.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onReturn" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: transparent;">
+      <Button layoutX="741.0" layoutY="106.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onReturn" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -47,7 +47,7 @@
             <Font name="Segoe UI Black" size="20.0" />
          </font>
       </Text>
-      <Text layoutX="239.0" layoutY="297.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Music">
+      <Text layoutX="239.0" layoutY="295.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Music">
          <font>
             <Font name="Segoe UI Black" size="20.0" />
          </font>

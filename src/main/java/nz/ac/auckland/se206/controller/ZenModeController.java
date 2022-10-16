@@ -147,6 +147,7 @@ public class ZenModeController {
     // if user's music status is true, not mute, play background music
     if (music) {
       playerBackgroundMusic.play();
+      playerBackgroundMusic.setVolume(0.1);
     }
     startGame();
   }
