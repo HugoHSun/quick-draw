@@ -92,13 +92,13 @@ public class CanvasController {
   @FXML private Label remainingPredictionsLabel;
 
   @FXML private Label winLostLabel;
-  
+
   @FXML private Button definitionButton;
 
   @FXML private HBox endGameBox;
 
   @FXML private Label categoryContext;
-  
+
   @FXML private Tooltip definitionToolTip;
 
   private Parent root;
@@ -126,7 +126,7 @@ public class CanvasController {
   private MediaPlayer playerBackgroundMusic;
 
   private static boolean isHiddenWord;
-  
+
   private Timer timer = new Timer();
 
   /**
@@ -195,6 +195,7 @@ public class CanvasController {
       Media backgroundMusic =
           new Media(App.class.getResource("/sounds/normalMusic.mp3").toURI().toString());
       playerBackgroundMusic = new MediaPlayer(backgroundMusic);
+      playerBackgroundMusic.setVolume(0.1);
     } catch (URISyntaxException e) {
       e.printStackTrace();
     }
@@ -371,7 +372,7 @@ public class CanvasController {
         1000,
         1000);
   }
-  
+
   /**
    * This method checks if the index (confidence) of the correct prediction is improving
    * or getting worse, and displays to the user
@@ -379,22 +380,20 @@ public class CanvasController {
    * @param currentPredictions List of all 345 predictions made by the model
    */
   private void checkGettingCloser(List<Classification> currentPredictions) {
-	  for (int i = 0;i<340;i++) {
-		  String prediction = currentPredictions.get(i).getClassName().replaceAll("_", " ");
-	      if (prediction.equals(category) && i < correctIndex){
-	        correctIndex = i;
-	        winLostLabel.setText("Getting Closer..");
-	        return;
-	      }
-	      else if (prediction.equals(category) && i > correctIndex) {
-	    	  correctIndex = i;
-	    	  winLostLabel.setText("Getting Further..");
-	    	  return;
-	      }
-	      else if (prediction.equals(category)) {
-	    	  return;
-	      }
-	  }	  
+    for (int i = 0; i < 340; i++) {
+      String prediction = currentPredictions.get(i).getClassName().replaceAll("_", " ");
+      if (prediction.equals(category) && i < correctIndex) {
+        correctIndex = i;
+        winLostLabel.setText("Getting Closer..");
+        return;
+      } else if (prediction.equals(category) && i > correctIndex) {
+        correctIndex = i;
+        winLostLabel.setText("Getting Further..");
+        return;
+      } else if (prediction.equals(category)) {
+        return;
+      }
+    }
   }
 
   /**
@@ -441,12 +440,12 @@ public class CanvasController {
       e.printStackTrace();
     }
     endGameBox.setVisible(true);
-    
+
     if (isHiddenWord) {
-    	definitionButton.setVisible(false);
-    	categoryLabel.setVisible(true);
-    	categoryLabel.setFont(new Font("Segoe UI Black", 15));
-    	Platform.runLater(()->categoryLabel.setText("The category was : " + category));
+      definitionButton.setVisible(false);
+      categoryLabel.setVisible(true);
+      categoryLabel.setFont(new Font("Segoe UI Black", 15));
+      Platform.runLater(() -> categoryLabel.setText("The category was : " + category));
     }
 
     TextToSpeech textToSpeech = new TextToSpeech();
@@ -489,7 +488,7 @@ public class CanvasController {
 
     // Record the category played
     user.newWord(difficulty, category);
-    
+
     user.setPlayHidden(isHiddenWord);
     user.setTopTen(isWon, correctIndex);
 
@@ -599,7 +598,7 @@ public class CanvasController {
    */
   @FXML
   private void onReturn(ActionEvent event) {
-	timer.cancel();
+    timer.cancel();
     playerBackgroundMusic.stop();
     Scene scene = ((Node) event.getSource()).getScene();
     try {
