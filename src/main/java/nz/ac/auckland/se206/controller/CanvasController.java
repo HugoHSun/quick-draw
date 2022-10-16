@@ -33,6 +33,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -93,10 +94,14 @@ public class CanvasController {
   @FXML private Label remainingPredictionsLabel;
 
   @FXML private Label winLostLabel;
+  
+  @FXML private Button definitionButton;
 
   @FXML private HBox endGameBox;
 
   @FXML private Label categoryContext;
+  
+  @FXML private Tooltip definitionToolTip;
 
   private Parent root;
 
@@ -114,6 +119,7 @@ public class CanvasController {
   private String category;
   private Difficulty difficulty;
   private Boolean sound;
+  private int correctIndex = 344;
 
   private Boolean music;
   private MediaPlayer playerDrawSFX;
@@ -122,6 +128,8 @@ public class CanvasController {
   private MediaPlayer playerBackgroundMusic;
 
   private static boolean isHiddenWord;
+  
+  private Timer timer = new Timer();
 
   public static void setHiddenWord(boolean isWordHidden) {
     isHiddenWord = isWordHidden;
@@ -151,12 +159,12 @@ public class CanvasController {
 
     if (isHiddenWord) {
       try {
-        System.out.println(category);
         WordInfo wordinfo = DictionaryLookup.searchWordInfo(category);
         String definition = wordinfo.getWordEntries().get(0).getDefinitions().get(0);
         categoryContext.setVisible(false);
-        categoryLabel.setFont(new Font("Segoe UI Black", 20));
-        categoryLabel.setText(definition);
+        categoryLabel.setVisible(false);
+        definitionButton.setVisible(true);
+        definitionToolTip.setText(definition);
       } catch (IOException | WordNotFoundException e) {
         // TODO Auto-generated catch block
         e.printStackTrace();
@@ -312,7 +320,6 @@ public class CanvasController {
 
     // Create a background timer thread that executes the task after 1 second delay for the first
     // time, then executes every second
-    Timer timer = new Timer();
     timer.scheduleAtFixedRate(
         new TimerTask() {
           public void run() {
@@ -346,8 +353,9 @@ public class CanvasController {
                   } else {
                     try {
                       List<Classification> currentPredictions =
-                          model.getPredictions(getCurrentSnapshot(), 10);
-                      game.updatePredictions(currentPredictions);
+                          model.getPredictions(getCurrentSnapshot(), 345);
+                      game.updatePredictions(currentPredictions.subList(0, 10));
+                      checkGettingCloser(currentPredictions);
                       topPredictionsLabel.setText(game.getTopPredictionsDisplay());
                       remainingPredictionsLabel.setText(game.getRemainingPredictionsDisplay());
                     } catch (TranslateException e) {
@@ -359,6 +367,25 @@ public class CanvasController {
         },
         1000,
         1000);
+  }
+  
+  private void checkGettingCloser(List<Classification> currentPredictions) {
+	  for (int i = 0;i<340;i++) {
+		  String prediction = currentPredictions.get(i).getClassName().replaceAll("_", " ");
+	      if (prediction.equals(category) && i < correctIndex){
+	        correctIndex = i;
+	        winLostLabel.setText("Getting Closer..");
+	        return;
+	      }
+	      else if (prediction.equals(category) && i > correctIndex) {
+	    	  correctIndex = i;
+	    	  winLostLabel.setText("Getting Further..");
+	    	  return;
+	      }
+	      else if (prediction.equals(category)) {
+	    	  return;
+	      }
+	  }	  
   }
 
   /**
@@ -405,6 +432,13 @@ public class CanvasController {
       e.printStackTrace();
     }
     endGameBox.setVisible(true);
+    
+    if (isHiddenWord) {
+    	definitionButton.setVisible(false);
+    	categoryLabel.setVisible(true);
+    	categoryLabel.setFont(new Font("Segoe UI Black", 15));
+    	Platform.runLater(()->categoryLabel.setText("The category was : " + category));
+    }
 
     TextToSpeech textToSpeech = new TextToSpeech();
     if (isWon) {
@@ -446,6 +480,9 @@ public class CanvasController {
 
     // Record the category played
     user.newWord(difficulty, category);
+    
+    user.setPlayHidden(isHiddenWord);
+    user.setTopTen(isWon, correctIndex);
 
     // Update any new badges
     user.obtainBadges();
@@ -547,6 +584,7 @@ public class CanvasController {
 
   @FXML
   private void onReturn(ActionEvent event) {
+	timer.cancel();
     playerBackgroundMusic.stop();
     Scene scene = ((Node) event.getSource()).getScene();
     try {

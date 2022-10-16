@@ -14,7 +14,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="820.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controller.BadgeController">
    <children>
-      <ImageView fitHeight="520.0" fitWidth="820.0" opacity="0.18" pickOnBounds="true">
+      <ImageView fitHeight="520.0" fitWidth="820.0" layoutX="14.0" layoutY="-14.0" opacity="0.18" pickOnBounds="true">
          <image>
             <Image url="@../images/generalBackground.png" />
          </image>
@@ -113,7 +113,7 @@
                         </ImageView>
                      </graphic>
                      <tooltip>
-                        <Tooltip text="&lt;Silver&gt; Not a beginner - Win one game of level medium" />
+                        <Tooltip text="&lt;Silver&gt; Not a beginner - Win one round with word difficulty medium" />
                      </tooltip>
                   </Button>
                   <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: transparent;">
@@ -137,7 +137,7 @@
                         </ImageView>
                      </graphic>
                      <tooltip>
-                        <Tooltip text="&lt;Silver&gt; Be an artist already - Play one game of Zen mode" />
+                        <Tooltip text="&lt;Silver&gt; That was not even hard - Win a round with a word difficulty of Hard" />
                      </tooltip>
                   </Button>
                   <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: transparent;">
@@ -177,7 +177,7 @@
                         </ImageView>
                      </graphic>
                      <tooltip>
-                        <Tooltip text="&lt;Gold&gt; Talented I guess? - Win one game of level master" />
+                        <Tooltip text="&lt;Gold&gt; Talented I guess? - Win one round with word difficulty Master" />
                      </tooltip>
                   </Button>
                   <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: transparent;">
@@ -241,7 +241,7 @@
                         </ImageView>
                      </graphic>
                      <tooltip>
-                        <Tooltip text="&lt;Diamond&gt; Wait what? - Play 1000 games" />
+                        <Tooltip text="&lt;Diamond&gt; Wait what? - Play 100 games" />
                      </tooltip>
                   </Button>
                   <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: transparent;">
@@ -253,7 +253,7 @@
                         </ImageView>
                      </graphic>
                      <tooltip>
-                        <Tooltip text="&lt;Diamond&gt; You have some spare time, don't you? - Spend more than 30 minutes in one game of Zen mode" />
+                        <Tooltip text="&lt;Diamond&gt; Professional Quick Drawer - Win a game with all settings to Master" />
                      </tooltip>
                   </Button>
                   <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: transparent;">
@@ -265,7 +265,7 @@
                         </ImageView>
                      </graphic>
                      <tooltip>
-                        <Tooltip text="&lt;Diamond&gt; ??? - Hint: Maybe take some time" />
+                        <Tooltip text="&lt;Diamond&gt; ??? - Hint: Who are we?" />
                      </tooltip>
                   </Button>
                   <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: transparent;">
