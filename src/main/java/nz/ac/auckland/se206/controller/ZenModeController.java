@@ -5,7 +5,6 @@ import ai.djl.modality.Classifications;
 import ai.djl.translate.TranslateException;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.awt.image.PixelGrabber;
 import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
@@ -40,6 +39,7 @@ import nz.ac.auckland.se206.game.Game;
 import nz.ac.auckland.se206.ml.DoodlePrediction;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 import nz.ac.auckland.se206.user.User;
+import nz.ac.auckland.se206.util.CanvasUtils;
 import nz.ac.auckland.se206.util.CategorySelector.Difficulty;
 import nz.ac.auckland.se206.util.JsonReader;
 
@@ -266,7 +266,7 @@ public class ZenModeController {
             // Ask the GUI thread to update predictions display
             Platform.runLater(
                 () -> {
-                  if (checkEmptyCanvas()) {
+                  if (CanvasUtils.checkEmptyCanvas(canvas)) {
                     topPredictionsLabel.setText("EMPTY CANVAS!!");
                     remainingPredictionsLabel.setText("");
                     game.updatePredictions(null);
@@ -287,38 +287,6 @@ public class ZenModeController {
         },
         1000,
         1000);
-  }
-
-  /**
-   * This method checks whether the canvas is empty and returns a boolean
-   *
-   * @return true if the canvas is empty, false otherwise
-   */
-  private boolean checkEmptyCanvas() {
-    // Get the current canvas as an image
-    final Image snapshot = canvas.snapshot(null, null);
-    final BufferedImage image = SwingFXUtils.fromFXImage(snapshot, null);
-    final int width = image.getWidth();
-    final int height = image.getHeight();
-
-    // Grab all the pixels
-    int[] pixels = new int[width * height];
-    PixelGrabber pg = new PixelGrabber(image, 0, 0, width, height, pixels, 0, width);
-    try {
-      pg.grabPixels();
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
-
-    // Check each pixel to see if they are all white
-    for (int pixel : pixels) {
-      java.awt.Color color = new java.awt.Color(pixel);
-      if (color.getAlpha() == 0 || color.getRGB() != java.awt.Color.WHITE.getRGB()) {
-        return false;
-      }
-    }
-
-    return true;
   }
 
   /**
