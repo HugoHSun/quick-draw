@@ -1,6 +1,7 @@
 package nz.ac.auckland.se206.user;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import nz.ac.auckland.se206.util.CategorySelector.Difficulty;
@@ -30,6 +31,7 @@ public class User {
   
   private Boolean topTen;
   private Boolean playHidden;
+  private Boolean visitAboutUs;
 
   public User(String name) {
     // Default values
@@ -55,6 +57,7 @@ public class User {
     
     this.topTen = false;
     this.playHidden = false;
+    this.visitAboutUs = false;
   }
 
   public String getName() {
@@ -96,6 +99,10 @@ public class User {
   public Boolean getMusicStatus() {
     return musicStatus;
   }
+  
+  public Boolean getVisitAboutUs() {
+	  return visitAboutUs;
+  }
 
   public void setMusicStatus(Boolean music) {
     musicStatus = music;
@@ -113,6 +120,10 @@ public class User {
   
   public void setPlayHidden(Boolean isWordHidden) {
 	 playHidden = isWordHidden;
+  }
+  
+  public void setVisitAboutUs(Boolean visit) {
+	  visitAboutUs = visit;
   }
 
   public void newWord(Difficulty diff, String word) {
@@ -169,7 +180,7 @@ public class User {
             .contains(true))) {
       newBadges.add(3);
     }
-    if (this.topTen == true) {
+    if (this.topTen) {
     	newBadges.add(4);
     }
 
@@ -206,7 +217,7 @@ public class User {
     if (this.fastestWon <= 3) {
       newBadges.add(12);
     }
-    if (this.playHidden == true) {
+    if (this.playHidden) {
     	newBadges.add(13);
     }
     if (previousResults.size() == 10 && !(previousResults.contains(false))) {
@@ -218,11 +229,16 @@ public class User {
     if ((this.gamesWon + this.gamesLost >= 50) && winRate > 0.9) {
       newBadges.add(15);
     }
-    if (this.gamesWon + this.gamesLost >= 1000) {
+    if (this.gamesWon + this.gamesLost >= 100) {
       newBadges.add(16);
     }
-    // implement badge 17
-    // implement badge 18
+    List<Difficulty> masterList = new ArrayList<Difficulty>(Arrays.asList(Difficulty.X, Difficulty.X, Difficulty.X, Difficulty.X, Difficulty.X));
+    if (currentDifficulty.equals(masterList) && previousResults.get(previousResults.size() - 1).equals(true)){
+    	newBadges.add(17);
+    }
+    if (visitAboutUs) {
+    	newBadges.add(18);
+    }
     if (badgesEarned.size() >= 19) {
       newBadges.add(19);
     }

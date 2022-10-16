@@ -241,7 +241,7 @@
                         </ImageView>
                      </graphic>
                      <tooltip>
-                        <Tooltip text="&lt;Diamond&gt; Wait what? - Play 1000 games" />
+                        <Tooltip text="&lt;Diamond&gt; Wait what? - Play 100 games" />
                      </tooltip>
                   </Button>
                   <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: transparent;">
@@ -253,7 +253,7 @@
                         </ImageView>
                      </graphic>
                      <tooltip>
-                        <Tooltip text="&lt;Diamond&gt; You have some spare time, don't you? - Spend more than 30 minutes in one game of Zen mode" />
+                        <Tooltip text="&lt;Diamond&gt; Professional Quick Drawer - Win a game with all settings to Master" />
                      </tooltip>
                   </Button>
                   <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: transparent;">
@@ -265,7 +265,7 @@
                         </ImageView>
                      </graphic>
                      <tooltip>
-                        <Tooltip text="&lt;Diamond&gt; ??? - Hint: Maybe take some time" />
+                        <Tooltip text="&lt;Diamond&gt; ??? - Hint: Who are we?" />
                      </tooltip>
                   </Button>
                   <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: transparent;">

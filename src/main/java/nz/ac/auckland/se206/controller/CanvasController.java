@@ -481,6 +481,7 @@ public class CanvasController {
     // Record the category played
     user.newWord(difficulty, category);
     
+    user.setPlayHidden(isHiddenWord);
     user.setTopTen(isWon, correctIndex);
 
     // Update any new badges
