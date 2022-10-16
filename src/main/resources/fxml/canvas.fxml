@@ -60,12 +60,12 @@
       </HBox>
       <VBox alignment="CENTER" layoutX="69.0" layoutY="45.0" prefHeight="460.0" prefWidth="400.0" AnchorPane.bottomAnchor="15.0">
          <children>
-            <Label alignment="CENTER" contentDisplay="RIGHT" prefHeight="23.0" prefWidth="355.0" text="Category To Draw:" textAlignment="CENTER">
+            <Label fx:id="categoryContext" alignment="CENTER" contentDisplay="RIGHT" prefHeight="23.0" prefWidth="355.0" text="Category To Draw:" textAlignment="CENTER">
                <font>
                   <Font name="Segoe UI Black" size="20.0" />
                </font>
             </Label>
-            <Label fx:id="categoryLabel" text="Loading">
+            <Label fx:id="categoryLabel" alignment="CENTER" prefHeight="50.0" prefWidth="400.0" text="Loading">
                <font>
                   <Font name="Segoe UI Black" size="30.0" />
                </font>

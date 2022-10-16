@@ -57,8 +57,6 @@ public class MenuController {
 
   @FXML private ComboBox<String> userComboBox;
 
-  private Boolean music;
-
   /**
    * This method runs after the FXML file is loaded
    *
@@ -161,6 +159,7 @@ public class MenuController {
     // Get the current scene
     scene = ((Node) event.getSource()).getScene();
     try {
+      CanvasController.setHiddenWord(false);
       // Load a new parent node
       root = new FXMLLoader(App.class.getResource("/fxml/canvas.fxml")).load();
     } catch (IOException e) {
@@ -188,6 +187,7 @@ public class MenuController {
     // Get the current scene
     scene = ((Node) event.getSource()).getScene();
     try {
+      CanvasController.setHiddenWord(true);
       // Load a new parent node
       root = new FXMLLoader(App.class.getResource("/fxml/canvas.fxml")).load();
     } catch (IOException e) {

@@ -41,10 +41,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
 import javax.imageio.ImageIO;
 import nz.ac.auckland.se206.App;
+import nz.ac.auckland.se206.dict.DictionaryLookup;
+import nz.ac.auckland.se206.dict.WordInfo;
+import nz.ac.auckland.se206.dict.WordNotFoundException;
 import nz.ac.auckland.se206.game.Game;
 import nz.ac.auckland.se206.ml.DoodlePrediction;
 import nz.ac.auckland.se206.speech.TextToSpeech;
@@ -92,6 +96,8 @@ public class CanvasController {
 
   @FXML private HBox endGameBox;
 
+  @FXML private Label categoryContext;
+
   private Parent root;
 
   private Game game;
@@ -110,10 +116,16 @@ public class CanvasController {
   private Boolean sound;
 
   private Boolean music;
-  MediaPlayer playerDrawSFX;
-  MediaPlayer playerEraseSFX;
+  private MediaPlayer playerDrawSFX;
+  private MediaPlayer playerEraseSFX;
 
-  MediaPlayer playerBackgroundMusic;
+  private MediaPlayer playerBackgroundMusic;
+
+  private static boolean isHiddenWord;
+
+  public static void setHiddenWord(boolean isWordHidden) {
+    isHiddenWord = isWordHidden;
+  }
 
   /**
    * JavaFX calls this method once the GUI elements are loaded. In our case we create a listener for
@@ -134,16 +146,33 @@ public class CanvasController {
     music = users.get(userNames.indexOf(MenuController.currentActiveUser)).getMusicStatus();
 
     game = new Game(dif);
+
     category = game.getCategoryToDraw();
+
+    if (isHiddenWord) {
+      try {
+        System.out.println(category);
+        WordInfo wordinfo = DictionaryLookup.searchWordInfo(category);
+        String definition = wordinfo.getWordEntries().get(0).getDefinitions().get(0);
+        categoryContext.setVisible(false);
+        categoryLabel.setFont(new Font("Segoe UI Black", 20));
+        categoryLabel.setText(definition);
+      } catch (IOException | WordNotFoundException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+    } else {
+      categoryLabel.setText(category);
+      Thread voiceOver =
+          new Thread(
+              () -> {
+                new TextToSpeech().speak("Please draw: " + category);
+              });
+      voiceOver.start();
+    }
+
     difficulty = game.getCategoryDifficulty();
-    categoryLabel.setText(category);
     usernameLabel.setText(currentActiveUser);
-    Thread voiceOver =
-        new Thread(
-            () -> {
-              new TextToSpeech().speak("Please draw: " + category);
-            });
-    voiceOver.start();
     graphic = canvas.getGraphicsContext2D();
 
     // Initialise drawing sound effect
