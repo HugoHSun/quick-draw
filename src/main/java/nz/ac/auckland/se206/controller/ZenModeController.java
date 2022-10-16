@@ -3,11 +3,6 @@ package nz.ac.auckland.se206.controller;
 import ai.djl.ModelException;
 import ai.djl.modality.Classifications;
 import ai.djl.translate.TranslateException;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.awt.image.PixelGrabber;
-import java.awt.image.RenderedImage;
-import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -15,7 +10,6 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import javafx.application.Platform;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,21 +19,19 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
-import javafx.stage.FileChooser;
 import javafx.stage.Window;
-import javax.imageio.ImageIO;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.game.Game;
 import nz.ac.auckland.se206.ml.DoodlePrediction;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 import nz.ac.auckland.se206.user.User;
+import nz.ac.auckland.se206.util.CanvasUtils;
 import nz.ac.auckland.se206.util.CategorySelector.Difficulty;
 import nz.ac.auckland.se206.util.JsonReader;
 
@@ -66,6 +58,8 @@ public class ZenModeController {
   @FXML private Label topPredictionsLabel;
 
   @FXML private Label remainingPredictionsLabel;
+
+  @FXML private Label hintLabel;
 
   private Parent root;
 
@@ -104,6 +98,7 @@ public class ZenModeController {
    * @throws TranslateException
    */
   public void initialize() throws ModelException, IOException, TranslateException {
+    timer = new Timer();
     List<User> users = JsonReader.getUsers();
     List<String> userNames = JsonReader.getUserNames();
 
@@ -130,7 +125,7 @@ public class ZenModeController {
 
     model = new DoodlePrediction();
     // By loading one prediction before the scene loads, it removes the GUI freezing
-    model.getPredictions((BufferedImage) getCurrentSnapshot(), 10);
+    model.getPredictions(CanvasUtils.getCurrentSnapshot(canvas), 10);
 
     // Initialise drawing, eraser, and background music sound effect
     try {
@@ -260,14 +255,13 @@ public class ZenModeController {
   private void startGame() {
     // Create a background timer thread that executes the task after 1 second delay for the first
     // time, then executes every second
-
     timer.scheduleAtFixedRate(
         new TimerTask() {
           public void run() {
             // Ask the GUI thread to update predictions display
             Platform.runLater(
                 () -> {
-                  if (checkEmptyCanvas()) {
+                  if (CanvasUtils.checkEmptyCanvas(canvas)) {
                     topPredictionsLabel.setText("EMPTY CANVAS!!");
                     remainingPredictionsLabel.setText("");
                     game.updatePredictions(null);
@@ -275,8 +269,9 @@ public class ZenModeController {
                   } else {
                     try {
                       List<Classifications.Classification> currentPredictions =
-                          model.getPredictions((BufferedImage) getCurrentSnapshot(), 10);
+                          model.getPredictions(CanvasUtils.getCurrentSnapshot(canvas), 345);
                       game.updatePredictions(currentPredictions);
+                      hintLabel.setText(game.checkImprovement());
                       topPredictionsLabel.setText(game.getTopPredictionsDisplay());
                       remainingPredictionsLabel.setText(game.getRemainingPredictionsDisplay());
                     } catch (TranslateException e) {
@@ -288,38 +283,6 @@ public class ZenModeController {
         },
         1000,
         1000);
-  }
-
-  /**
-   * This method checks whether the canvas is empty and returns a boolean
-   *
-   * @return true if the canvas is empty, false otherwise
-   */
-  private boolean checkEmptyCanvas() {
-    // Get the current canvas as an image
-    final Image snapshot = canvas.snapshot(null, null);
-    final BufferedImage image = SwingFXUtils.fromFXImage(snapshot, null);
-    final int width = image.getWidth();
-    final int height = image.getHeight();
-
-    // Grab all the pixels
-    int[] pixels = new int[width * height];
-    PixelGrabber pg = new PixelGrabber(image, 0, 0, width, height, pixels, 0, width);
-    try {
-      pg.grabPixels();
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
-
-    // Check each pixel to see if they are all white
-    for (int pixel : pixels) {
-      java.awt.Color color = new java.awt.Color(pixel);
-      if (color.getAlpha() == 0 || color.getRGB() != java.awt.Color.WHITE.getRGB()) {
-        return false;
-      }
-    }
-
-    return true;
   }
 
   /**
@@ -367,68 +330,8 @@ public class ZenModeController {
    */
   @FXML
   private void onSaveDrawing(ActionEvent event) throws IOException {
-    // Open a file dialog box
-    FileChooser fileChooser = new FileChooser();
-    fileChooser.setTitle("Save Your Drawing");
-
-    // You can change the location as you see fit.
-    final File tmpFolder = new File("tmp");
-
-    // tmpfolder is the default directory
-    fileChooser.setInitialDirectory(tmpFolder);
-
-    // make a tmp folder if it doesn't exist
-    if (!tmpFolder.exists()) {
-      tmpFolder.mkdir();
-    }
-
-    // Set default name and available file extensions
-    fileChooser.setInitialFileName("MyDrawing");
-    fileChooser
-        .getExtensionFilters()
-        .addAll(
-            new FileChooser.ExtensionFilter("img", "*.bmp"),
-            new FileChooser.ExtensionFilter("img", "*.png"),
-            new FileChooser.ExtensionFilter("img", "*.jpeg"));
-
-    // open file dialog box
     Window stage = canvas.getScene().getWindow();
-    File file = fileChooser.showSaveDialog(stage);
-
-    try {
-      // Save the image to a file and pop up a message to show if the image is saved
-      ImageIO.write(getCurrentSnapshot(), "bmp", file);
-      Alert successfulSave = new Alert(Alert.AlertType.INFORMATION);
-      successfulSave.setHeaderText("Image successfully saved");
-      successfulSave.show();
-    } catch (Exception e) {
-      Alert unsuccessfulSave = new Alert(Alert.AlertType.ERROR);
-      unsuccessfulSave.setHeaderText("Image not saved");
-      unsuccessfulSave.show();
-    }
-  }
-
-  /**
-   * Get the current snapshot of the canvas.
-   *
-   * @return The BufferedImage corresponding to the current canvas content.
-   */
-  private RenderedImage getCurrentSnapshot() {
-    final Image snapshot = canvas.snapshot(null, null);
-    final BufferedImage image = SwingFXUtils.fromFXImage(snapshot, null);
-
-    // Convert into a binary image.
-    final BufferedImage imageBinary =
-        new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_BYTE_BINARY);
-
-    final Graphics2D graphics = imageBinary.createGraphics();
-
-    graphics.drawImage(image, 0, 0, null);
-
-    // To release memory we dispose.
-    graphics.dispose();
-
-    return imageBinary;
+    CanvasUtils.saveDrawing(stage, canvas);
   }
 
   /**

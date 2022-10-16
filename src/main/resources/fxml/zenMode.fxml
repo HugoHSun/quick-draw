@@ -198,7 +198,7 @@
                <children>
                   <Label alignment="CENTER" contentDisplay="RIGHT" prefHeight="23.0" prefWidth="355.0" text="Category To Draw:" textAlignment="CENTER">
                      <font>
-                        <Font name="Segoe UI Semibold" size="25.0" />
+                        <Font name="Segoe UI Semibold" size="23.0" />
                      </font>
                   </Label>
                   <Label fx:id="categoryLabel" text="Loading">
@@ -206,8 +206,13 @@
                         <Font name="Segoe UI Black" size="38.0" />
                      </font>
                      <VBox.margin>
-                        <Insets bottom="10.0" />
+                        <Insets />
                      </VBox.margin>
+                  </Label>
+                  <Label fx:id="hintLabel">
+                     <font>
+                        <Font name="Segoe UI Semibold" size="25.0" />
+                     </font>
                   </Label>
                   <AnchorPane maxHeight="260.0" maxWidth="400.0" style="-fx-background-color: white;">
                      <children>

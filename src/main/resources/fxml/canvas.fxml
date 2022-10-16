@@ -101,7 +101,7 @@
                   </Label>
                </graphic>
             </Label>
-            <Label fx:id="winLostLabel" alignment="CENTER" prefHeight="40.0" prefWidth="400.0" text="Getting Closer.." textAlignment="CENTER">
+            <Label fx:id="winLostLabel" alignment="CENTER" prefHeight="40.0" prefWidth="400.0" textAlignment="CENTER">
                <font>
                   <Font name="Segoe UI Black" size="20.0" />
                </font>

@@ -4,10 +4,6 @@ import ai.djl.ModelException;
 import ai.djl.modality.Classifications.Classification;
 import ai.djl.translate.TranslateException;
 import com.google.gson.GsonBuilder;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.awt.image.PixelGrabber;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -16,7 +12,6 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import javafx.application.Platform;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,8 +22,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
@@ -41,9 +34,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.stage.FileChooser;
 import javafx.stage.Window;
-import javax.imageio.ImageIO;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.dict.DictionaryLookup;
 import nz.ac.auckland.se206.dict.WordInfo;
@@ -52,6 +43,7 @@ import nz.ac.auckland.se206.game.Game;
 import nz.ac.auckland.se206.ml.DoodlePrediction;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 import nz.ac.auckland.se206.user.User;
+import nz.ac.auckland.se206.util.CanvasUtils;
 import nz.ac.auckland.se206.util.CategorySelector.Difficulty;
 import nz.ac.auckland.se206.util.JsonReader;
 
@@ -117,7 +109,7 @@ public class CanvasController {
   private String category;
   private Difficulty difficulty;
   private Boolean sound;
-  private int correctIndex = 344;
+  private int prevIndex = 344;
 
   private Boolean music;
   private MediaPlayer playerDrawSFX;
@@ -145,7 +137,7 @@ public class CanvasController {
    *
    * @throws ModelException If there is an error in reading the input/output of the DL model.
    * @throws IOException If the model cannot be found on the file system.
-   * @throws TranslateException
+   * @throws TranslateException {@inheritDoc}
    */
   public void initialize() throws ModelException, IOException, TranslateException {
 
@@ -206,7 +198,7 @@ public class CanvasController {
     onPen();
     model = new DoodlePrediction();
     // By loading one prediction before the scene loads, it removes the GUI freezing
-    model.getPredictions(getCurrentSnapshot(), 10);
+    model.getPredictions(CanvasUtils.getCurrentSnapshot(canvas), 10);
 
     usernameLabel.setText(MenuController.currentActiveUser);
     timerLabel.setText(game.getRemainingTime().toString());
@@ -349,7 +341,8 @@ public class CanvasController {
             // Ask the GUI thread to update predictions display
             Platform.runLater(
                 () -> {
-                  if (checkEmptyCanvas()) {
+                  if (CanvasUtils.checkEmptyCanvas(canvas)) {
+                    winLostLabel.setText("EMPTY CANVAS!!");
                     topPredictionsLabel.setText("EMPTY CANVAS!!");
                     remainingPredictionsLabel.setText("");
                     game.updatePredictions(null);
@@ -357,9 +350,11 @@ public class CanvasController {
                   } else {
                     try {
                       List<Classification> currentPredictions =
-                          model.getPredictions(getCurrentSnapshot(), 345);
-                      game.updatePredictions(currentPredictions.subList(0, 10));
-                      checkGettingCloser(currentPredictions);
+                          model.getPredictions(CanvasUtils.getCurrentSnapshot(canvas), 345);
+                      game.updatePredictions(currentPredictions);
+
+                      // Check if the predictions has improved or not
+                      winLostLabel.setText(game.checkImprovement());
                       topPredictionsLabel.setText(game.getTopPredictionsDisplay());
                       remainingPredictionsLabel.setText(game.getRemainingPredictionsDisplay());
                     } catch (TranslateException e) {
@@ -371,61 +366,6 @@ public class CanvasController {
         },
         1000,
         1000);
-  }
-
-  /**
-   * This method checks if the index (confidence) of the correct prediction is improving
-   * or getting worse, and displays to the user
-   * 
-   * @param currentPredictions List of all 345 predictions made by the model
-   */
-  private void checkGettingCloser(List<Classification> currentPredictions) {
-    for (int i = 0; i < 340; i++) {
-      String prediction = currentPredictions.get(i).getClassName().replaceAll("_", " ");
-      if (prediction.equals(category) && i < correctIndex) {
-        correctIndex = i;
-        winLostLabel.setText("Getting Closer..");
-        return;
-      } else if (prediction.equals(category) && i > correctIndex) {
-        correctIndex = i;
-        winLostLabel.setText("Getting Further..");
-        return;
-      } else if (prediction.equals(category)) {
-        return;
-      }
-    }
-  }
-
-  /**
-   * This method checks whether the canvas is empty and returns a boolean
-   *
-   * @return true if the canvas is empty, false otherwise
-   */
-  private boolean checkEmptyCanvas() {
-    // Get the current canvas as an image
-    final Image snapshot = canvas.snapshot(null, null);
-    final BufferedImage image = SwingFXUtils.fromFXImage(snapshot, null);
-    final int width = image.getWidth();
-    final int height = image.getHeight();
-
-    // Grab all the pixels
-    int[] pixels = new int[width * height];
-    PixelGrabber pg = new PixelGrabber(image, 0, 0, width, height, pixels, 0, width);
-    try {
-      pg.grabPixels();
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
-
-    // Check each pixel to see if they are all white
-    for (int pixel : pixels) {
-      java.awt.Color color = new java.awt.Color(pixel);
-      if (color.getAlpha() == 0 || color.getRGB() != java.awt.Color.WHITE.getRGB()) {
-        return false;
-      }
-    }
-
-    return true;
   }
 
   /** This is a helper method that is executed when a game has ended */
@@ -468,7 +408,7 @@ public class CanvasController {
    * @param userName the name of the user
    * @param isWon whether the user won
    * @param timeTaken the time taken for the game to end
-   * @throws IOException
+   * @throws IOException {@inheritDoc}
    */
   private void recordResult(String userName, boolean isWon, int timeTaken) throws IOException {
     List<User> users = JsonReader.getUsers();
@@ -490,7 +430,7 @@ public class CanvasController {
     user.newWord(difficulty, category);
 
     user.setPlayHidden(isHiddenWord);
-    user.setTopTen(isWon, correctIndex);
+    user.setTopTen(isWon, prevIndex);
 
     // Update any new badges
     user.obtainBadges();
@@ -507,6 +447,7 @@ public class CanvasController {
    */
   @FXML
   private void onPlayNewRound(ActionEvent event) {
+    timer.cancel();
     playerBackgroundMusic.stop();
     Scene scene = ((Node) event.getSource()).getScene();
     try {
@@ -522,72 +463,12 @@ public class CanvasController {
    * Save the drawing on a file when a game has ended
    *
    * @param event the event of clicking "Save Your Drawing" button
-   * @throws IOException
+   * @throws IOException {@inheritDoc}
    */
   @FXML
-  private void onSaveDrawing(ActionEvent event) {
-    // Open a file dialog box
-    FileChooser fileChooser = new FileChooser();
-    fileChooser.setTitle("Save Your Drawing");
-
-    // You can change the location as you see fit.
-    final File tmpFolder = new File("tmp");
-
-    // tmpfolder is the default directory
-    fileChooser.setInitialDirectory(tmpFolder);
-
-    // make a tmp folder if it doesn't exist
-    if (!tmpFolder.exists()) {
-      tmpFolder.mkdir();
-    }
-
-    // Set default name and available file extensions
-    fileChooser.setInitialFileName("MyDrawing");
-    fileChooser
-        .getExtensionFilters()
-        .addAll(
-            new FileChooser.ExtensionFilter("BMP File", "*.bmp"),
-            new FileChooser.ExtensionFilter("PNG File", "*.png"),
-            new FileChooser.ExtensionFilter("JPG File", "*.jpeg"));
-
-    // open file dialog box
+  private void onSaveDrawing(ActionEvent event) throws IOException {
     Window stage = canvas.getScene().getWindow();
-    File file = fileChooser.showSaveDialog(stage);
-
-    try {
-      // Save the image to a file and pop up a message to show if the image is saved
-      ImageIO.write(getCurrentSnapshot(), "bmp", file);
-      Alert successfulSave = new Alert(AlertType.INFORMATION);
-      successfulSave.setHeaderText("Image successfully saved");
-      successfulSave.show();
-    } catch (Exception e) {
-      Alert unsuccessfulSave = new Alert(AlertType.ERROR);
-      unsuccessfulSave.setHeaderText("Image not saved");
-      unsuccessfulSave.show();
-    }
-  }
-
-  /**
-   * Get the current snapshot of the canvas.
-   *
-   * @return The BufferedImage corresponding to the current canvas content.
-   */
-  private BufferedImage getCurrentSnapshot() {
-    final Image snapshot = canvas.snapshot(null, null);
-    final BufferedImage image = SwingFXUtils.fromFXImage(snapshot, null);
-
-    // Convert into a binary image.
-    final BufferedImage imageBinary =
-        new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_BYTE_BINARY);
-
-    final Graphics2D graphics = imageBinary.createGraphics();
-
-    graphics.drawImage(image, 0, 0, null);
-
-    // To release memory we dispose.
-    graphics.dispose();
-
-    return imageBinary;
+    CanvasUtils.saveDrawing(stage, canvas);
   }
 
   /**
