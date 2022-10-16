@@ -47,7 +47,6 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import javafx.stage.Window;
 import javax.imageio.ImageIO;
 import nz.ac.auckland.se206.App;
@@ -114,8 +113,12 @@ public class CanvasController {
   private String category;
   private Difficulty difficulty;
   private Boolean sound;
+
+  private Boolean music;
   MediaPlayer playerDrawSFX;
   MediaPlayer playerEraseSFX;
+
+  MediaPlayer playerBackgroundMusic;
 
   /**
    * JavaFX calls this method once the GUI elements are loaded. In our case we create a listener for
@@ -137,8 +140,10 @@ public class CanvasController {
     for (User user : users) {
       userNames.add(user.getName());
     }
+    // reads difficulty, sound status, and music status from user's json
     dif = users.get(userNames.indexOf(MenuController.currentActiveUser)).getCurrentDifficulty();
     sound = users.get(userNames.indexOf(MenuController.currentActiveUser)).getSoundStatus();
+    music = users.get(userNames.indexOf(MenuController.currentActiveUser)).getMusicStatus();
 
     game = GameFactory.createGame(dif);
     category = game.getCategoryToDraw();
@@ -159,8 +164,15 @@ public class CanvasController {
       playerDrawSFX = new MediaPlayer(drawSFX);
       Media eraseSFX = new Media(App.class.getResource("/sounds/eraserSFX.mp3").toURI().toString());
       playerEraseSFX = new MediaPlayer(eraseSFX);
+      Media backgroundMusic =
+          new Media(App.class.getResource("/sounds/normalMusic.mp3").toURI().toString());
+      playerBackgroundMusic = new MediaPlayer(backgroundMusic);
     } catch (URISyntaxException e) {
       e.printStackTrace();
+    }
+    // if user's music status is true, not mute, play background music
+    if (music) {
+      playerBackgroundMusic.play();
     }
     onPen();
     model = new DoodlePrediction();
@@ -441,6 +453,7 @@ public class CanvasController {
    */
   @FXML
   private void onPlayNewRound(ActionEvent event) {
+    playerBackgroundMusic.stop();
     Scene scene = ((Node) event.getSource()).getScene();
     try {
       // Load a new canvas FXML file which initializes everything
@@ -449,24 +462,6 @@ public class CanvasController {
     } catch (IOException e) {
       e.printStackTrace();
     }
-  }
-
-  /**
-   * This method is called when the "Statistics" button is pressed, it shows the statistics of the
-   * current player in a new window
-   *
-   * @param event the event of clicking this button
-   * @throws IOException
-   */
-  @FXML
-  private void onSeeStatistics(ActionEvent event) throws IOException {
-    Parent root = FXMLLoader.load(getClass().getResource("/fxml/stats.fxml"));
-    // Display the statistics of the current user in a new window
-    Stage stage = new Stage();
-    stage.setTitle("Statistics");
-    stage.setResizable(false);
-    stage.setScene(new Scene(root));
-    stage.show();
   }
 
   /**
@@ -543,6 +538,7 @@ public class CanvasController {
 
   @FXML
   private void onReturn(ActionEvent event) {
+    playerBackgroundMusic.stop();
     Scene scene = ((Node) event.getSource()).getScene();
     try {
       // Load a new parent node

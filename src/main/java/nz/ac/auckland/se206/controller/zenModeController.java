@@ -124,6 +124,7 @@ public class zenModeController {
     for (User user : users) {
       userNames.add(user.getName());
     }
+    // reads difficulty, sound status, and music status from user's json
     dif = users.get(userNames.indexOf(MenuController.currentActiveUser)).getCurrentDifficulty();
     sound = users.get(userNames.indexOf(MenuController.currentActiveUser)).getSoundStatus();
     music = users.get(userNames.indexOf(MenuController.currentActiveUser)).getMusicStatus();
@@ -132,6 +133,8 @@ public class zenModeController {
     category = game.getCategoryToDraw();
     categoryLabel.setText(category);
     usernameLabel.setText(currentActiveUser);
+
+    // start speech to speak out the word to draw
     Thread voiceOver =
         new Thread(
             () -> {
@@ -147,18 +150,19 @@ public class zenModeController {
 
     usernameLabel.setText(MenuController.currentActiveUser);
 
-    // Initialise drawing sound effect
+    // Initialise drawing, eraser, and background music sound effect
     try {
       Media drawSFX = new Media(App.class.getResource("/sounds/drawSFX.mp3").toURI().toString());
       playerDrawSFX = new MediaPlayer(drawSFX);
       Media eraseSFX = new Media(App.class.getResource("/sounds/eraserSFX.mp3").toURI().toString());
       playerEraseSFX = new MediaPlayer(eraseSFX);
       Media backgroundMusic =
-          new Media(App.class.getResource("/sounds/music2.mp3").toURI().toString());
+          new Media(App.class.getResource("/sounds/zenMusic.wav").toURI().toString());
       playerBackgroundMusic = new MediaPlayer(backgroundMusic);
     } catch (URISyntaxException e) {
       e.printStackTrace();
     }
+    // if user's music status is true, not mute, play background music
     if (music) {
       playerBackgroundMusic.play();
     }
@@ -262,7 +266,11 @@ public class zenModeController {
     onPen();
   }
 
-  /** This method is called when the user click on "Start drawing" button */
+  /**
+   * This method is called when the user click on "Start drawing" button
+   *
+   * @throws TranslateException
+   */
   @FXML
   private void onStartDrawing() throws TranslateException {
     // Turn on the canvas and change the start button to pen, eraser and clear
@@ -352,6 +360,11 @@ public class zenModeController {
     }
   }
 
+  /**
+   * This method is called when back button is pressed to return user to main menu
+   *
+   * @param event the event of clicking the button
+   */
   @FXML
   private void onReturn(ActionEvent event) {
     playerBackgroundMusic.stop();
@@ -437,8 +450,13 @@ public class zenModeController {
     return imageBinary;
   }
 
+  /**
+   * This method is called to switch to blue coloured pen to draw
+   *
+   * @param event the event of clicking the button
+   */
   @FXML
-  private void onBlue(ActionEvent actionEvent) {
+  private void onBlue(ActionEvent event) {
     penDisable(
         penButton,
         eraserButton,
@@ -459,8 +477,13 @@ public class zenModeController {
     onPen();
   }
 
+  /**
+   * This method is called to switch to red coloured pen to draw
+   *
+   * @param event the event of clicking the button
+   */
   @FXML
-  private void onRed(ActionEvent actionEvent) {
+  private void onRed(ActionEvent event) {
     penDisable(
         penButton,
         eraserButton,
@@ -480,9 +503,13 @@ public class zenModeController {
     setColour(Color.RED);
     onPen();
   }
-
+  /**
+   * This method is called to switch to green coloured pen to draw
+   *
+   * @param event the event of clicking the button
+   */
   @FXML
-  private void onGreen(ActionEvent actionEvent) {
+  private void onGreen(ActionEvent event) {
     penDisable(
         penButton,
         eraserButton,
@@ -502,9 +529,13 @@ public class zenModeController {
     setColour(Color.web("#0FDD00"));
     onPen();
   }
-
+  /**
+   * This method is called to switch to orange coloured pen to draw
+   *
+   * @param event the event of clicking the button
+   */
   @FXML
-  private void onOrange(ActionEvent actionEvent) {
+  private void onOrange(ActionEvent event) {
     penDisable(
         penButton,
         eraserButton,
@@ -524,9 +555,13 @@ public class zenModeController {
     setColour(Color.web("#FF7A00"));
     onPen();
   }
-
+  /**
+   * This method is called to switch to purple coloured pen to draw
+   *
+   * @param event the event of clicking the button
+   */
   @FXML
-  private void onPurple(ActionEvent actionEvent) {
+  private void onPurple(ActionEvent event) {
     penDisable(
         penButton,
         eraserButton,
@@ -546,9 +581,13 @@ public class zenModeController {
     setColour(Color.web("#8E00FF"));
     onPen();
   }
-
+  /**
+   * This method is called to switch to pink coloured pen to draw
+   *
+   * @param event the event of clicking the button
+   */
   @FXML
-  private void onPink(ActionEvent actionEvent) {
+  private void onPink(ActionEvent event) {
     penDisable(
         penButton,
         eraserButton,
@@ -568,9 +607,13 @@ public class zenModeController {
     setColour(Color.web("#FF00C9"));
     onPen();
   }
-
+  /**
+   * This method is called to switch to brown coloured pen to draw
+   *
+   * @param event the event of clicking the button
+   */
   @FXML
-  private void onBrown(ActionEvent actionEvent) {
+  private void onBrown(ActionEvent event) {
     penDisable(
         penButton,
         eraserButton,
@@ -591,7 +634,11 @@ public class zenModeController {
     setColour(Color.web("#894800"));
     onPen();
   }
-
+  /**
+   * This method is called to switch to black coloured pen to draw
+   *
+   * @param event the event of clicking the button
+   */
   @FXML
   private void onBlack(ActionEvent event) {
     penDisable(
@@ -613,15 +660,26 @@ public class zenModeController {
     setColour(Color.BLACK);
     onPen();
   }
-
+  /**
+   * This method is called to set the colour of the drawing pen
+   *
+   * @param colour which colour to set the drawing pen
+   */
   private void setColour(Color colour) {
     this.penColour = colour;
   }
-
+  /**
+   * This method is called to get the colour of the drawing pen
+   *
+   * @return colour of drawing pen
+   */
   private Color getColour() {
     return this.penColour;
   }
-
+  /**
+   * This method is called to enable all pens before disabling the current pen in their respective
+   * method
+   */
   private void penDisable(
       Button penButton,
       Button eraserButton,
