@@ -12,18 +12,26 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane prefHeight="500.0" prefWidth="780.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controller.NewUserController">
+<Pane prefHeight="520.0" prefWidth="820.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controller.NewUserController">
    <children>
-      <ImageView fitHeight="500.0" fitWidth="780.0" opacity="0.8" pickOnBounds="true">
+      <ImageView fitHeight="520.0" fitWidth="820.0" opacity="0.3" pickOnBounds="true">
          <image>
-            <Image url="@../images/canvasBackground.jpg" />
+            <Image url="@../images/generalBackground.png" />
          </image>
       </ImageView>
-      <VBox layoutY="167.0" prefHeight="147.0" prefWidth="750.0">
+      <Button contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#onReturn" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css" text="Button">
+         <graphic>
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/returnIcon.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <VBox layoutY="167.0" prefHeight="150.0" prefWidth="820.0">
          <children>
             <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="54.0" prefWidth="644.0" text="Enter name of the new User!">
                <font>
-                  <Font size="31.0" />
+                  <Font name="Segoe UI Black" size="32.0" />
                </font>
                <VBox.margin>
                   <Insets left="80.0" />
@@ -45,6 +53,5 @@
             </HBox>
          </children>
       </VBox>
-      <Button fx:id="menuButton" layoutX="14.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onReturn" prefHeight="20.0" prefWidth="20.0" scaleX="0.1" scaleY="0.1" scaleZ="0.1" stylesheets="@../css/buttons.css" translateX="10.0" translateY="10.0" />
    </children>
 </Pane>

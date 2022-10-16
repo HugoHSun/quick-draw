@@ -11,28 +11,18 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.user.User;
 import nz.ac.auckland.se206.util.JsonReader;
 
 public class NewUserController {
 
-  @FXML private Button menuButton;
   @FXML private TextField newUsername;
 
   private Scene scene;
 
   private Parent root;
-
-  public void initialize() {
-    Image returnImg = new Image("/images/returnIcon.png");
-    ImageView returnImgView = new ImageView(returnImg);
-    menuButton.setGraphic(returnImgView);
-  }
 
   /**
    * This method adds a new user if the user name does not exist
@@ -50,9 +40,6 @@ public class NewUserController {
     // Add new item to the list
 
     List<String> userNames = new ArrayList<String>();
-    for (User user : users) {
-      userNames.add(user.getName());
-    }
 
     if (!userNames.contains(newUsername.getText())) {
       users.add(new User(newUsername.getText()));

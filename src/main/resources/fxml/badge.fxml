@@ -14,9 +14,9 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="820.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controller.BadgeController">
    <children>
-      <ImageView fitHeight="520.0" fitWidth="820.0" opacity="0.2" pickOnBounds="true">
+      <ImageView fitHeight="520.0" fitWidth="820.0" opacity="0.18" pickOnBounds="true">
          <image>
-            <Image url="@../images/canvasBackground.jpg" />
+            <Image url="@../images/generalBackground.png" />
          </image>
       </ImageView>
       <VBox alignment="CENTER" layoutX="75.0" layoutY="47.0" prefHeight="404.0" prefWidth="671.0">
@@ -291,7 +291,7 @@
          <graphic>
             <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../images/returnIcon2.png" />
+                  <Image url="@../images/returnIcon.png" />
                </image>
             </ImageView>
          </graphic>

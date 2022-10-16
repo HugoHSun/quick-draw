@@ -18,7 +18,7 @@
 
 <AnchorPane prefHeight="520.0" prefWidth="820.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controller.MenuController">
    <children>
-      <ImageView fitHeight="520.0" fitWidth="820.0" opacity="0.5">
+      <ImageView fitHeight="520.0" fitWidth="820.0" opacity="0.4">
          <image>
             <Image url="@../images/menuBackground.png" />
          </image>

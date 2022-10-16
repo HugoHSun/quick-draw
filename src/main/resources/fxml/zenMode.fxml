@@ -70,7 +70,7 @@
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true">
                      <image>
-                        <Image url="@../images/returnIcon2.png" />
+                        <Image url="@../images/returnIcon.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -144,42 +144,6 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-<<<<<<< HEAD
-=======
-                  <HBox fx:id="toolBox" alignment="CENTER" spacing="10.0" visible="false">
-                     <children>
-                        <Button fx:id="penButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onBlack" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;">
-                           <graphic>
-                              <ImageView fitHeight="35.0" fitWidth="40.0" pickOnBounds="true">
-                                 <image>
-                                    <Image url="@../images/Pencil-icon.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Button>
-                        <Button fx:id="eraserButton" alignment="CENTER" mnemonicParsing="false" onAction="#onErase" prefHeight="35.0" prefWidth="40.0" style="-fx-background-color: transparent;">
-                           <graphic>
-                              <ImageView fitHeight="35.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../images/Eraser-icon.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Button>
-                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#onClear" prefHeight="23.0" prefWidth="80.0" style="-fx-background-color: FFE5B4;" text="Clear">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Button>
-                     </children>
-                  </HBox>
->>>>>>> main
                </children>
                <padding>
                   <Insets bottom="10.0" top="10.0" />

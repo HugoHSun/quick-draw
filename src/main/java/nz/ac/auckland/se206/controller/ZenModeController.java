@@ -85,12 +85,13 @@ public class ZenModeController {
   private double currentY;
   private String category;
 
-  MediaPlayer playerDrawSFX;
-  MediaPlayer playerEraseSFX;
+  private MediaPlayer playerDrawSFX;
+  private MediaPlayer playerEraseSFX;
 
-  MediaPlayer playerBackgroundMusic;
+  private MediaPlayer playerBackgroundMusic;
 
-  Color penColour;
+  private Color penColour;
+  private String penCursor = null;
 
   /**
    * JavaFX calls this method once the GUI elements are loaded. In our case we create a listener for
@@ -151,14 +152,16 @@ public class ZenModeController {
   }
 
   /** This method is called when the "Pen" button is presses */
+  @FXML
   private void onPen() {
     penButton.setDisable(true);
     eraserButton.setDisable(false);
 
-    // Change the cursor icon to eraser
-    URL cursorUrl = App.class.getResource("/images/Pencil-icon.png");
-    Image pencilCursor = new Image(cursorUrl.toString());
-    canvas.setCursor(new ImageCursor(pencilCursor, 0, pencilCursor.getHeight()));
+    if (penCursor == null) {
+      penCursor = "Pencil-icon.png";
+    }
+    // Change the cursor icon to pen
+    changeCursor(penCursor);
 
     // save coordinates when mouse is pressed on the canvas
     canvas.setOnMousePressed(
@@ -176,8 +179,7 @@ public class ZenModeController {
           final double y = e.getY() - size / 2;
 
           // This is the colour of the brush.
-          Color colour = getColour();
-          graphic.setStroke(colour);
+          graphic.setStroke(penColour);
           graphic.setLineWidth(size);
 
           // Create a line that goes from the point (currentX, currentY) and (x,y)
@@ -206,10 +208,7 @@ public class ZenModeController {
     penButton.setDisable(false);
     eraserButton.setDisable(true);
     // Change the cursor to eraser
-    URL cursorUrl = App.class.getResource("/images/Eraser-icon.png");
-    Image eraserCursor = new Image(cursorUrl.toString());
-    canvas.setCursor(
-        new ImageCursor(eraserCursor, eraserCursor.getWidth() / 3.5, eraserCursor.getHeight()));
+    changeCursor("Eraser-icon.png");
 
     canvas.setOnMousePressed(
         e -> {
@@ -323,7 +322,7 @@ public class ZenModeController {
   }
 
   /**
-   * This method is called when "Play another round" button is pressed
+   * This method is called when "Change category" button is pressed
    *
    * @param event the event of clicking the button
    */
@@ -448,11 +447,9 @@ public class ZenModeController {
         brownButton);
     blueButton.setDisable(true);
     // Change the cursor icon to eraser
-    URL cursorUrl = App.class.getResource("/images/bluePen.png");
-    Image pencilCursor = new Image(cursorUrl.toString());
-    canvas.setCursor(new ImageCursor(pencilCursor, 0, pencilCursor.getHeight()));
+    penCursor = "bluePen.png";
 
-    setColour(Color.web("#00B5FF"));
+    penColour = Color.web("#00B5FF");
     onPen();
   }
 
@@ -475,11 +472,9 @@ public class ZenModeController {
         brownButton);
     redButton.setDisable(true);
     // Change the cursor icon to eraser
-    URL cursorUrl = App.class.getResource("/images/redPen.png");
-    Image pencilCursor = new Image(cursorUrl.toString());
-    canvas.setCursor(new ImageCursor(pencilCursor, 0, pencilCursor.getHeight()));
+    penCursor = "redPen.png";
 
-    setColour(Color.RED);
+    penColour = Color.RED;
     onPen();
   }
 
@@ -502,11 +497,9 @@ public class ZenModeController {
         brownButton);
     greenButton.setDisable(true);
     // Change the cursor icon to eraser
-    URL cursorUrl = App.class.getResource("/images/greenPen.png");
-    Image pencilCursor = new Image(cursorUrl.toString());
-    canvas.setCursor(new ImageCursor(pencilCursor, 0, pencilCursor.getHeight()));
+    penCursor = "greenPen.png";
 
-    setColour(Color.web("#0FDD00"));
+    penColour = Color.web("#0FDD00");
     onPen();
   }
 
@@ -529,11 +522,9 @@ public class ZenModeController {
         brownButton);
     orangeButton.setDisable(true);
     // Change the cursor icon to eraser
-    URL cursorUrl = App.class.getResource("/images/orangePen.png");
-    Image pencilCursor = new Image(cursorUrl.toString());
-    canvas.setCursor(new ImageCursor(pencilCursor, 0, pencilCursor.getHeight()));
+    penCursor = "orangePen.png";
 
-    setColour(Color.web("#FF7A00"));
+    penColour = Color.web("#FF7A00");
     onPen();
   }
 
@@ -556,11 +547,9 @@ public class ZenModeController {
         brownButton);
     purpleButton.setDisable(true);
     // Change the cursor icon to eraser
-    URL cursorUrl = App.class.getResource("/images/purplePen.png");
-    Image pencilCursor = new Image(cursorUrl.toString());
-    canvas.setCursor(new ImageCursor(pencilCursor, 0, pencilCursor.getHeight()));
+    penCursor = "purplePen.png";
 
-    setColour(Color.web("#8E00FF"));
+    penColour = Color.web("#8E00FF");
     onPen();
   }
 
@@ -583,11 +572,9 @@ public class ZenModeController {
         brownButton);
     pinkButton.setDisable(true);
     // Change the cursor icon to eraser
-    URL cursorUrl = App.class.getResource("/images/pinkPen.png");
-    Image pencilCursor = new Image(cursorUrl.toString());
-    canvas.setCursor(new ImageCursor(pencilCursor, 0, pencilCursor.getHeight()));
+    penCursor = "pinkPen.png";
 
-    setColour(Color.web("#FF00C9"));
+    penColour = Color.web("#FF00C9");
     onPen();
   }
 
@@ -611,11 +598,9 @@ public class ZenModeController {
     brownButton.setDisable(true);
 
     // Change the cursor icon to eraser
-    URL cursorUrl = App.class.getResource("/images/brownPen.png");
-    Image pencilCursor = new Image(cursorUrl.toString());
-    canvas.setCursor(new ImageCursor(pencilCursor, 0, pencilCursor.getHeight()));
+    penCursor = "brownPen.png";
 
-    setColour(Color.web("#894800"));
+    penColour = Color.web("#894800");
     onPen();
   }
 
@@ -639,29 +624,9 @@ public class ZenModeController {
     penButton.setDisable(true);
 
     // Change the cursor icon to eraser
-    URL cursorUrl = App.class.getResource("/images/Pencil-icon.png");
-    Image pencilCursor = new Image(cursorUrl.toString());
-    canvas.setCursor(new ImageCursor(pencilCursor, 0, pencilCursor.getHeight()));
-    setColour(Color.BLACK);
+    penCursor = "Pencil-icon.png";
+    penColour = Color.BLACK;
     onPen();
-  }
-
-  /**
-   * This method is called to set the colour of the drawing pen
-   *
-   * @param colour which colour to set the drawing pen
-   */
-  private void setColour(Color colour) {
-    this.penColour = colour;
-  }
-
-  /**
-   * This method is called to get the colour of the drawing pen
-   *
-   * @return colour of drawing pen
-   */
-  private Color getColour() {
-    return this.penColour;
   }
 
   /**
@@ -687,5 +652,17 @@ public class ZenModeController {
     purpleButton.setDisable(false);
     pinkButton.setDisable(false);
     brownButton.setDisable(false);
+  }
+
+  /**
+   * This is a helper method to change the cursor appearance on canvas
+   *
+   * @param cursorName the name of the cursor image
+   */
+  private void changeCursor(String cursorName) {
+    URL cursorUrl = App.class.getResource("/images/" + cursorName);
+    Image cursorImage = new Image(cursorUrl.toString());
+    canvas.setCursor(
+        new ImageCursor(cursorImage, cursorImage.getWidth() / 3.5, cursorImage.getHeight()));
   }
 }

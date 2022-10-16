@@ -16,9 +16,9 @@
    <content>
       <AnchorPane prefHeight="750.0" prefWidth="820.0">
          <children>
-            <ImageView fitHeight="750.0" fitWidth="820.0" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <ImageView fitHeight="750.0" fitWidth="820.0" opacity="0.18" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <image>
-                  <Image url="@../images/canvasBackground.jpg" />
+                  <Image url="@../images/aboutUsBackground.png" />
                </image>
             </ImageView>
             <VBox prefHeight="750.0" prefWidth="820.0">
@@ -29,22 +29,22 @@
                            <graphic>
                               <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../images/returnIcon2.png" />
+                                    <Image url="@../images/returnIcon.png" />
                                  </image>
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Label prefHeight="90.0" prefWidth="700.0" text="Speedy Sketchers&#10;an Auckland-based Art School " textAlignment="CENTER">
+                        <Label prefHeight="90.0" prefWidth="700.0" text="Speedy Sketchers&#10;We are an Auckland-based Art School " textAlignment="CENTER">
                            <font>
                               <Font name="Segoe UI Black" size="35.0" />
                            </font>
                            <HBox.margin>
-                              <Insets left="60.0" top="12.0" />
+                              <Insets left="20.0" top="12.0" />
                            </HBox.margin>
                         </Label>
                      </children>
                   </HBox>
-                  <Label prefHeight="40.0" prefWidth="820.0" text="Sign up to our most popular course &quot;Speed Drawing&quot; today!" textFill="WHITE">
+                  <Label prefHeight="40.0" prefWidth="820.0" text="Sign up to our most popular course &quot;Speed Drawing&quot; today!" textFill="#ffb347">
                      <font>
                         <Font name="Roboto Black" size="26.0" />
                      </font>
@@ -52,7 +52,7 @@
                         <Insets left="35.0" />
                      </padding>
                   </Label>
-                  <Hyperlink prefHeight="30.0" prefWidth="820.0" text="https://en.wikipedia.org/wiki/Speed_painting" textFill="WHITE">
+                  <Hyperlink prefHeight="30.0" prefWidth="820.0" text="https://en.wikipedia.org/wiki/Speed_painting" textFill="#ffb347">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
@@ -78,7 +78,7 @@
                         </ImageView>
                      </graphic>
                   </Label>
-                  <Label prefHeight="50.0" prefWidth="820.0" text="But wait.. Why should I learn Art?" textFill="WHITE">
+                  <Label prefHeight="50.0" prefWidth="820.0" text="But wait.. Why should I learn Art?" textFill="#ffb347">
                      <font>
                         <Font name="Roboto Black" size="26.0" />
                      </font>
@@ -94,7 +94,7 @@
                         <Insets left="35.0" />
                      </padding>
                   </Label>
-                  <Label prefHeight="50.0" prefWidth="820.0" text="Start ENJOYING these benefits today!" textFill="WHITE">
+                  <Label prefHeight="50.0" prefWidth="820.0" text="Start ENJOYING these benefits today!" textFill="#ffb347">
                      <font>
                         <Font name="Roboto Black" size="26.0" />
                      </font>
