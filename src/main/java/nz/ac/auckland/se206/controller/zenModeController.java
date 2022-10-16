@@ -47,7 +47,6 @@ import javax.imageio.ImageIO;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.CategorySelector.Difficulty;
 import nz.ac.auckland.se206.game.Game;
-import nz.ac.auckland.se206.game.GameFactory;
 import nz.ac.auckland.se206.ml.DoodlePrediction;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 import nz.ac.auckland.se206.user.User;
@@ -88,10 +87,10 @@ public class zenModeController {
 
   private DoodlePrediction model;
 
-  private Difficulty dif;
   private Boolean sound;
 
   private Boolean music;
+  private List<Difficulty> dif;
 
   // mouse coordinates
   private double currentX;
@@ -129,7 +128,7 @@ public class zenModeController {
     sound = users.get(userNames.indexOf(MenuController.currentActiveUser)).getSoundStatus();
     music = users.get(userNames.indexOf(MenuController.currentActiveUser)).getMusicStatus();
 
-    game = GameFactory.createGame(dif);
+    game = new Game(dif);
     category = game.getCategoryToDraw();
     categoryLabel.setText(category);
     usernameLabel.setText(currentActiveUser);

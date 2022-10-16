@@ -52,110 +52,368 @@
             <Font name="Segoe UI Black" size="20.0" />
          </font>
       </Text>
-      <VBox layoutX="391.0" layoutY="242.0" prefHeight="61.0" prefWidth="300.0">
+      <HBox alignment="CENTER" layoutX="410.0" layoutY="126.0" prefHeight="27.0" prefWidth="300.0">
          <children>
-            <HBox prefHeight="46.0" prefWidth="300.0">
-               <children>
-                  <Button fx:id="easyButton" mnemonicParsing="false" onAction="#onEasyButton" style="-fx-background-color: transparent;">
-                     <HBox.margin>
-                        <Insets left="10.0" right="10.0" />
-                     </HBox.margin>
-                     <graphic>
-                        <ImageView fx:id="easyImage" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../images/easy-face.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-                  <Button fx:id="mediumButton" mnemonicParsing="false" onAction="#onMediumButton" style="-fx-background-color: transparent;">
-                     <graphic>
-                        <ImageView fx:id="mediumImage" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../images/medium-face.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <HBox.margin>
-                        <Insets left="12.0" right="10.0" />
-                     </HBox.margin>
-                  </Button>
-                  <Button fx:id="hardButton" mnemonicParsing="false" onAction="#onHardButton" style="-fx-background-color: transparent;">
-                     <graphic>
-                        <ImageView fx:id="hardImage" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../images/hard-face.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <HBox.margin>
-                        <Insets left="25.0" />
-                     </HBox.margin>
-                  </Button>
-                  <Button fx:id="masterButton" mnemonicParsing="false" onAction="#onMasterButton" style="-fx-background-color: transparent;">
-                     <graphic>
-                        <ImageView fx:id="masterImage" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../images/master-face.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <HBox.margin>
-                        <Insets left="25.0" />
-                     </HBox.margin>
-                  </Button>
-               </children>
-            </HBox>
-            <HBox alignment="BOTTOM_CENTER" prefHeight="17.0" prefWidth="300.0">
-               <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="EASY">
-                     <font>
-                        <Font name="Segoe UI Black" size="15.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="10.0" right="10.0" />
-                     </HBox.margin>
-                  </Text>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="MEDIUM">
-                     <font>
-                        <Font name="Segoe UI Black" size="15.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="10.0" right="10.0" />
-                     </HBox.margin>
-                  </Text>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="HARD">
-                     <font>
-                        <Font name="Segoe UI Black" size="15.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="10.0" right="10.0" />
-                     </HBox.margin>
-                  </Text>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="MASTER">
-                     <font>
-                        <Font name="Segoe UI Black" size="15.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="10.0" right="10.0" />
-                     </HBox.margin>
-                  </Text>
-               </children>
-            </HBox>
-         </children>
-      </VBox>
-      <HBox alignment="CENTER" layoutX="391.0" layoutY="202.0" prefHeight="27.0" prefWidth="300.0">
-         <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Difficulty : " wrappingWidth="111.46405029296875">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Difficulty Setting" wrappingWidth="171.46405792236328">
                <font>
                   <Font name="Segoe UI Black" size="20.0" />
                </font>
             </Text>
-            <Label fx:id="difficultyLabel" prefHeight="30.0" prefWidth="111.0">
-               <font>
-                  <Font name="Segoe UI Black" size="20.0" />
-               </font>
-            </Label>
+         </children>
+      </HBox>
+      <HBox layoutX="331.0" layoutY="163.0" prefHeight="220.0" prefWidth="420.0">
+         <children>
+            <VBox prefHeight="240.0" prefWidth="220.0">
+               <children>
+                  <Label alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="120.0" text="Accuracy :">
+                     <VBox.margin>
+                        <Insets top="35.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="Segoe UI Black" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="120.0" text="Word Difficulty :">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="Segoe UI Black" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="120.0" text="Time :">
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="Segoe UI Black" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="120.0" text="Confidence Score :">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="Segoe UI Black" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="120.0" text="Visibility :">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="Segoe UI Black" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <VBox prefHeight="220.0" prefWidth="380.0">
+               <children>
+                  <VBox prefHeight="0.0" prefWidth="296.0">
+                     <children>
+                        <HBox alignment="BOTTOM_CENTER" prefHeight="17.0" prefWidth="277.0">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="EASY">
+                                 <font>
+                                    <Font name="Segoe UI Black" size="15.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="10.0" right="10.0" />
+                                 </HBox.margin>
+                              </Text>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="MEDIUM">
+                                 <font>
+                                    <Font name="Segoe UI Black" size="15.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="15.0" right="10.0" />
+                                 </HBox.margin>
+                              </Text>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="HARD">
+                                 <font>
+                                    <Font name="Segoe UI Black" size="15.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="10.0" right="10.0" />
+                                 </HBox.margin>
+                              </Text>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="MASTER">
+                                 <font>
+                                    <Font name="Segoe UI Black" size="15.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="10.0" right="10.0" />
+                                 </HBox.margin>
+                              </Text>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="29.0" prefWidth="296.0">
+                           <children>
+                              <Button fx:id="easyAccuracyButton" mnemonicParsing="false" onAction="#onEasyAccuracyButton" style="-fx-background-color: transparent;">
+                                 <HBox.margin>
+                                    <Insets right="20.0" />
+                                 </HBox.margin>
+                                 <graphic>
+                                    <ImageView fx:id="easyAccuracyImage" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/easy-face.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="mediumAccuracyButton" mnemonicParsing="false" onAction="#onMediumAccuracyButton" style="-fx-background-color: transparent;">
+                                 <graphic>
+                                    <ImageView fx:id="mediumAccuracyImage" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/medium-face.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <HBox.margin>
+                                    <Insets left="10.0" right="10.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button fx:id="hardAccuracyButton" mnemonicParsing="false" onAction="#onHardAccuracyButton" style="-fx-background-color: transparent;">
+                                 <graphic>
+                                    <ImageView fx:id="hardAccuracyImage" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/hard-face.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <HBox.margin>
+                                    <Insets left="20.0" right="10.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button fx:id="masterAccuracyButton" mnemonicParsing="false" onAction="#onMasterAccuracyButton" style="-fx-background-color: transparent;">
+                                 <graphic>
+                                    <ImageView fx:id="masterAccuracyImage" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/master-face.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <HBox.margin>
+                                    <Insets left="20.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="29.0" prefWidth="296.0">
+                           <children>
+                              <Button fx:id="easyWordButton" mnemonicParsing="false" onAction="#onEasyWordButton" style="-fx-background-color: transparent;">
+                                 <HBox.margin>
+                                    <Insets right="20.0" />
+                                 </HBox.margin>
+                                 <graphic>
+                                    <ImageView fx:id="easyWordImage" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/easy-face.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="mediumWordButton" mnemonicParsing="false" onAction="#onMediumWordButton" style="-fx-background-color: transparent;">
+                                 <graphic>
+                                    <ImageView fx:id="mediumWordImage" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/medium-face.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <HBox.margin>
+                                    <Insets left="10.0" right="10.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button fx:id="hardWordButton" mnemonicParsing="false" onAction="#onHardWordButton" style="-fx-background-color: transparent;">
+                                 <graphic>
+                                    <ImageView fx:id="hardWordImage" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/hard-face.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <HBox.margin>
+                                    <Insets left="20.0" right="10.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button fx:id="masterWordButton" mnemonicParsing="false" onAction="#onMasterWordButton" style="-fx-background-color: transparent;">
+                                 <HBox.margin>
+                                    <Insets left="20.0" />
+                                 </HBox.margin>
+                                 <graphic>
+                                    <ImageView fx:id="masterWordImage" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/master-face.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="29.0" prefWidth="296.0">
+                           <children>
+                              <Button fx:id="easyTimeButton" mnemonicParsing="false" onAction="#onEasyTimeButton" style="-fx-background-color: transparent;">
+                                 <HBox.margin>
+                                    <Insets right="20.0" />
+                                 </HBox.margin>
+                                 <graphic>
+                                    <ImageView fx:id="easyTimeImage" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/easy-face.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="mediumTimeButton" mnemonicParsing="false" onAction="#onMediumTimeButton" style="-fx-background-color: transparent;">
+                                 <graphic>
+                                    <ImageView fx:id="mediumTimeImage" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/medium-face.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <HBox.margin>
+                                    <Insets left="10.0" right="10.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button fx:id="hardTimeButton" mnemonicParsing="false" onAction="#onHardTimeButton" style="-fx-background-color: transparent;">
+                                 <graphic>
+                                    <ImageView fx:id="hardTimeImage" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/hard-face.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <HBox.margin>
+                                    <Insets left="20.0" right="10.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button fx:id="masterTimeButton" mnemonicParsing="false" onAction="#onMasterTimeButton" style="-fx-background-color: transparent;">
+                                 <HBox.margin>
+                                    <Insets left="20.0" />
+                                 </HBox.margin>
+                                 <graphic>
+                                    <ImageView fx:id="masterTimeImage" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/master-face.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="29.0" prefWidth="296.0">
+                           <children>
+                              <Button fx:id="easyConfidenceButton" mnemonicParsing="false" onAction="#onEasyConfidenceButton" style="-fx-background-color: transparent;">
+                                 <HBox.margin>
+                                    <Insets right="20.0" />
+                                 </HBox.margin>
+                                 <graphic>
+                                    <ImageView fx:id="easyConfidenceImage" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/easy-face.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="mediumConfidenceButton" mnemonicParsing="false" onAction="#onMediumConfidenceButton" style="-fx-background-color: transparent;">
+                                 <graphic>
+                                    <ImageView fx:id="mediumConfidenceImage" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/medium-face.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <HBox.margin>
+                                    <Insets left="10.0" right="10.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button fx:id="hardConfidenceButton" mnemonicParsing="false" onAction="#onHardConfidenceButton" style="-fx-background-color: transparent;">
+                                 <graphic>
+                                    <ImageView fx:id="hardConfidenceImage" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/hard-face.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <HBox.margin>
+                                    <Insets left="20.0" right="10.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button fx:id="masterConfidenceButton" mnemonicParsing="false" onAction="#onMasterConfidenceButton" style="-fx-background-color: transparent;">
+                                 <HBox.margin>
+                                    <Insets left="20.0" />
+                                 </HBox.margin>
+                                 <graphic>
+                                    <ImageView fx:id="masterConfidenceImage" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/master-face.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="29.0" prefWidth="296.0">
+                           <children>
+                              <Button fx:id="easyVisibilityButton" mnemonicParsing="false" onAction="#onEasyVisibilityButton" style="-fx-background-color: transparent;">
+                                 <HBox.margin>
+                                    <Insets right="20.0" />
+                                 </HBox.margin>
+                                 <graphic>
+                                    <ImageView fx:id="easyVisibilityImage" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/easy-face.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="mediumVisibilityButton" mnemonicParsing="false" onAction="#onMediumVisibilityButton" style="-fx-background-color: transparent;">
+                                 <graphic>
+                                    <ImageView fx:id="mediumVisibilityImage" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/medium-face.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <HBox.margin>
+                                    <Insets left="10.0" right="10.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button fx:id="hardVisibilityButton" mnemonicParsing="false" onAction="#onHardVisibilityButton" style="-fx-background-color: transparent;">
+                                 <graphic>
+                                    <ImageView fx:id="hardVisibilityImage" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/hard-face.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <HBox.margin>
+                                    <Insets left="20.0" right="10.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button fx:id="masterVisibilityButton" mnemonicParsing="false" onAction="#onMasterVisibilityButton" style="-fx-background-color: transparent;">
+                                 <HBox.margin>
+                                    <Insets left="20.0" />
+                                 </HBox.margin>
+                                 <graphic>
+                                    <ImageView fx:id="masterVisibilityImage" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/master-face.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </VBox>
          </children>
       </HBox>
    </children>
