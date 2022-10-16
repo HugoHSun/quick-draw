@@ -1,7 +1,5 @@
 package nz.ac.auckland.se206.controller;
 
-import static nz.ac.auckland.se206.controller.MenuController.currentActiveUser;
-
 import ai.djl.ModelException;
 import ai.djl.modality.Classifications.Classification;
 import ai.djl.translate.TranslateException;
@@ -123,6 +121,12 @@ public class CanvasController {
 
   private Timer timer = new Timer();
 
+  /**
+   * Set the static variable, isHiddenWord, depending on if
+   * the user selects hidden word or normal mode
+   * 
+   * @param isWordHidden
+   */
   public static void setHiddenWord(boolean isWordHidden) {
     isHiddenWord = isWordHidden;
   }
@@ -172,7 +176,6 @@ public class CanvasController {
     }
 
     difficulty = game.getCategoryDifficulty();
-    usernameLabel.setText(currentActiveUser);
     graphic = canvas.getGraphicsContext2D();
 
     // Initialise drawing sound effect
@@ -184,6 +187,7 @@ public class CanvasController {
       Media backgroundMusic =
           new Media(App.class.getResource("/sounds/normalMusic.mp3").toURI().toString());
       playerBackgroundMusic = new MediaPlayer(backgroundMusic);
+      playerBackgroundMusic.setVolume(0.1);
     } catch (URISyntaxException e) {
       e.printStackTrace();
     }
@@ -371,7 +375,7 @@ public class CanvasController {
     canvas.setDisable(true);
     canvas.setOnMouseDragged(null);
     try {
-      recordResult(currentActiveUser, isWon, 60 - game.getRemainingTime());
+      recordResult(MenuController.currentActiveUser, isWon, 60 - game.getRemainingTime());
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -467,6 +471,12 @@ public class CanvasController {
     CanvasUtils.saveDrawing(stage, canvas);
   }
 
+  /**
+   * When the user presses the return button. Stop the timer (thread)
+   * Stop the music and set the scene to main menu.
+   * 
+   * @param event
+   */
   @FXML
   private void onReturn(ActionEvent event) {
     timer.cancel();

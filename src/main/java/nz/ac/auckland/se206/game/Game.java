@@ -24,6 +24,12 @@ public class Game {
 
   private int prevRank;
 
+  /**
+   * Constructor for the game. It gets input list of difficulties, consisting of
+   * accuracy, word difficulty, time, confidence and visibility. Assign variable with specific rules from client
+   * 
+   * @param difficulty
+   */
   public Game(List<Difficulty> difficulty) {
     prevRank = 344;
     if (difficulty.get(0).equals(Difficulty.E)) {

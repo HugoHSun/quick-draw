@@ -2,7 +2,6 @@ package nz.ac.auckland.se206.controller;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.GsonBuilder;
@@ -22,21 +21,32 @@ public class AboutUsController {
 
   private Parent root;
   
+  /**
+   * Initializes the JavaFX scene. If the user (if any) has
+   * not yet got the badge for entering the About Us page, give the badge.
+   * 
+   * @throws IOException
+   */
   @FXML
   private void initialize() throws IOException {
-	  List<User> users = JsonReader.getUsers();
-	  List<String> userNames = JsonReader.getUserNames();
-	  User user = users.get(userNames.indexOf(MenuController.currentActiveUser));
-	  if (!user.getVisitAboutUs()) {
-		  
-		  user.setVisitAboutUs(true);
-		  user.obtainBadges();
-		  FileWriter fw = new FileWriter(App.usersFileName, false);
-		  new GsonBuilder().setPrettyPrinting().create().toJson(users, fw);
-		  fw.close();
-	  }  	    
+	  if (MenuController.currentActiveUser != null) {
+		  List<User> users = JsonReader.getUsers();
+		  List<String> userNames = JsonReader.getUserNames();
+		  User user = users.get(userNames.indexOf(MenuController.currentActiveUser));
+		  if (!user.getVisitAboutUs()) {
+			  
+			  user.setVisitAboutUs(true);
+			  user.obtainBadges();
+			  FileWriter fw = new FileWriter(App.usersFileName, false);
+			  new GsonBuilder().setPrettyPrinting().create().toJson(users, fw);
+			  fw.close();
+		  }  	  
+	  }
   }
 
+  /**
+   * When clicked the return button it loads the main menu
+   */
   @FXML
   private void onReturn(ActionEvent event) {
     scene = ((Node) event.getSource()).getScene();

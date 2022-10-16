@@ -23,7 +23,7 @@
             <Image url="@../images/menuBackground.png" />
          </image>
       </ImageView>
-      <VBox alignment="TOP_CENTER" layoutX="185.0" layoutY="90.0" prefHeight="320.0" prefWidth="450.0" AnchorPane.bottomAnchor="90.0" AnchorPane.topAnchor="90.0">
+      <VBox alignment="TOP_CENTER" layoutX="185.0" layoutY="80.0" prefHeight="320.0" prefWidth="450.0" AnchorPane.bottomAnchor="100.0" AnchorPane.topAnchor="80.0">
          <children>
             <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefHeight="74.0" prefWidth="378.0" text="QUICK, DRAW!" textAlignment="CENTER">
                <font>
@@ -111,21 +111,30 @@
                   <Insets top="20.0" />
                </VBox.margin>
             </Button>
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#onStartSandBoxGame" prefHeight="43.0" prefWidth="155.0" stylesheets="@../css/buttons.css" text="SandBox Mode">
+               <font>
+                  <Font name="Segoe UI" size="15.0" />
+               </font>
+               <effect>
+                  <Blend mode="DARKEN" />
+               </effect>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </Button>
          </children>
       </VBox>
       <HBox layoutX="8.0" layoutY="14.0" prefHeight="60.0" prefWidth="300.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
+            <ImageView fitHeight="56.0" fitWidth="58.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../images/app-logo.PNG" />
+               </image>
+            </ImageView>
             <Button alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#onAboutUs" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css" text="About Us&#10;Speedy Sketchers" textAlignment="CENTER">
                <font>
                   <Font name="Segoe UI Black" size="12.0" />
                </font>
-               <graphic>
-                  <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true">
-                     <image>
-                        <Image url="@../images/app-logo.PNG" />
-                     </image>
-                  </ImageView>
-               </graphic>
             </Button>
          </children>
       </HBox>
@@ -153,6 +162,9 @@
                         <Font name="Roboto Black" size="14.0" />
                      </font>
                </tooltip>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
             <Button fx:id="deleteUserButton" contentDisplay="BOTTOM" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onDeleteUser" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
                <graphic>
@@ -171,6 +183,9 @@
                         <Font name="Roboto Black" size="14.0" />
                      </font>
                </tooltip>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
          </children>
       </HBox>
@@ -179,7 +194,7 @@
             <Separator prefWidth="200.0" />
             <HBox prefHeight="50.0" prefWidth="200.0" spacing="100.0">
                <children>
-                  <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onBadges" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;">
+                  <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onBadges" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent;" stylesheets="@../css/buttons.css">
                      <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                            <image>

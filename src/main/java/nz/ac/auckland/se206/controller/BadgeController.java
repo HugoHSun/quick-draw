@@ -1,7 +1,6 @@
 package nz.ac.auckland.se206.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -43,6 +42,13 @@ public class BadgeController {
   @FXML private ImageView diamondFour;
   @FXML private ImageView diamondFive;
 
+  /**
+   * Initialize the badges according to the user data
+   * The user data contains different badges obtained by 
+   * the user. The opacity of each badge icon will be determined.
+   * 
+   * @throws IOException
+   */
   public void initialize() throws IOException {
     List<User> users = JsonReader.getUsers();
     List<String> userNames = JsonReader.getUserNames();
@@ -94,6 +100,12 @@ public class BadgeController {
     }
   }
 
+  /**
+   * When user presses the return button, reset the
+   * scene to the main menu
+   * 
+   * @param event
+   */
   @FXML
   private void onReturn(ActionEvent event) {
     Scene scene = ((Node) event.getSource()).getScene();
@@ -104,10 +116,5 @@ public class BadgeController {
       e.printStackTrace();
     }
     scene.setRoot(root);
-  }
-
-  @FXML
-  private void onBadge(ActionEvent event) {
-    System.out.println("Hi");
   }
 }
