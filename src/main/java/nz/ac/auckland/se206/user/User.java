@@ -269,7 +269,7 @@ public class User {
     String fastestTime = String.valueOf(fastestWon);
     // Default
     if (fastestWon > 60) {
-      fastestTime = "You have never won! :(";
+      return "You have never won! :(";
     }
     return fastestTime + " seconds";
   }

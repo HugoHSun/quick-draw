@@ -28,7 +28,7 @@
       <Label fx:id="easyWordsLabel" layoutX="77.0" layoutY="231.0" prefHeight="164.0" prefWidth="131.0" wrapText="true" />
       <Label fx:id="mediumWordsLabel" layoutX="222.0" layoutY="233.0" prefHeight="164.0" prefWidth="139.0" wrapText="true" />
       <Label fx:id="hardWordsLabel" layoutX="376.0" layoutY="233.0" prefHeight="164.0" prefWidth="124.0" wrapText="true" />
-      <Label fx:id="fastTimeLabel" layoutX="97.0" layoutY="162.0" prefHeight="21.0" prefWidth="80.0">
+      <Label fx:id="fastTimeLabel" layoutX="97.0" layoutY="162.0" prefHeight="21.0" prefWidth="200.0">
          <font>
             <Font name="Segoe UI Black" size="15.0" />
          </font>
