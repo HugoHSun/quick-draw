@@ -1,4 +1,4 @@
-# SE206 - 2022 - Beta & Final Releases
+# The University of Auckland - SE206 - 2022 - Beta & Final Releases
 
 ### Quick, Draw!
 
